@@ -10,7 +10,7 @@ humandate:
 humantime: 
 startdate: 
 enddate: 
-instructor: ["Paul Bartholomew and William Lucas"]
+instructor: ["William Lucas and Paul Bartholomew"]
 helper: [""]
 email: [""]
 collaborative_notes: 
@@ -20,19 +20,23 @@ root: .
 
 <h2>Description</h2>
 
-This course is aimed at users and developers who know how to program, but have little or no experience in Fortran, and those who may wish to have a refresher in Fortran.
+Fortran (a contraction of Formula Translation) was the first programming language to have a standard (in 1954), but has changed significantly over the years. More recent standards (the latest being Fortran 2018) come under the umbrella term "Modern Fortran". Fortran retains very great significance in many areas of scientific and numerical computing, particularly for applications such as quantum chemistry, plasmas, engineering and fluid dynamics, and in numerical weather prediction and climate models.
 
-Fortran (a contraction of Formula Translation) was the first programming language to have a standard (in 1954), but has changed significantly over the years. More recent standards (the latest being Fortran 2023) come under the umbrella term "Modern Fortran". Fortran retains very great significance in many areas of scientific and numerical computing, particularly for applications such as quantum chemistry, plasmas, and in numerical weather prediction and climate models.
+This intermediate course concentrates on some of the more recent features which are central to Modern Fortran. Attendees should be familiar with the basics of Fortran programming which might be covered in an introductory course, e.g., the one at,
 
-This course provides an introduction to the basics of writing Fortran. It will cover basic syntax, variables, expressions and assignments, flow of control, and introductions to i/o and user-defined types. Common Fortran idioms are introduced and contrasted with those available in C-like languages; the course will try to focus on real usage rather than formal descriptions.
+https://github.com/ARCHER2-HPC/archer2-fortran-intro
 
-At the end of the course you should be able to understand many Fortran programs and be confident to start to write well-structured and portable Fortran. Fortran is a rather "large" language, so it is not possible to cover all its features in a two day course. Further elements of Fortran are discussed in the "Intermediate Modern Fortran" course.
+So, attendees should be comfortable writing structured Fortran programs based on modules and procedures, and have a sound grounding in variables, logic, flow-of-control, and so on. Some knowledge of Fortran I/O is assumed.
 
-Prerequisites: attendees must be familiar with the basic concepts of programming: variables, logic, flow of control, loops, functions and so on. No knowledge of Fortran is assumed. Previous programming experience might typically be in the context C/C++ or python. If you know no programming, we suggest this course on Fortran is not the place to start.
+There are two main topics in this intermediate course: the facilities in Fortran for abstraction and polymorphism provided by classes and interfaces, and the facilities for formal interoperability with ANSI C. The course will cover type extension ("classes" and "inheritance"), type-bound procedures ("methods"), generic procedures ("polymorphism"), and so on. The standard iso_c_binding module provides facilities for interoperability with C; this allow the communication of Fortran entities with direct analogues C, and also Fortran objects (particularly arrays) which have no direct analogue in C.
+
+Further language features concerning arrays, pointers, and facilities for structured programming using submodules will also be covered along the way.
+
+Knowledge of the object-oriented paradigm would be useful, but is not essential. Knowledge of C is required for the material on C/Fortran interoperation. The course will allow programmers interested in working on larger, structured, software projects to make use of (almost) a full complement of Modern Fortran features.
 
 The course requires a Fortran compiler, for which a local machine or laptop may be appropriate [1]. If you do not have access to a Fortran compiler, course training accounts on ARCHER2 will be available which provide access to various compilers. Use of a text editor will be required (some may prefer an IDE, but we do not intend to consider or support IDEs).
 
-[1] This may typically be gfortran, freely available as part of Gnu Compiler Collection (GCC). See e.g., https://gcc.gnu.org/wiki/GFortranBinaries
+[1] This may typically be gfortran, freely available as part of the GNU Compiler Collection (GCC). See e.g., https://gcc.gnu.org/wiki/GFortranBinaries
 
 <hr/>
 
