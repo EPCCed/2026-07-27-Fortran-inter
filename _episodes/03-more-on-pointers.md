@@ -300,6 +300,26 @@ A procedure pointer must be associated in order to reference the procedure.
 >
 > > ## Solution
 > >
+> > ```
+> > program example2
+> > 
+> >   implicit none
+> > 
+> >   interface
+> >      function array_size(a) result(isize)
+> >        real, dimension(:), intent(in) :: a
+> >        integer                        :: isize
+> >      end function array_size
+> >   end interface
+> >
+> >   procedure (array_size), pointer :: f => array_size
+> >   real :: a(13)
+> > 
+> >   print *, "size of a is: ", f(a)
+> > 
+> > end program example2
+> > ```
+> >
 > {: .solution}
 > 
 > Try replacing the specific interface block with an equivalent abstract
@@ -307,6 +327,26 @@ A procedure pointer must be associated in order to reference the procedure.
 > procedure statement, and also try a procedure pointer.
 >
 > > ## Solution
+> >
+> > ```
+> > program example2
+> > 
+> >   implicit none
+> > 
+> >   abstract interface
+> >      function my_array_size(a) result(isize)
+> >        real, dimension(:), intent(in) :: a
+> >        integer                        :: isize
+> >      end function my_array_size
+> >   end interface
+> >
+> >   procedure (my_array_size) :: array_size
+> >   real :: a(13)
+> > 
+> >   print *, "size of a is: ", array_size(a)
+> > 
+> > end program example2
+> > ```
 > >
 > {: .solution}
 {: .challenge}
