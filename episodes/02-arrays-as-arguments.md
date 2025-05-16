@@ -1,13 +1,16 @@
 ---
 title: "Arrays as arguments"
 teaching: 10
-exercises: 10
+exercises: 20
 questions:
-- ""
+- "How are arrays passed as arguments?"
+- "How are array slices passed as arguments?"
+- "How do allocatable array arguments interact with argument intent attributes?"
 objectives:
-- ""
+- "Understand array argument behaviour"
 keypoints:
-- ""
+- "Arrays passed as arguments retain their size, not their bounds"
+- "Array arguments behave as though passed by reference, however array sections may require copy-in, copy-out"
 ---
 
 This section describes use of arrays as actual and dummy arguments,
@@ -52,10 +55,10 @@ without some care. Consider:
 The dummy argument in this case would have a size `nmax + 1` and a default
 lower bound of `1`. This may not be what is expected.
 
-### Example (2 minutes)
+### Example (5 minutes)
 
 As a simple illustration of this problem, the following example should print out
-the values `0,0, 1.0, ...` (not `1.0, 2.0, ...`):
+the values `0.0, 1.0, ...` (not `1.0, 2.0, ...`):
 ```
 $ ftn example1.f90
 ```
@@ -178,7 +181,7 @@ compiler is given the freedom to do this if it is deemed appropriate. So
 Fortran cannot be described as "call by reference" or "call by value". The
 standard only says the mechanism "is usually similar to call by reference".
 
-### Example (1 minute)
+### Example (5 minutes)
 
 If you wish to convince yourself of this, a version of this code has been
 provided:
@@ -188,7 +191,7 @@ $ ftn example2.f90
 A `print` statement has been added to the subroutine to confirm that the
 dummy argument is an entity of size `3`.
 
-## Exercise (4 minutes)
+## Exercise (10 minutes)
 
 Write a short example along the lines of `example2.f90` to check that an
 allocatable dummy argument with intent `out` is indeed deallocated on
