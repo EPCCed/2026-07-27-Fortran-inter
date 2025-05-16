@@ -148,7 +148,7 @@ conforms with a scalar, as usual). As a zero-sized array has no
 elements, it is always considered to be defined.
 
 
-## Exercise (3 minutes)
+## Exercise (5 minutes)
 
 Look at the accompanying programs to be found in the current directory.
 ```
@@ -161,7 +161,7 @@ These may be compiled with, e.g.,
 $ ftn problem1.f90
 ```
 
-## Exercise (2 minutes)
+## Exercise (5 minutes)
 
 As arrays are self-describing in Fortran, it is relatively easy for the
 compiler to analyse whether array accesses are valid, or within bounds.
@@ -181,6 +181,9 @@ value of `4` is entered.
 ```
 $ ftn -hbounds bounds-run-time.f90
 ```
+
+Check what happens if the tests are repeated using programs compiled without bounds checking, what
+are the possible dangers?
 
 
 {% include links.md %}
