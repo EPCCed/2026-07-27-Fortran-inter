@@ -54,13 +54,14 @@ components which are themselves derived types give rise to the idea of
 an _ultimate component_, which is an intrinsic type for which no further
 application of `%` is relevant.
 
-### `protected` attribute
-
-Note that there is a `protected` attribute in Fortran, although it has
-a slightly different usage than in C++. It will be discussed later as
-part of the section on submodules.
-Some authors argue that `protected` should be avoided as it represents
-a breakdown of encapsulation.
+> ## `protected` attribute
+> 
+> Note that there is a `protected` attribute in Fortran, although it has
+> a slightly different usage than in C++. It will be discussed later as
+> part of the section on submodules.
+> Some authors argue that `protected` should be avoided as it represents
+> a breakdown of encapsulation.
+{: .callout}
 
 ## Assignments and copying
 
