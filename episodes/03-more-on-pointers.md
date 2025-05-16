@@ -1,7 +1,7 @@
 ---
 title: "More on pointers"
-teaching: 10
-exercises: 10
+teaching: 15
+exercises: 15
 questions:
 - ""
 objectives:
@@ -87,8 +87,7 @@ if desired. If the argument has been allocated via `allocate()`, then
 `nullify()` will not perform deallocation: use `deallocate()`.
 
 
-### Exercise: (4 minutes)
-
+### Exercise: (5 minutes)
 
 > ## Pointer shapes and bounds
 >
@@ -231,7 +230,7 @@ The general form is
 ```
 procedure [(interface-spec)] [, attribuite-list ::] declaration-list
 ```
-The paranetheses accommodate an interface specification, which may be
+The parentheses accommodate an interface specification, which may be
 an interface name, or a declaration type specification (such as
 `integer` above). There are a number of
 possible attributes, including `pointer`, which declares a pointer to a
@@ -277,29 +276,39 @@ A procedure pointer must be associated in order to reference the procedure.
 
 ### Exercise (10 minutes)
 
-An example of an external function is provided in `external.f90`. This is a
-function which has a single argument which is an integer rank 1 array, and
-returns an integer which is the size of the array.
-
-The accompanying program `example2.f90` makes a simple `procedure` declaration
-to allow the external function to be referenced (similar to an `external`
-declaration).
-```
-$ ftn external.f90 example2.f90
-```
-There a number of possible problems with this example (e.g., what happens
-if you provide an actual argument which is a rank two array?).
-
-Adjust the example to provide a _specific_ interface block which describes
-the external function. Make an appropriate procedure declaration, and also
-try declaring a pointer to the procedure.
-
-Check this works and that the compiler now traps errors associated with
-incompatible actual arguments.
-
-Try replacing the specific interface block with an equivalent abstract
-interface. Again, call the external function via a name declared in a
-procedure statement, and also try a procedure pointer.
-
+> ## Procedure interfaces and pointers
+> 
+> An example of an external function is provided in `external.f90`. This is a
+> function which has a single argument which is an integer rank 1 array, and
+> returns an integer which is the size of the array.
+> 
+> The accompanying program `example2.f90` makes a simple `procedure` declaration
+> to allow the external function to be referenced (similar to an `external`
+> declaration).
+> ```
+> $ ftn external.f90 example2.f90
+> ```
+> There are a number of possible problems with this example (e.g., what happens
+> if you provide an actual argument which is a rank two array?).
+> 
+> Adjust the example to provide a _specific_ interface block which describes
+> the external function. Make an appropriate procedure declaration, and also
+> try declaring a pointer to the procedure.
+> 
+> Check this works and that the compiler now traps errors associated with
+> incompatible actual arguments.
+>
+> > ## Solution
+> >
+> {: .solution}
+> 
+> Try replacing the specific interface block with an equivalent abstract
+> interface. Again, call the external function via a name declared in a
+> procedure statement, and also try a procedure pointer.
+>
+> > ## Solution
+> >
+> {: .solution}
+{: .challenge}
 
 {% include links.md %}
