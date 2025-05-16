@@ -5,9 +5,11 @@ exercises: 35
 questions:
 - "How are interfaces used for generic programming?"
 objectives:
-- ""
+- "Understand how to define generic interfaces, overload operators and define new names"
+- "Understand generic interface resolution and potential pitfalls"
 keypoints:
-- ""
+- "Interfaces allow us to write generic, high-level code"
+- "Designing a generic interface requires care, particularly for generic operators"
 ---
 
 The `interface` block has three different forms in Fortran: it may define an
