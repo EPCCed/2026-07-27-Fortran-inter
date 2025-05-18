@@ -1,14 +1,15 @@
 ---
 title: "Generic input/output for derived types"
-teaching: 15
-exercises: 15
+teaching: 10
+exercises: 20
 start: True
 questions:
-- ""
+- "How can we customise the writing/reading of defined types?"
 objectives:
-- ""
+- "Understand how types are written/read by default"
+- "Be able to write a custom type-bound writer/reader for generic I/O"
 keypoints:
-- ""
+- "Defined types can control how they are printed using type-bound procedures"
 ---
 
 ## Default input/output
@@ -29,7 +30,8 @@ separately with an appropriate format
   write (*, fmt = "(i4)")   a%int1
   write (*, fmt = "(f5.3)") a%real1
 ```
-Fortunately, a mechanism using type-bound procedures is available.
+If we wish to control the output format, without needing to write each component individually, we
+can customise the I/O using type-bound procedures.
 
 ## Non-default input/output
 
@@ -40,7 +42,7 @@ For formatted i/o, a special `dt` edit-descriptor exists, of the form:
 ```
   dt[iodesc-string][(v-list)]
 ```
-where the `iodesc-string" is a string, and the v-list is a series of
+where the `iodesc-string` is a string, and the v-list is a series of
 integers. For example, we may have
 ```
   dt" my-type: "(2,14)
@@ -60,7 +62,7 @@ These provide a mechanism to define a procedure with the relevant interface
 1. a `formatted` interface for formatted i/o;
 2. an `unformatted` interface to specify unformatted i/o.
 
-The relevant procedure would then be called if a item of that type appeared
+The relevant procedure would then be called if an item of that type appeared
 in the io list for a `read()` or a `write()` statement.
 
 ## Interfaces
@@ -81,7 +83,7 @@ requires
 
   end subroutine my_type_unformatted_output
 ```
-The `iostat` and `iomsg` variables take on their usually meaning in the context
+The `iostat` and `iomsg` variables take on their usual meaning in the context
 of `write()`.
 The `iostat` variable is zero on success, but should take a positive value if
 an error occurs. If `iostat` is non-zero, `iomsg`
@@ -92,7 +94,7 @@ be of `intent(inout)`.
 
 ### Formatted output
 
-The formatted case includes the addition `iodesc-string` and `v-list`
+The formatted case includes the addition of `iodesc-string` and `v-list`
 arguments:
 ```
  subroutine my_type_write_formatted(self, unit, iotype, vlist, iostat, iomsg)
@@ -144,21 +146,78 @@ invoke `read()` and procedures for writing only invoke `write()`.
 
 ## Exercise (20 minutes)
 
-Try implementing the generic `write(formatted)` procedure for the following
-type:
-```
-  type, public :: my_date
-    integer :: day = 1        ! day 1-31
-    integer :: month = 1      ! month 1-12
-    integer :: year = 1900    ! year
-  end type my_date
-```
-First, try list directed I/O: the format we would like is `dd/mm/yyyy` for
-`01/12/1999` for 1st December 1999.
-
-Then try adding the `dt` edit descriptor to allow some more flexibility. For
-example, a `vlist` of 3 integers might control the width of the fields for
-each part of the date. This requires constructing an appropriate format string.
-
+> ## Implementing generic I/O
+> 
+> Try implementing the generic `write(formatted)` procedure for the following
+> type:
+> ```
+>   type, public :: my_date
+>     integer :: day = 1        ! day 1-31
+>     integer :: month = 1      ! month 1-12
+>     integer :: year = 1900    ! year
+>   end type my_date
+> ```
+> First, try list directed I/O: the format we would like is `dd/mm/yyyy` for
+> `01/12/1999` for 1st December 1999.
+>
+> A program `date_program.f90` and module `date_module.f90` template are provided.
+> 
+> > ## Solution (list directed)
+> >
+> > First we implement a type-bound procedure for the date object that will print it in `dd/mm/yyyy` format
+> > ```
+> > subroutine write_my_type(self, unit, iotype, vlist, iostat, iomsg)
+> > 
+> >   class (my_type),     intent(in)    :: self
+> >   integer,             intent(in)    :: unit
+> >   character (len = *), intent(in)    :: iotype
+> >   integer,             intent(in)    :: vlist(:)
+> >   integer,             intent(out)   :: iostat
+> >   character (len = *), intent(inout) :: iomsg
+> > 
+> >   character (len = *), parameter :: dfmt = "(i2.2,'/',i2.2,'/',i4)"
+> >   iostat = 0   ! we will assume no errors occur (iomsg is unchanged)
+> > 
+> >   write(unit, fmt = dfmt, iostat = iostat) self%day, self%month, self%year
+> > 
+> > end subroutine write_my_type
+> > ```
+> > where the format string `dfmt` controls the formatting.
+> > You should be able to confirm this works with the `date_program`.
+> >
+> {: .solution}
+>
+> Then try adding the `dt` edit descriptor to allow some more flexibility. For
+> example, a `vlist` of 3 integers might control the width of the fields for
+> each part of the date. This requires constructing an appropriate format string.
+>
+> > ## Solution (edit descriptor)
+> > 
+> > Extending our earlier solution we can handle both the list directed, and the format descriptor cases
+> > ```
+> > if (iotype == "LISTDIRECTED") then
+> >    write(unit, fmt = dfmt, iostat = iostat) self%day, self%month, self%year
+> > else
+> >    ! A dt-style format
+> >    ! We will only consider the case of vlist(3)
+> >    if (size(vlist) == 3) then
+> >      block
+> >        character (len = 20) :: userfmt
+> >        write (userfmt, "(a,i1,a,i2,a,i1,a)") &
+> >             "(i", vlist(1), ",a", vlist(2), ",i", vlist(3), ")"
+> >        write(unit, userfmt, iostat = iostat) &
+> >             self%day, months(self%month), self%year
+> >      end block
+> >    else
+> >      ! Handle other conditions; we will just use the default format
+> >      write (unit, dfmt, iostat = iostat) self%day, self%month, self%year
+> >    end if
+> > end if
+> > ```
+> > using the default list directed format as a fallback.
+> > The `userfmt` format string controls the display of the date, try changing some of the widths passed.
+> >
+> {: .solution}
+{: .challenge}
 
 {% include links.md %}
