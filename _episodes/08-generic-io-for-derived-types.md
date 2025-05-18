@@ -1,7 +1,7 @@
 ---
 title: "Generic input/output for derived types"
-teaching: 10
-exercises: 10
+teaching: 15
+exercises: 15
 start: True
 questions:
 - ""
