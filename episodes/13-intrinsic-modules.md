@@ -1,7 +1,7 @@
 ---
 title: "Intrinsic modules"
-teaching: 10
-exercises: 10
+teaching: 15
+exercises: 15
 questions:
 - ""
 objectives:
