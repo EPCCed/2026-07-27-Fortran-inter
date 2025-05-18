@@ -12,8 +12,4 @@ module object_type
     real :: a = 1.0          ! radius
   end type sphere_t
 
-  type, extends(sphere_t), public :: charged_sphere_t
-    real :: q = -1.0         ! charge
-  end type charged_sphere_t
-
 end module object_type

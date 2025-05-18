@@ -1,13 +1,18 @@
 ---
 title: "Type extension and polymorphism"
 teaching: 15
-exercises: 15
+exercises: 20
 questions:
-- ""
+- "How can we reuse type definitions in related types?"
+- "How can we write generic procedures for related types?"
+- "How can we apply type-specific behaviour for related types?"
 objectives:
-- ""
+- "Understand type extension"
+- "Understand the use of polymorphism"
+- "Understand declared and dynamic types"
 keypoints:
-- ""
+- "Fortran supports polymorphism through the `class` pointers and allocatable objects."
+- "Types can be selected dynamically to support type-specific behaviours"
 ---
 
 Type extension and polymorphism provide the ability to define a uniform
@@ -48,8 +53,10 @@ For operations which treat the base type as a whole, the longer form
 may be useful. However, if just component access is required, the
 second, shorter, form is more concise and to be preferred.
 
-A new type may extend only one existing type in Fortran:
-it has a so-called _single inheritance_ model.
+> ## Single inheritance
+> A new type may extend only one existing type in Fortran:
+> it has a so-called _single inheritance_ model.
+{: .callout}
 
 
 ### Structure constructors
@@ -87,18 +94,60 @@ initialisations may be omitted in the structure constructor.
 
 New types can be further extended by following the same procedure.
 
-### Example (4 minutes)
+### Example (5 minutes)
 
-Further extend the `sphere_t` to give a `charged_sphere_t` by adding
-a (`real`) component `q` in the new type. The first two type
-definitions are provided in the file `object_type.f90`.
-
-In the example main program, check you can provide some value for the
-new charge component via a constructor (e.g., `q = -1.0`), and access
-the charge component of the new type in both long and short forms.
-```
-$ ftn example1.f90 object_type.f90
-```
+> ## Extending types
+> 
+> Further extend the `sphere_t` to give a `charged_sphere_t` by adding
+> a (`real`) component `q` in the new type. The first two type
+> definitions are provided in the file `object_type.f90`.
+>
+> > ## Solution 1
+> > 
+> > ```
+> > type, extends(sphere_t), public :: charged_sphere_t
+> >   real :: q = -1.0         ! charge
+> > end type charged_sphere_t
+> > ```
+> > 
+> > Confirm you can compile the code with
+> > ```
+> > ftn example1.f90 object_type.f90
+> > ```
+> {: .solution}
+> 
+> In the example main program, check you can provide some value for the
+> new charge component via a constructor (e.g., `q = -1.0`), and access
+> the ancestor components of the new type in both long and short forms.
+> 
+> > ## Solution 2
+> > 
+> > ```
+> > ! ... Earlier declarations ...
+> > cs = charged_sphere_t(s, 5.0)
+> > print *, "Charged sphere q = ", cs%q
+> > print *, "Charged sphere density (short) = ", cs%rho
+> > print *, "Charged sphere density (long) = ", cs%sphere_t%object_t%rho
+> > ```
+> >
+> > Compiling and running the code you should obtain output similar to
+> > ```
+> > $ ftn example1.f90 object_type.f90 && ./a.out
+> >  Sphere density    1.00000000
+> >  Sphere density    1.00000000
+> >  Sphere radius     1.50000000
+> >  Sphere density    1.00000000
+> >  Sphere density    1.00000000
+> >  Sphere radius     1.50000000
+> >  Sphere density      2.50000000 
+> >  Sphere position:    1.00000000       1.00000000       1.00000000
+> >  Sphere radius       1.50000000
+> >  Charged sphere q =    5.00000000
+> >  Charged sphere density (short) =    2.50000000
+> >  Charged sphere density (long) =    2.50000000
+> > ```
+> {: .solution}
+{: .challenge}
 
 
 ## Polymorphism
@@ -159,29 +208,72 @@ of only of the declared type, but not of its descendents. So
   obj%a        ! erroneous: radius `a` is component of the extended type
 ```
 
-Dynamic type will also be relevant when procedures are considered:
-polymorphic dummy arguments take on the dynamic type of the associated
-actual argument.
+> ## Polymorphic arguments
+> 
+> Dynamic type will also be relevant when procedures are considered:
+> polymorphic dummy arguments take on the dynamic type of the associated
+> actual argument.
+{: .callout}
 
+### Exercise (5 minutes)
 
-### Exercise (2 minutes)
-
-Compile the second example together with your updated `object_type.f90`
-which includes a `charged_sphere_t`:
-```
-$ ftn example2.f90 object_type.f90
-```
-(or use the canned solution `object_types.f90`).
-
-Comment out (don't remove for the time being) the erroneous statements
-from the example so it will compile.
-
-Why can't we just declare the pointer to be:
-```
- class (charged_sphere_t), pointer :: p
-```
-in this example? What is the compiler error if you try?
-
+> ## Declared vs dynamic type
+> 
+> Compile the second example together with your updated `object_type.f90`
+> which includes a `charged_sphere_t`:
+> ```
+> $ ftn example2.f90 object_type.f90
+> ```
+> (or use the canned solution `object_types.f90`).
+> 
+> > ## Solution
+> >
+> > Attempting to compile this code should fail with errors
+> > ```
+> > $example2.f90:20:34:
+> > 
+> >    20 |   print *, "object radius   ", p%a
+> >       |                                  1
+> > Error: 'a' at (1) is not a member of the 'object_t' structure
+> > example2.f90:26:34:
+> > 
+> >    26 |   print *, "sphere radius   ", p%a
+> >       |                                  1
+> > Error: 'a' at (1) is not a member of the 'object_t' structure
+> > example2.f90:29:34:
+> > 
+> >    29 |   print *, "sphere charge   ", p%q
+> >       |                                  1
+> > Error: 'q' at (1) is not a member of the 'object_t' structure gfortran exercise2.f90 object_type.f90
+> > ```
+> > 
+> > {: .solution}
+> 
+> Comment out (don't remove for the time being) the erroneous statements
+> from the example so it will compile.
+> 
+> Why can't we just declare the pointer to be:
+> ```
+>  class (charged_sphere_t), pointer :: p
+> ```
+> in this example? What is the compiler error if you try?
+>
+> > ## Solution
+> >
+> > The `charged_sphere_t` is higher in the inheritance chain than `object_t`, it therefore cannot
+> > be associated with the base derived type.
+> >
+> > ```
+> > example2.f90:16:2:
+> > 
+> >    16 |   p => obj
+> >       |  1
+> > Error: Different types in pointer assignment at (1); attempted assignment of TYPE(object_t) to
+> > CLASS(sphere_t)
+> > ```
+> >
+> {: .solution}
+{: .challenge}
 
 ### Type selection
 
@@ -200,7 +292,7 @@ class default
   print *, "bare object_t"
 end select
 ```
-The are two forms of the so-called type guard statement: `type is` and
+There are two forms of the so-called type guard statement: `type is` and
 `class is`. They may be combined in a single construct. The result depends
 on the following logic:
 1. if the dynamic type of the selector exactly matches a `type is` block,
@@ -227,21 +319,65 @@ and
 returns `.true.` if the dynamic types of both arguments are equal.
 
 
-### Exercise (5 minutes)
+### Exercise (10 minutes)
 
-Write a subroutine in `object_type.f90` which takes a single polymorphic
-argument of `object_t`, and prints out all the relevant components
-depending on the dynamic type of the actual argument.
+> ## Type selection
+> 
+> Write a subroutine in `object_type.f90` which takes a single polymorphic
+> argument of `object_t`, and prints out all the relevant components
+> depending on the dynamic type of the actual argument.
+>
+> > ## Solution
+> >
+> > The body of the subroutine will look like
+> > ```
+> > print *, "Select type: "
+> > select type (p)
+> > class is (object_t)
+> >   print *, "density  ", p%rho
+> >   print *, "position ", p%x(:)
+> > class is (sphere_t)
+> >   print *, "sphere radius   ", p%a
+> > class is (charged_sphere_t)
+> >   print *, "sphere charge   ", p%q
+> > class default
+> >   print *, "unknown"
+> > end select
+> > ```
+> >
+> {: .solution}
+> 
+> Check your subroutine works by passing each different type in turn from
+> the `example2.f90` program.
+{: .challenge}
 
-Check your subroutine works by passing each different type in turn from
-the `example2.f90` program.
-
-
-### Exercise (optional)
-
-Type constructors again. Write some generic constructors for object types
-which take different data types as arguments. For example, it might be a
-convenience to be able to specify the position as a three-vector of integers.
-
+> ## Type constructors again 
+> 
+> Write some generic constructors for object types
+> which take different data types as arguments. For example, it might be a
+> convenience to be able to specify the position as a three-vector of integers.
+>
+> > ## Solution
+> >
+> > A possible implementation might be of the form
+> > ```
+> > function generic_object(rho, x, a, q) result(obj)
+> >   real, intent(in) :: rho
+> >   integer, dimension(3), intent(in) :: x
+> >   real, intent(in), optional :: a
+> >   real, intent(in), optional :: q
+> >   class(object_t), allocatable :: obj
+> >   if (present(q)) then
+> >     obj = charged_sphere(sphere_t(rho=rho,x=x,a=a), q)
+> >   else if (present(a)) then
+> >     obj = sphere_t(object_t(rho, x), a)
+> >   else
+> >     obj = object_t(rho, x)
+> >   end if
+> > end function
+> > ```
+> >
+> {: .solution}
+{: .challenge}
 
 {% include links.md %}
