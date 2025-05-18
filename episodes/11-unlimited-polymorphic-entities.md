@@ -1,7 +1,7 @@
 ---
 title: "Unlimited polymorphic entities"
-teaching: 15
-exercises: 15
+teaching: 10
+exercises: 20
 questions:
 - ""
 objectives:
@@ -12,7 +12,7 @@ keypoints:
 
 It is sometimes useful in C to be able to use a `void *` pointer,
 a pointer for which there is no type-checking at compile time.
-The nearest analogue in Fortran in the unlimited polymorphic
+The nearest analogue in Fortran is the unlimited polymorphic
 pointer.
 
 ## `class (*)` pointers
@@ -63,10 +63,40 @@ is not valid, as this allows an association to an incompatible type.
 
 ### Exercise (2 minutes)
 
-The accompanying code `example1.f90` has three invalid assignments
-which will not compile, and one additional error. Check the compiler
-messages for each.
-
+> ## Compiling pointers
+> 
+> The accompanying code `example1.f90` has three invalid assignments
+> which will not compile, and one additional error. Check the compiler
+> messages for each.
+>
+> > ## Solution
+> > 
+> > ```
+> > $ gfortran example1.f90 
+> > example1.f90:14:2:
+> > 
+> >    14 |   p32 => r64
+> >       |  1
+> > Error: Different types in pointer assignment at (1); attempted assignment of REAL(8) to REAL(4)
+> > example1.f90:19:2:
+> > 
+> >    19 |   p   = 0.0
+> >       |  1
+> > Error: Nonallocatable variable must not be polymorphic in intrinsic assignment at (1) - check that there is a matching specific subroutine for '=' operator
+> > example1.f90:21:2:
+> > 
+> >    21 |   p32 => p
+> >       |  1
+> > Error: Data-pointer-object at (1) must be unlimited polymorphic, or of a type with the BIND or SEQUENCE attribute, to be compatible with an unlimited polymorphic target
+> > example1.f90:24:23:
+> > 
+> >    24 |   print *, "Result ", p
+> >       |                       1
+> > Error: Data transfer element at (1) cannot be polymorphic unless it is processed by a defined input/output procedure
+> > ```
+> >
+> {: .solution}
+{: .challenge}
 
 ### Use of type guards
 
@@ -113,63 +143,64 @@ which will produce a copy of `a`; `p` will take on the dynamic type of `a`.
 
 ## Exercise (20 minutes)
 
-### A key value pair
+> ## A key value pair
+> 
+> The accompanying template module `key_value_module.f90` provides a
+> derived type that is intended to store key value pairs, where the
+> key is a (deferred length) string, and the value is an unlimited
+> polymorphic pointer.
+> ```
+>   type, public :: key_value_t
+>     character (len = :), allocatable :: key
+>     class (*), pointer               :: val
+>   end type key_value_t
+> ```
+> In principle, this can store values of any type.
+> 
+> Implement three specific constructors to establish key-value pairs for
+> integer and real intrinsic types (`int32` and `real32` from `iso_fortran_env`),
+> and for strings. Each should allocate appropriate memory for the key and the
+> value. These should overload the default structure constructor `key_value_t()`.
+> 
+> Implement a subroutine `key_value_print()` which uses a `select type`
+> construct to display the current type, key and value of the three
+> different data types.
+> 
+> To be complete, implement a routine to release the resources associated
+> with a `key_value_t`. We could use type-bound procedures for these
+> last two operations, but it's not really necessary in this context.
+> 
+> The accompanying program has some examples to act as a test.
+{: .challenge}
 
-The accompanying template module `key_value_module.f90` provides a
-derived type that is intended to store key value pairs, where the
-key is a (deferred length) string, and the value is an unlimited
-polymorphic pointer.
-```
-  type, public :: key_value_t
-    character (len = :), allocatable :: key
-    class (*), pointer               :: val
-  end type key_value_t
-```
-In principle, this can store values of any type.
+> ## Assumed type (F2018)
+> 
+> It is possible to use a non-pointer unlimited polymorphic dummy argument
+> in a procedure, e.g.:
+> ```
+>   subroutine example(upe)
+> 
+>     class (*), intent(in) :: upe
+>     ! ...
+> 
+>   end subroutine example
+> ```
+> This does not have the pointer attribute, but has similar constraints.
+> Such an entity would allow us to replace the three specific constructors
+> with one which took on the dynamic type of the actual argument. Try it.
+> Do you think it's a good idea?
+{: .challenge}
 
-Implement three specific constructors to establish key-value pairs for
-integer and real intrinsic types (`int32` and `real32` from `iso_fortran_env`),
-and for strings. Each should allocate appropriate memory for the key and the
-value. These should overload the default structure constructor `key_value_t()`.
-
-Implement a subroutine `key_value_print()` which uses a `select type`
-construct to display the current type, key and value of the three
-different data types.
-
-To be complete, implement a routine to release the resources associated
-with a `key_value_t`. We could use type-bound procedures for these
-last two operations, but it's not really necessary in this context.
-
-The accompanying program has some examples to act as a test.
-
-
-### Assumed type (F2018)
-
-It is possible to use a non-pointer unlimited polymorphic dummy argument
-in a procedure, e.g.:
-```
-  subroutine example(upe)
-
-    class (*), intent(in) :: upe
-    ! ...
-
-  end subroutine example
-```
-This does not have the pointer attribute, but has similar constraints.
-Such an entity would allow us to replace the three specific constructors
-with one which took on the dynamic type of the actual argument. Try it.
-Do you think it's a good idea?
-
-### A dynamic list of key value pairs
-
-It might be useful to have an expandable list of such key value pairs.
-A possible implementation is also provided in the `key_value_module.f90`
-
-The list constructor and a procedure to add a `key_value_t` are provided.
-There's also a routine to print out the list contents.
-What remains to be provided is a subroutine which increases the storage as
-required. This should use `move_alloc()`. Have a go at providing this
-subroutine.
-
+> ## A dynamic list of key value pairs
+> 
+> It might be useful to have an expandable list of such key value pairs.
+> A possible implementation is also provided in the `key_value_module.f90`
+> 
+> The list constructor and a procedure to add a `key_value_t` are provided.
+> There's also a routine to print out the list contents.
+> What remains to be provided is a subroutine which increases the storage as
+> required. This should use `move_alloc()`. Have a go at providing this
+> subroutine.
+{: .challenge}
 
 {% include links.md %}
