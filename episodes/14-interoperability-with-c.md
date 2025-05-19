@@ -1,7 +1,7 @@
 ---
 title: "Interoperability with C"
 teaching: 15
-exercises: 15
+exercises: 30
 questions:
 - ""
 objectives:
@@ -73,11 +73,14 @@ integer type may be appropriate in a given context.
 
 ### Example (1 minute)
 
-A program is provided which prints out a full list of the symbols
-from `iso_c_binding` illustrated above.
-```
-$ ftn print_iso_c_binding.f90
-```
+> ## `iso_c_binding` symbols
+> 
+> A program is provided which prints out a full list of the symbols
+> from `iso_c_binding` illustrated above.
+> ```
+> $ ftn print_iso_c_binding.f90
+> ```
+{: .challenge}
 
 ### Characters and strings
 
@@ -159,40 +162,50 @@ copied in, whereon it may be changed, but not copied out again.
 
 ### Example (10 minutes)
 
-Suppose we have a C function with prototype
-```
-int c_snprintf_float(char * str, size_t nsz, const char * format, float x);
-```
-which we wish to call from Fortran. The function uses the standard C
-library call `snprintf()` to write the value of the `float` argument
-to a string `str` with C format specification `format`. The maximum
-number of characters to be written is `nsz`. The return value is the
-number of characters actually written to the string (not including
-the `\0` terminating character).
-
-The C function is supplied in the current directory; it needs to be
-compiled (not linked) with the relevant C compiler, e.g.,
-```
-$ cc -c c_snprintf.c
-```
-which will produce an object `c_snprintf.o`.
-
-Write a program which includes an interface which allows the C function
-to be called with appropriate arguments. If the program is called
-`f_snprintf.f90`, we should be able to compile this with the C object
-via:
-```
-$ ftn c_snprintf.o f_snprintf.f90
-```
-Note this is the Fortran compiler.
-
-What can you say about the length of the string returned in Fortran
-compared with the number of characters written indicated by the
-return value?
-
-If you were to implement interfaces for both the `c_snprintf_float()`
-and `c_snprintf_double()` versions, you might wonder whether you could
-overload the specific names with a generic name.
+> ## Calling C from Fortran
+>
+> Suppose we have a C function with prototype
+> ```
+> int c_snprintf_float(char * str, size_t nsz, const char * format, float x);
+> ```
+> which we wish to call from Fortran. The function uses the standard C
+> library call `snprintf()` to write the value of the `float` argument
+> to a string `str` with C format specification `format`. The maximum
+> number of characters to be written is `nsz`. The return value is the
+> number of characters actually written to the string (not including
+> the `\0` terminating character).
+> 
+> The C function is supplied in the current directory; it needs to be
+> compiled (not linked) with the relevant C compiler, e.g.,
+> ```
+> $ cc -c c_snprintf.c
+> ```
+> which will produce an object `c_snprintf.o`.
+> 
+> Write a program which includes an interface which allows the C function
+> to be called with appropriate arguments. If the program is called
+> `f_snprintf.f90`, we should be able to compile this with the C object
+> via:
+> ```
+> $ ftn c_snprintf.o f_snprintf.f90
+> ```
+> Note this is the Fortran compiler.
+> 
+> What can you say about the length of the string returned in Fortran
+> compared with the number of characters written indicated by the
+> return value?
+> 
+> > ## Solution
+> > 
+> > The returned string has a null character (total length = 6) whereas the number of characters written
+> > is 5.
+> >
+> {: .solution}
+> 
+> If you were to implement interfaces for both the `c_snprintf_float()`
+> and `c_snprintf_double()` versions, you might wonder whether you could
+> overload the specific names with a generic name.
+{: .challenge}
 
 ## Arrays
 
