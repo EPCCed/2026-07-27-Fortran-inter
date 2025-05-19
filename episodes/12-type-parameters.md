@@ -3,11 +3,11 @@ title: "Type parameters"
 teaching: 15
 exercises: 15
 questions:
-- ""
+- "How to implement user-defined types with `kind`s, like intrinsic types?"
 objectives:
-- ""
+- "Understand the use of type parameters in user-defined types."
 keypoints:
-- ""
+- "The `kind` of a user-defined type must be known at compile time (as for intrinsic types)"
 ---
 
 ## Type parameters for intrinsic types
@@ -36,7 +36,7 @@ These features may be combined in a parameterised type definition, e.g.:
 ```
 type, public :: my_array_t(kr, nlen)
   integer, kind :: kr                ! kind parameter
-  integer, nlen :: nlen              ! len parameter
+  integer, len  :: nlen              ! len parameter
   real    (kr)  :: data(nlen)
 end type my_array_t
 ```
@@ -73,5 +73,51 @@ with the colon:
 ```
 Here, an (optional) keyword has been used in the parameter list.
 
+> ## Example
+> 
+> The example code `example1` illustrates how a parameterised type can be defined and used
+> ```
+> program exmaple1
+> 
+>   use iso_fortran_env
+>   implicit none
+> 
+>   type :: my_array_t(kr, nlen)
+>     integer, kind :: kr
+>     integer, len  :: nlen
+>     real (kr)     :: data(nlen)
+>   end type my_array_t
+> 
+>   integer :: kr
+>   integer :: nlen
+>   type (my_array_t(kr = real64, nlen = 1000)) :: a
+> 
+>   print *, "kind a", a%kr
+>   print *, "nlen a", a%nlen
+> 
+>   write (*, "(a)", advance = "no") "nlen: "
+>   read (*, *) nlen
+> 
+>   call defer_me(nlen)
+> 
+> contains
+> 
+>   subroutine defer_me(nlen)
+> 
+>     integer, intent(in) :: nlen
+>     type (my_array_t(kr = real32, nlen=nlen)) :: b
+> 
+>     print *, "Length   ", b%nlen
+>     print *, "Shape    ", shape(b%data)
+> 
+>   end subroutine defer_me
+> 
+> end program exmaple1
+> ```
+> The `kind` of the data held by `my_array_t%data` must be known at compile time, but the `len` of
+> the array can be set dynamically as shown by `defer_me()`.
+> You can convince yourself of this by compiling and running `example1.f90` which will allow you to
+> pass the array length at runtime.
+{: .challenge}
 
 {% include links.md %}
