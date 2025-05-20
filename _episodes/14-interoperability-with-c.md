@@ -3,9 +3,11 @@ title: "Interoperability with C"
 teaching: 15
 exercises: 30
 questions:
-- ""
+- "How can we write Fortran programs that interact with C in a portable way?"
+- "How can we make use of Fortran procedures from C code?"
 objectives:
-- ""
+- "Understand the use of the `iso_c_binding` intrinsic module"
+- "Write C/Fortran programs that call Fortran/C procedures using `iso_c_binding`"
 keypoints:
 - ""
 ---
@@ -245,16 +247,19 @@ or `dimension(m,n)`, respectively.
 
 ### Exercise (10 minutes)
 
-The accompanying C file `c_array.c` holds a function with prototype
-```
-void c_array(int mlen, int nlen, int [][mlen]);
-```
-intended to be interoperable with a Fortran array declared `(mlen,nlen)`.
-The C function simply prints out the values of the elements.
-
-Write a Fortran program that passes a small array of shape `(2,3)`
-to C. Initialise the values consistent with Fortran array element
-order (e.g., indicative of increasing address).
+> ## Passing arrays to C
+>
+> The accompanying C file `c_array.c` holds a function with prototype
+> ```
+> void c_array(int mlen, int nlen, int [][mlen]);
+> ```
+> intended to be interoperable with a Fortran array declared `(mlen,nlen)`.
+> The C function simply prints out the values of the elements.
+> 
+> Write a Fortran program that passes a small array of shape `(2,3)`
+> to C. Initialise the values consistent with Fortran array element
+> order (e.g., indicative of increasing address).
+{: .challenge}
 
 ### Pointers
 
@@ -346,11 +351,13 @@ a call to `c_f_pointer()` before it can be used.
 
 ### Exerise (10 minutes)
 
-Check you can construct a working example based on the above outline.
-Initialise some sample values and check you can recover the values in
-the Fortran subroutine.
-
-Try using either the C or the Fortran compiler to perform the link stage.
-
+> ## Calling Fortran from C
+> 
+> Check you can construct a working example based on the above outline.
+> Initialise some sample values and check you can recover the values in
+> the Fortran subroutine.
+> 
+> Try using either the C or the Fortran compiler to perform the link stage.
+{: .challenge}
 
 {% include links.md %}
