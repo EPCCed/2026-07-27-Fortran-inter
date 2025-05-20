@@ -6,8 +6,9 @@ questions:
 - "How can we associate behaviour with types?"
 - "How can we specialise behaviour for extended types?"
 objectives:
-- "Understand how to define type-bound procedures"
-- "Understand how to redefine type-bound procedures for extended types"
+- "Define a type-bound procedure for a derived type"
+- "Override a type-bound procedure for an extended type"
+- "Add additional functionaly to extended types not present in the parent type"
 keypoints:
 - "Type-bound procedures allow Fortran objects to implement behaviour"
 - "Redefining type-bound procedures allows behaviour to be specialised"
@@ -102,16 +103,16 @@ argument (`self`).
 > > ```
 > >
 > > and the module should now contain
-> ```
-> function object_volume(self) result(volume)
-> 
->   class (object_t), intent(in) :: self
->   real                         :: volume
-> 
->   volume = 0.0
-> 
-> end function object_volume
-> ```
+> > ```
+> > function object_volume(self) result(volume)
+> > 
+> >   class (object_t), intent(in) :: self
+> >   real                         :: volume
+> > 
+> >   volume = 0.0
+> > 
+> > end function object_volume
+> > ```
 > >
 >{: .solution}
 > 
