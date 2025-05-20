@@ -150,40 +150,85 @@ elements, it is always considered to be defined.
 
 ## Exercise (5 minutes)
 
-Look at the accompanying programs to be found in the current directory.
+> ## Correcting array programs
+>
+> Look at the accompanying programs to be found in the current directory.
+> ```
+> problem1.f90       ! needs completing
+> problem2.f90       ! will fail to compile; correct
+> problem3.f90       ! will fail at run time; what is the problem?
+> ```
+> These may be compiled with, e.g.,
+> ```
+> $ ftn problem1.f90
+> ```
+>
+> > ## Solution 1
+> >
+> > ```
+> > print *, a([1, 2, 7]) => 1 2 7
+> > print *, a(::2)       => 1 3 5 7 9
+> > print *, b(:, [1, 3]) => 1 2 5 6
+> > ```
+> > 
+> {: .solution}
+>
+> > ## Solution 2
+> >
+> > The compiler should highlight the source of the issue, `i` is undefined.
+> > After fixing you should obtain the expected output
+> > ```
+> > Initial values    10.0000000       20.0000000       40.0000000
+> > ```
+> > Using the array constructor
+> > ```
+> > real :: t(3) = [ (10.0*(2**(i-1)), i = 1,3) ]
+> > ```
+> > 
+> {: .solution}
+>
+> > ## Solution 3
+> >
+> > The program will `SEGFAULT` at runtime as `a` has not been allocated.
+> > Confirm this by copying the line to print `Status` before the array accesses are performed:
+> > ```
+> > Status  F
+> > ```
+> > Allocating the array before accessing will allow the program to run correctly
 ```
-problem1.f90       ! needs completing
-problem2.f90       ! will fail to compile; correct
-problem3.f90       ! will fail at run time; what is the problem?
+Status  F # Before allocation
+Status  T # After allocation
+Values    1.00000000       2.00000000       3.00000000
 ```
-These may be compiled with, e.g.,
-```
-$ ftn problem1.f90
-```
+> > 
+> {: .solution}
+{: .challenge}
 
 ## Exercise (5 minutes)
 
-As arrays are self-describing in Fortran, it is relatively easy for the
-compiler to analyse whether array accesses are valid, or within bounds.
-This can help debugging. Most compilers will have an option that instructs
-the compiler to inject additional code which checks bounds at run time.
-For the Cray Fortran compiler, this is `-hbounds`; for the GNU compiler,
-this is `-fbounds-check`.
-
-The first example contains a fixed array element reference which is
-incorrect. This should be visible to the compiler at compile time:
-```
-$ ftn -hbounds bounds-compile-time.f90
-```
-The second example prompts for an array index at run time. This may
-or may not be out of bounds. Check what happens at run time if the
-value of `4` is entered.
-```
-$ ftn -hbounds bounds-run-time.f90
-```
-
-Check what happens if the tests are repeated using programs compiled without bounds checking, what
-are the possible dangers?
-
+> ## Array safety
+> 
+> As arrays are self-describing in Fortran, it is relatively easy for the
+> compiler to analyse whether array accesses are valid, or within bounds.
+> This can help debugging. Most compilers will have an option that instructs
+> the compiler to inject additional code which checks bounds at run time.
+> For the Cray Fortran compiler, this is `-hbounds`; for the GNU compiler,
+> this is `-fbounds-check`.
+> 
+> The first example contains a fixed array element reference which is
+> incorrect. This should be visible to the compiler at compile time:
+> ```
+> $ ftn -hbounds bounds-compile-time.f90
+> ```
+> The second example prompts for an array index at run time. This may
+> or may not be out of bounds. Check what happens at run time if the
+> value of `4` is entered.
+> ```
+> $ ftn -hbounds bounds-run-time.f90
+> ```
+> 
+> Check what happens if the tests are repeated using programs compiled without bounds checking, what
+> are the possible dangers?
+{: .challenge}
 
 {% include links.md %}
