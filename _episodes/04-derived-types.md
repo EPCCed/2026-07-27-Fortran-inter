@@ -291,12 +291,12 @@ second with `intent(in)` to represent the right-hand side.
 > >    module procedure my_array_ptr_assignment
 > > end interface assignment (=)
 > > ```
-> > and the assignemnt subroutine itself
+> > and the assignment subroutine itself
 > > ```
 > > subroutine my_array_ptr_assignment(a, b)
 > > 
 > >   type(my_array_pointer_t), intent(out) :: a
-> >   type(my_array_t), pointer, intent(in) :: b
+> >   type(my_array_t), target, intent(in) :: b
 > > 
 > >   a%nlen = b%nlen
 > >   a%values => b%values
