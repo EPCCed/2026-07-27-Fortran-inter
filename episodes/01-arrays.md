@@ -152,10 +152,11 @@ elements, it is always considered to be defined.
 
 > ## Correcting array programs
 >
-> Look at the accompanying programs to be found in the current directory.
+> Look at the accompanying programs to be found in the directory `exercises/01-arrays`
+> within this repository:
 > ```
 > problem1.f90       ! needs completing
-> problem2.f90       ! will fail to compile; correct
+> problem2.f90       ! will fail to compile; correct the code
 > problem3.f90       ! will fail at run time; what is the problem?
 > ```
 > These may be compiled with, e.g.,
@@ -166,21 +167,22 @@ elements, it is always considered to be defined.
 > > ## Solution 1
 > >
 > > ```
-> > print *, a([1, 2, 7]) => 1 2 7
-> > print *, a(::2)       => 1 3 5 7 9
-> > print *, b(:, [1, 3]) => 1 2 5 6
+> > print *, a([1, 2, 7])    ! => 1 2 7
+> > print *, a(::2)          ! => 1 3 5 7 9
+> > print *, b(:, [1, 3])    ! => 1 2 5 6
 > > ```
 > > 
 > {: .solution}
 >
 > > ## Solution 2
 > >
-> > The compiler should highlight the source of the issue, `i` is undefined.
-> > After fixing you should obtain the expected output
+> > The compiler should highlight the source of the issue, `i` is undefined. The
+> > values in the array will still not be as requested. After fixing you should
+> > obtain the expected output
 > > ```
 > > Initial values    10.0000000       20.0000000       40.0000000
 > > ```
-> > Using the array constructor
+> > using the array constructor
 > > ```
 > > real :: t(3) = [ (10.0*(2**(i-1)), i = 1,3) ]
 > > ```
@@ -227,7 +229,7 @@ Values    1.00000000       2.00000000       3.00000000
 > $ ftn -hbounds bounds-run-time.f90
 > ```
 > 
-> Check what happens if the tests are repeated using programs compiled without bounds checking, what
+> Check what happens if the tests are repeated using programs compiled without bounds checking. What
 > are the possible dangers?
 {: .challenge}
 
