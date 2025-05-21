@@ -85,9 +85,10 @@ lower bound of `1`. This may not be what is expected.
 >
 > > ## Solution
 > > 
-> > The intrinsic functions `lbound` and `ubound` return a rank-1 array of the bounds by default,
-> > passing the optional argument `dim` returns the scalar bound corresponding to that array
-> > dimension.
+> > The intrinsic functions `lbound` and `ubound` by default return a rank-1
+> > array containing the lower or upper bounds of all dimensions. Passing the
+> > optional argument `dim` instead returns the scalar bound corresponding to
+> > that dimension of the array.
 > >
 > {: .solution}
 {: .challenge}
@@ -124,7 +125,7 @@ This is something more akin to the plain C pass-by-reference: a pointer.
 However, it is potentially error-prone as it does not provide access to
 shape information of the associated actual argument.
 
-Prefer the explicit shape, assumed shape, or allocatable options of
+One should prefer the explicit shape, assumed shape, or allocatable options of
 Modern Fortran.
 
 ## Allocatable arguments
@@ -140,7 +141,7 @@ entry. A number of conditions apply:
 
 1. The corresponding actual argument must also be allocatable.
 2. The rank must be specified.
-3. Action changing the allocation status of the actual argument
+3. Actions changing the allocation status of the actual argument
    must occur via the dummy argument.
 
 Well-written procdures may need to check the allocation status of any
