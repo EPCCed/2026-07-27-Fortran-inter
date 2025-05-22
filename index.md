@@ -24,7 +24,7 @@ Fortran (a contraction of Formula Translation) was the first programming languag
 
 This intermediate course concentrates on some of the more recent features which are central to Modern Fortran. Attendees should be familiar with the basics of Fortran programming which might be covered in an introductory course, e.g., the one at,
 
-https://epcced.github.io/2025-05-19-MO-Fortran-intro/
+[https://epcced.github.io/2025-05-19-MO-Fortran-intro/](https://epcced.github.io/2025-05-19-MO-Fortran-intro/)
 
 So, attendees should be comfortable writing structured Fortran programs based on modules and procedures, and have a sound grounding in variables, logic, flow-of-control, and so on. Some knowledge of Fortran I/O is assumed.
 
