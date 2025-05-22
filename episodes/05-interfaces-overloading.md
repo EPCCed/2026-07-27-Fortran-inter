@@ -5,11 +5,11 @@ exercises: 35
 questions:
 - "How are interfaces used for generic programming?"
 objectives:
-- "Understand how to define generic interfaces, overload operators and define new names"
-- "Understand generic interface resolution and potential pitfalls"
+- "Understand how to define generic interfaces, overload operators and define new names."
+- "Understand generic interface resolution and potential pitfalls."
 keypoints:
-- "Interfaces allow us to write generic, high-level code"
-- "Designing a generic interface requires care, particularly for generic operators"
+- "Interfaces allow us to write generic, high-level code."
+- "Designing a generic interface requires care, particularly for generic operators."
 ---
 
 The `interface` block has three different forms in Fortran: it may define an
@@ -42,7 +42,7 @@ end interface assignment (=)
 ```
 
 There are one or more `interface-specification` entries which can take
-different forms. As we will usually expect to place interface deinfitions
+different forms. As we will usually expect to place interface definitions
 in a module along with the relevant procedure definitions,
 the `interface-specification` will often involve one or more
 `module procedure` statements of the form
@@ -158,7 +158,7 @@ with dummy argument which is a non-pointer data object.
 > Looking again at our `my_array_t` example, check that you can overload the
 > default structure constructor `my_array_t()` using the existing function
 > `my_array_allocate()`. A new version of the module and program are available
-> in the current directory (or you can keep your existing one).
+> in the `exercises/05-interfaces-overloading` directory (or you can keep your existing one).
 > ```
 > $ ftn my_array_type.f90 example1.f90
 > ```
@@ -344,19 +344,27 @@ need to be established via parentheses.
 
 > ## Dot and cross products
 >
-> Write a module which defines a type to hold a 3-vector $(u_1, u_2, u_3)$ where
+> Write a module which defines a type to hold a 3-vector `(u_1, u_2, u_3)` where
 > the components are integers. Define an operator `.x.` which
 > computes the cross product of two vectors, being
+>
+> ![\mathbf{u}\times \mathbf{v} = (u_2 v_3 - u_3 v_2, u_3 v_1 - u_1 v_3, u_1 v_2 - u_2 v_1)](https://latex.codecogs.com/svg.latex?\mathbf{u}\times \mathbf{v} = (u_2 v_3 - u_3 v_2, u_3 v_1 - u_1 v_3, u_1 v_2 - u_2 v_1).)
 > 
-> $$\mathbf{u}\times \mathbf{v} = (u_2 v_3 - u_3 v_2, u_3 v_1 - u_1 v_3, u_1 v_2 - u_2 v_1).$$
-> 
-> This should also allow a vector triple product $\mathbf{u}\times(\mathbf{v}\times\mathbf{w})$.
-> where one must use parentheses to obtain the desiredd result.
+> This should also allow a vector triple product
+>
+> ![\mathbf{u}\times(\mathbf{v}\times\mathbf{w})](https://latex.codecogs.com/svg.latex?\mathbf{u}\times(\mathbf{v}\times\mathbf{w}))
+>
+> where one must use parentheses to obtain the desired result.
 > 
 > One could also define a scalar product `.dot.`, being
-> $$\mathbf{u}.\mathbf{v} = u_1 v_1 + u_2 v_2 + u_3 v_3.$$
-> Does a scalar triple product $\mathbf{u}.\mathbf{v}\times\mathbf{w}$ work correctly
-> without parentheses?
+>
+> ![\mathbf{u}\cdot\mathbf{v} = u_1 v_1 + u_2 v_2 + u_3 v_3](https://latex.codecogs.com/svg.latex?\mathbf{u}\cdot\mathbf{v} = u_1 v_1 + u_2 v_2 + u_3 v_3)
+>
+> Does a scalar triple product
+>
+> ![\mathbf{u}\cdot\mathbf{v}\times\mathbf{w}](https://latex.codecogs.com/svg.latex?\mathbf{u}\cdot\mathbf{v}\times\mathbf{w})
+>
+> work correctly without parentheses?
 > 
 > A template is provided
 > ```

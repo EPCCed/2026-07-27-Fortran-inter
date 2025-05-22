@@ -81,7 +81,7 @@ data data-statement-set [[,] data-statement-set] ...
 ```
 where the `data-statement-set` consists of pairs of
 ```
-data-statment-object-list / data-statement-value-list /
+data-statement-object-list / data-statement-value-list /
 ```
 That is, one associates a list of values with a list of variables, e.g.:
 ```
