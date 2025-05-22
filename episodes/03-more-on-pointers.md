@@ -5,15 +5,15 @@ exercises: 15
 questions:
 - "How are pointers associated with data?"
 - "How can pointers be used to access arrays?"
-- "How can pointers be associated with procedures"
+- "How can pointers be associated with procedures?"
 objectives:
 - "Understand pointer association"
 - "Understand how pointers allow us to create 'views' of arrays"
 - "Understand the use of procedure pointers"
 keypoints:
-- "Fortran pointers describe what they are pointing to, not only its address"
-- "We must take care when programming with pointers to avoid aliasing"
-- "Procedure pointers create a binding between a variable and a procedure"
+- "Fortran pointers describe what they are pointing to, not only its address."
+- "We must take care when programming with pointers to avoid aliasing."
+- "Procedure pointers create a binding between a variable and a procedure."
 ---
 
 In C, a (bare) pointer is simply a variable that holds an address.
@@ -139,7 +139,7 @@ if desired. If the argument has been allocated via `allocate()`, then
 ## Pointers as arguments
 
 A dummy argument may have the pointer attribute.
-If the intent of the dummy argument is intent(inout) or intent(out), the
+If the intent of the dummy argument is `intent(inout)` or `intent(out)`, the
 relevant actual argument must also be a pointer.
 
 A pointer actual argument can correspond to a non-pointer dummy argument,
@@ -234,7 +234,7 @@ These are again equivalent.
 
 The general form is
 ```
-procedure [(interface-spec)] [, attribuite-list ::] declaration-list
+procedure [(interface-spec)] [, attribute-list ::] declaration-list
 ```
 The parentheses accommodate an interface specification, which may be
 an interface name, or a declaration type specification (such as

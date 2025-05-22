@@ -9,6 +9,6 @@ program bounds_check1
   write (*, '(a)', advance = 'no') "Input an array index "
   read (*, *) i
 
-  print *, "First array element ", array(i)
+  print *, "Selected array element ", array(i)
 
 end program bounds_check1
