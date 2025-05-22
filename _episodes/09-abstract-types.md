@@ -213,7 +213,7 @@ to allow us to declare the dummy variable.
 > > end interface
 > > ```
 > >
-> > {: .solution}
+> {: .solution}
 {: .challenge}
 
 ## A concrete implementation
