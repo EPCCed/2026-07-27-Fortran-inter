@@ -312,8 +312,10 @@ or `dimension(m,n)`, respectively.
 > > Element [2][1]  5  6
 > > ```
 > > {: .output}
-> > In C the array appears to be transposed. The loop moves through it
-> > in such a way that memory accesses are contiguous.
+> > If we insist on visualising the array as a matrix, then in C it
+> > _appears_ to be transposed. This is not actually correct -- the memory
+> > layout is unchanged, and we reverse the order of indices while in C
+> > code in order to use it as we did in Fortran.
 > >
 > > Sample solution code is available in the `solutions` directory in
 > > [f_array.f90](../exercises/14-interoperability-with-c/solutions/f_array.f90).
