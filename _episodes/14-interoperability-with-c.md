@@ -296,7 +296,7 @@ or `dimension(m,n)`, respectively.
 > order (e.g., indicative of increasing address). Does what you see make sense?
 > > ## Solution
 > > 
-> > If you declare the array in Fortran as described and in your interface
+> > If you declare the array in C as described and in your Fortran interface
 > > to the C function declare it as assumed size
 > > ```
 > > integer (kind = c_int), intent(in) :: idata(mlen, *)
