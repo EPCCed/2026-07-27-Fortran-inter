@@ -20,7 +20,7 @@ carpentry: 'cp'
 title: 'Intermediate Modern Fortran'
 
 # Date the lesson was created (YYYY-MM-DD, this is empty by default)
-created: 
+created: 2025-05-06
 
 # Comma-separated list of keywords for the lesson
 keywords: 'software, data, lesson, The Carpentries'
