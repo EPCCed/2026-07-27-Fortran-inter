@@ -1,24 +1,25 @@
 ---
-title: "Connecting to ARCHER2 and transferring data"
+title: Connecting to ARCHER2 and transferring data
 teaching: 20
 exercises: 20
-start: True
-questions:
-- "What can I expect from this course?"
-- "How will the course work and how will I get help?"
-- "How can I give feedback to improve the course?"
-- "How can I access ARCHER2 interactively?"
-objectives:
-- "Understand how this course works, how I can get help and how I can give feedback."
-- "Understand how to connect to ARCHER2."
-keypoints:
-- "We should all understand and follow the [ARCHER2 Code of Conduct][archer2-tcoc] to ensure this course is conducted in the best teaching environment."
-- "The course will be flexible to best meet the learning needs of the attendees."
-- "Feedback is an essential part of our training to allow us to continue to improve and make sure the course is as useful as possible to attendees."
-- "ARCHER2's login address is `login.archer2.ac.uk`."
-- "You have to change the default text password the first time you log in"
-- "MFA is mandatory in ARCHER2"
+start: yes
 ---
+
+::::::::::::::::::::::::::::::::::::::: objectives
+
+- Understand how this course works, how I can get help and how I can give feedback.
+- Understand how to connect to ARCHER2.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- What can I expect from this course?
+- How will the course work and how will I get help?
+- How can I give feedback to improve the course?
+- How can I access ARCHER2 interactively?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Purpose
 
@@ -52,7 +53,7 @@ For example, passwords in the style of both `LA10!£lsty` and `horsebatterystapl
 As well as password access, users are required to add the public part of an SSH key pair to access ARCHER2. The public part of the key pair is associated with your account using the SAFE web interface.
 See the ARCHER2 User and Best Practice Guide for information on how to create SSH key pairs and associate them with your account:
 
-* [Connecting to ARCHER2][archer2-connecting].
+- [Connecting to ARCHER2][archer2-connecting].
 
 ## TOTP/MFA
 
@@ -65,28 +66,32 @@ ARCHER2 supports a number of different data transfer mechanisms.
 The one you choose depends on the amount and structure of the data you want to transfer and where you want to transfer the data to.
 The three main options are:
 
-* `scp`: The standard way to transfer small to medium amounts of data off ARCHER2 to any other location.
-* `rsync`: Used if you need to keep small to medium datasets synchronised between two different locations
+- `scp`: The standard way to transfer small to medium amounts of data off ARCHER2 to any other location.
+- `rsync`: Used if you need to keep small to medium datasets synchronised between two different locations
 
 More information on data transfer mechanisms can be found in the ARCHER2 User and Best Practice Guide:
 
-* [Data management and transfer][archer2-data].
+- [Data management and transfer][archer2-data].
 
 ## Installation
 
-For details of how to log into an ARCHER2 account, see https://docs.archer2.ac.uk/quick-start/quickstart-users/
+For details of how to log into an ARCHER2 account, see <https://docs.archer2.ac.uk/quick-start/quickstart-users/>
 
 Check out the git repository to your laptop or ARCHER2 account.
+
 ```
 $ git clone https://github.com/EPCCed/2025-05-22-MO-Fortran-inter.git
 $ cd 2025-05-22-MO-Fortran-inter
 ```
+
 The default Fortran compiler on ARCHER2 is the Cray Fortran compiler
 invoked using `ftn`. For example,
+
 ```
 $ cd examples/01-arrays
 $ ftn problem1.f90
 ```
+
 should generate an executable with the default name `a.out`.
 
 Each section of the course is associated with a different directory,
@@ -122,4 +127,17 @@ Instructors and helpers will review this feedback over lunch and provide a summa
 Finally, you will be provided with the opportunity to provide feedback on the course after it has finished.
 We welcome all this feedback, both good and bad, as this information in key to allow us to continually improve the training we offer.
 
-{% include links.md %}
+
+
+:::::::::::::::::::::::::::::::::::::::: keypoints
+
+- We should all understand and follow the \[ARCHER2 Code of Conduct\]\[archer2-tcoc\] to ensure this course is conducted in the best teaching environment.
+- The course will be flexible to best meet the learning needs of the attendees.
+- Feedback is an essential part of our training to allow us to continue to improve and make sure the course is as useful as possible to attendees.
+- ARCHER2's login address is `login.archer2.ac.uk`.
+- You have to change the default text password the first time you log in
+- MFA is mandatory in ARCHER2
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
