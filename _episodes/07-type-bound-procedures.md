@@ -114,7 +114,7 @@ argument (`self`).
 > > end function object_volume
 > > ```
 > >
->{: .solution}
+> {: .solution}
 > 
 > Can you also use the same type-bound procedure for the sub-type
 > `sphere_t`?
@@ -123,6 +123,7 @@ argument (`self`).
 > > 
 > > Yes, as a derived type of `object_t`, objects of type `sphere_t` can call their methods.
 > > Does always returning `volume()=0` make sense for a `sphere_t`?
+> >
 > {: .solution}
 {: .challenge}
 

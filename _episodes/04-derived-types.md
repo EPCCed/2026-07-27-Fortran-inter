@@ -219,11 +219,11 @@ pointer description itself.
 > > ## Solution 1B
 > >
 > > The output of the program after destroying `a` shows `c%values` now points to uninitialised data, however `c%nlen` is a deep copy and is still "valid" (in some sense).
-```
- State of a            3 T
- State of c            3 T   1.00000000       2.00000000       3.00000000    
- State of c            3 T  -1.40913533E-36   1.56146688E-41   1.12103877E-44
-```
+> > ```
+> > State of a            3 T
+> > State of c            3 T   1.00000000       2.00000000       3.00000000    
+> > State of c            3 T  -1.40913533E-36   1.56146688E-41   1.12103877E-44
+> > ```
 > >
 > {: .solution}
 > 
