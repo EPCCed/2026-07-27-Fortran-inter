@@ -241,7 +241,6 @@ copied in, whereon it may be changed, but not copied out again.
 > overload the specific names with a generic name. It seems like this should
 > be possible, but all attempts currently fail with the compiler unable to
 > resolve which specific interface it should use from the generic.
->
 {: .challenge}
 
 ## Arrays
