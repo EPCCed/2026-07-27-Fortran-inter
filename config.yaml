@@ -33,7 +33,7 @@ life_cycle: 'stable'
 license: 'CC-BY 4.0'
 
 # Link to the source repository for this lesson
-source: 'https://github.com/fishtree-attempt/2026-07-27-Fortran-inter/'
+source: 'https://github.com/EPCCed/2026-07-27-Fortran-inter'
 
 # Default branch of your lesson
 branch: 'main'
@@ -103,7 +103,6 @@ profiles:
 
 
 carpentry_description: Lesson Description
-url: https://preview.carpentries.org/2026-07-27-Fortran-inter
+url: 'https://EPCCed.github.io/2026-07-27-Fortran-inter'
 analytics: carpentries
 lang: en
-workbench-beta: yes
