@@ -197,11 +197,11 @@ elements, it is always considered to be defined.
 > > Status  F
 > > ```
 > > Allocating the array before accessing will allow the program to run correctly
-```
-Status  F # Before allocation
-Status  T # After allocation
-Values    1.00000000       2.00000000       3.00000000
-```
+> > ```
+> > Status  F # Before allocation
+> > Status  T # After allocation
+> > Values    1.00000000       2.00000000       3.00000000
+> > ```
 > > 
 > {: .solution}
 {: .challenge}
