@@ -5,13 +5,14 @@ address: ~
 country: UK
 language: English
 latlng: ~
-humandate: ~
+humandate: 27 to 31 July 2026
 humantime: ~
-startdate: ~
-enddate: ~
-instructor: William Lucas and Paul Bartholomew
+startdate: '2026-07-27'
+enddate: '2026-07-31'
+instructor:
+- William Lucas
 helper: ''
-email: ''
+email: 'w.lucas@epcc.ed.ac.uk'
 collaborative_notes: ~
 eventbrite: ~
 site: sandpaper::sandpaper_site
@@ -23,7 +24,7 @@ Fortran (a contraction of Formula Translation) was the first programming languag
 
 This intermediate course concentrates on some of the more recent features which are central to Modern Fortran. Attendees should be familiar with the basics of Fortran programming which might be covered in an introductory course, e.g., the one at,
 
-<https://epcced.github.io/2025-05-19-MO-Fortran-intro/>
+<https://epcced.github.io/2026-03-02-Fortran-intro/>
 
 So, attendees should be comfortable writing structured Fortran programs based on modules and procedures, and have a sound grounding in variables, logic, flow-of-control, and so on. Some knowledge of Fortran I/O is assumed.
 
@@ -41,46 +42,6 @@ The course requires a Fortran compiler, for which a local machine or laptop may 
 
 <h2 id="general">General Information</h2>
 
-{% comment %}
-LOCATION
-
-This block displays the address and links to maps showing directions
-if the latitude and longitude of the workshop have been set.  You
-can use <https://itouchmap.com/latlong.html> to find the lat/long of an
-address.
-{% endcomment %}
-{% if page.latlng %}
-
-<p id="where">
-  <strong>Where:</strong>
-  {{page.address}}.
-  Get directions with
-  <a href="//www.openstreetmap.org/?mlat={{page.latlng | replace:',','&mlon='}}&zoom=16">OpenStreetMap</a>
-  or
-  <a href="//maps.google.com/maps?q={{page.latlng}}">Google Maps</a>.
-</p>
-{% endif %}
-
-{% comment %}
-DATE
-
-This block displays the date and links to Google Calendar.
-{% endcomment %}
-{% if page.humandate %}
-
-<p id="when">
-  <strong>When:</strong>
-  {{page.humandate}}.
-  {% include workshop_calendar.html %}
-</p>
-{% endif %}
-
-{% comment %}
-SPECIAL REQUIREMENTS
-
-Modify the block below if there are any special requirements.
-{% endcomment %}
-
 <p id="requirements">
   <strong>Requirements:</strong> Participants must have a working laptop or 
   desktop computer with a Mac, Linux, or Windows operating system (not a 
@@ -91,54 +52,6 @@ Modify the block below if there are any special requirements.
   <a href="https://www.putty.org/">PuTTY</a>. They are also required to abide 
   by the <a href="https://www.archer2.ac.uk/training/code-of-conduct/">ARCHER2 Training Code of Conduct</a>.
 </p>
-
-{% comment %}
-ACCESSIBILITY
-
-Modify the block below if there are any barriers to accessibility or
-special instructions.
-{% endcomment %}
-
-<p id="accessibility">
-  <strong>Accessibility:</strong> We are committed to making this workshop
-  accessible to everybody.
-
-Materials will be provided in advance of the lesson and
-large-print handouts are available if needed by notifying the
-organizers in advance.  If we can help making learning easier for
-you (e.g. sign-language interpreters, lactation facilities) please
-get in touch (using contact details below) and we will
-attempt to provide them.
-
-</p>
-
-{% comment %}
-CONTACT EMAIL ADDRESS
-
-Display the contact email address set in the configuration file.
-{% endcomment %}
-
-<p id="contact">
-  <strong>Contact</strong>:
-  Please email
-  {% if page.email %}
-    {% for email in page.email %}
-      {% if forloop.last and page.email.size > 1 %}
-        or
-      {% else %}
-        {% unless forloop.first %}
-        ,
-        {% endunless %}
-      {% endif %}
-      <a href='mailto:{{email}}'>{{email}}</a>
-    {% endfor %}
-  {% else %}
-    to-be-announced
-  {% endif %}
-  for more information.
-</p>
-
-<hr/>
 
 ::::::::::::::::::::::::::::::::::::::::::  prereq
 
@@ -153,7 +66,4 @@ on your local system and copying them to the remote HPC system using `scp`).
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 <hr/>
-
-
-
 
