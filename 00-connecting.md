@@ -43,7 +43,7 @@ Access to ARCHER2 is via SSH using **both** a time-based one time password (TOTP
 ## Passwords and password policy
 
 When you first get an ARCHER2 account, you will get a single-use password from the SAFE which you will be asked to change to a password of your choice.
-Your chosen  password must have the required complexity as specified in the [ARCHER2 Password Policy][archer2-password].
+Your chosen  password must have the required complexity as specified in the [ARCHER2 Password Policy](https://www.archer2.ac.uk/about/policies/passwords_usernames.html).
 
 The password policy has been chosen to allow users to use both complex, shorter passwords and long, but comparatively simple passwords.
 For example, passwords in the style of both `LA10!£lsty` and `horsebatterystaple` would be supported.
@@ -53,12 +53,12 @@ For example, passwords in the style of both `LA10!£lsty` and `horsebatterystapl
 As well as password access, users are required to add the public part of an SSH key pair to access ARCHER2. The public part of the key pair is associated with your account using the SAFE web interface.
 See the ARCHER2 User and Best Practice Guide for information on how to create SSH key pairs and associate them with your account:
 
-- [Connecting to ARCHER2][archer2-connecting].
+- [Connecting to ARCHER2](https://docs.archer2.ac.uk/user-guide/connecting/)
 
 ## TOTP/MFA
 
 ARCHER2 accounts are now required to use timed one-time passwords (TOTP), as part of a multi-factor authorisation (MFA) system.
-Instructions on how to add MFA authentication to a machine account on SAFE can be found [here][safe-machine-mfa].
+Instructions on how to add MFA authentication to a machine account on SAFE can be found [here](https://epcced.github.io/safe-docs/safe-for-users/#how-to-turn-on-mfa-on-your-machine-account).
 
 ## Data transfer services: scp, rsync, Globus Online
 
@@ -71,7 +71,7 @@ The three main options are:
 
 More information on data transfer mechanisms can be found in the ARCHER2 User and Best Practice Guide:
 
-- [Data management and transfer][archer2-data].
+- [Data management and transfer](https://docs.archer2.ac.uk/user-guide/data/)
 
 ## Installation
 
@@ -80,8 +80,8 @@ For details of how to log into an ARCHER2 account, see <https://docs.archer2.ac.
 Check out the git repository to your laptop or ARCHER2 account.
 
 ```
-$ git clone https://github.com/EPCCed/2025-05-22-MO-Fortran-inter.git
-$ cd 2025-05-22-MO-Fortran-inter
+$ git clone https://github.com/EPCCed/2026-07-27-Fortran-inter.git
+$ cd 2026-07-27-Fortran-inter
 ```
 
 The default Fortran compiler on ARCHER2 is the Cray Fortran compiler
@@ -98,21 +98,26 @@ Each section of the course is associated with a different directory,
 each of which
 contains a number of example programs and exercise templates. Answers to
 exercises generally re-appear as templates to later exercises.
-Miscellaneous solutions also appear in the [solutions](./solutions) directory.
+Miscellaneous solutions also appear in solutions subdirectories.
 
 Not all the examples compile. Some have deliberate errors which will be
 discussed as part of the course.
 
+
 ## Course structure and method
 
-Rather than having separate lectures and practical sessions, this course is taught following [The Carpentries methodology][c-site],
+Rather than having separate lectures and practical sessions, this course is taught following [The Carpentries methodology](https://carpentries.org/),
 where we all work together through material learning key skills and information throughout the course.
 Typically, this follows the method of the instructor demonstrating and then the attendees doing along with the instructor.
-
-There are many helpers available to assist you and to answer any questions you may have as we work through the material together.
 You should also feel free to ask questions of the instructor whenever you like.
 The instructor will also provide many opportunities to pause and ask questions.
 
+<!---
+There are many helpers available to assist you and to answer any questions you may have as we work through the material together.
+--->
+
+
+<!---
 ## Feedback
 
 Feedback is integral to how we approach training both during and after the course.
@@ -126,14 +131,14 @@ Instructors and helpers will review this feedback over lunch and provide a summa
 
 Finally, you will be provided with the opportunity to provide feedback on the course after it has finished.
 We welcome all this feedback, both good and bad, as this information in key to allow us to continually improve the training we offer.
-
+--->
 
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- We should all understand and follow the \[ARCHER2 Code of Conduct\]\[archer2-tcoc\] to ensure this course is conducted in the best teaching environment.
-- The course will be flexible to best meet the learning needs of the attendees.
-- Feedback is an essential part of our training to allow us to continue to improve and make sure the course is as useful as possible to attendees.
+- We should all understand and follow the [ARCHER2 Code of
+  Conduct](https://www.archer2.ac.uk/about/policies/code-of-conduct.html) to
+  ensure this course is conducted in the best teaching environment.
 - ARCHER2's login address is `login.archer2.ac.uk`.
 - You have to change the default text password the first time you log in
 - MFA is mandatory in ARCHER2
