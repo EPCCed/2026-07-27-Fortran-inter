@@ -542,7 +542,7 @@
         
 <section id="aio-00-connecting"><p>Content from <a href="00-connecting.html">Connecting to ARCHER2 and transferring data</a></p>
 <hr>
-<p>Last updated on 2026-07-10 |
+<p>Last updated on 2026-07-21 |
 
         <a href="https://github.com/EPCCed/2026-07-27-Fortran-inter/edit/main/episodes/00-connecting.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -606,7 +606,8 @@ one time password (TOTP) and a passphrase-protected SSH key pair.</p>
 <p>When you first get an ARCHER2 account, you will get a single-use
 password from the SAFE which you will be asked to change to a password
 of your choice. Your chosen password must have the required complexity
-as specified in the [ARCHER2 Password Policy][archer2-password].</p>
+as specified in the <a href="https://www.archer2.ac.uk/about/policies/passwords_usernames.html" class="external-link">ARCHER2
+Password Policy</a>.</p>
 <p>The password policy has been chosen to allow users to use both
 complex, shorter passwords and long, but comparatively simple passwords.
 For example, passwords in the style of both <code>LA10!£lsty</code> and
@@ -620,14 +621,15 @@ associated with your account using the SAFE web interface. See the
 ARCHER2 User and Best Practice Guide for information on how to create
 SSH key pairs and associate them with your account:</p>
 <ul>
-<li>[Connecting to ARCHER2][archer2-connecting].</li>
+<li><a href="https://docs.archer2.ac.uk/user-guide/connecting/" class="external-link">Connecting to
+ARCHER2</a></li>
 </ul></section><section><h2 class="section-heading" id="totpmfa">TOTP/MFA<a class="anchor" aria-label="anchor" href="#totpmfa"></a>
 </h2>
 <hr class="half-width">
 <p>ARCHER2 accounts are now required to use timed one-time passwords
 (TOTP), as part of a multi-factor authorisation (MFA) system.
 Instructions on how to add MFA authentication to a machine account on
-SAFE can be found [here][safe-machine-mfa].</p>
+SAFE can be found <a href="https://epcced.github.io/safe-docs/safe-for-users/#how-to-turn-on-mfa-on-your-machine-account" class="external-link">here</a>.</p>
 </section><section><h2 class="section-heading" id="data-transfer-services-scp-rsync-globus-online">Data transfer services: scp, rsync, Globus Online<a class="anchor" aria-label="anchor" href="#data-transfer-services-scp-rsync-globus-online"></a>
 </h2>
 <hr class="half-width">
@@ -646,14 +648,15 @@ datasets synchronised between two different locations</li>
 <p>More information on data transfer mechanisms can be found in the
 ARCHER2 User and Best Practice Guide:</p>
 <ul>
-<li>[Data management and transfer][archer2-data].</li>
+<li><a href="https://docs.archer2.ac.uk/user-guide/data/" class="external-link">Data
+management and transfer</a></li>
 </ul></section><section><h2 class="section-heading" id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <hr class="half-width">
 <p>For details of how to log into an ARCHER2 account, see <a href="https://docs.archer2.ac.uk/quick-start/quickstart-users/" class="external-link uri">https://docs.archer2.ac.uk/quick-start/quickstart-users/</a></p>
 <p>Check out the git repository to your laptop or ARCHER2 account.</p>
-<pre><code>$ git clone https://github.com/EPCCed/2025-05-22-MO-Fortran-inter.git
-$ cd 2025-05-22-MO-Fortran-inter</code></pre>
+<pre><code>$ git clone https://github.com/EPCCed/2026-07-27-Fortran-inter.git
+$ cd 2026-07-27-Fortran-inter</code></pre>
 <p>The default Fortran compiler on ARCHER2 is the Cray Fortran compiler
 invoked using <code>ftn</code>. For example,</p>
 <pre><code>$ cd examples/01-arrays
@@ -663,43 +666,39 @@ $ ftn problem1.f90</code></pre>
 <p>Each section of the course is associated with a different directory,
 each of which contains a number of example programs and exercise
 templates. Answers to exercises generally re-appear as templates to
-later exercises. Miscellaneous solutions also appear in the <a href="./solutions">solutions</a> directory.</p>
+later exercises. Miscellaneous solutions also appear in solutions
+subdirectories.</p>
 <p>Not all the examples compile. Some have deliberate errors which will
 be discussed as part of the course.</p>
 </section><section><h2 class="section-heading" id="course-structure-and-method">Course structure and method<a class="anchor" aria-label="anchor" href="#course-structure-and-method"></a>
 </h2>
 <hr class="half-width">
 <p>Rather than having separate lectures and practical sessions, this
-course is taught following [The Carpentries methodology][c-site], where
-we all work together through material learning key skills and
-information throughout the course. Typically, this follows the method of
-the instructor demonstrating and then the attendees doing along with the
-instructor.</p>
-<p>There are many helpers available to assist you and to answer any
-questions you may have as we work through the material together. You
-should also feel free to ask questions of the instructor whenever you
-like. The instructor will also provide many opportunities to pause and
-ask questions.</p>
-</section><section><h2 class="section-heading" id="feedback">Feedback<a class="anchor" aria-label="anchor" href="#feedback"></a>
-</h2>
-<hr class="half-width">
-<p>Feedback is integral to how we approach training both during and
-after the course. In particular, we use informal and structured feedback
-activities during the course to ensure we tailor the pace and content
-appropriately for the attendees, and feedback after the course to help
-us improve our training for the future.</p>
-<p>If you are not comfortable with the pace/content then you can use the
-reaction function of the collaborate session.</p>
-<p>At the lunch break (and end of days for multi-day courses) we will
-also run a quick feedback activity to gauge how the course is matching
-onto attendees requirements. Instructors and helpers will review this
-feedback over lunch and provide a summary of what we found at the start
-of the next session and, potentially, how the upcoming materiel/schedule
-will be changed to address the feedback.</p>
-<p>Finally, you will be provided with the opportunity to provide
-feedback on the course after it has finished. We welcome all this
-feedback, both good and bad, as this information in key to allow us to
-continually improve the training we offer.</p>
+course is taught following <a href="https://carpentries.org/" class="external-link">The
+Carpentries methodology</a>, where we all work together through material
+learning key skills and information throughout the course. Typically,
+this follows the method of the instructor demonstrating and then the
+attendees doing along with the instructor. You should also feel free to
+ask questions of the instructor whenever you like. The instructor will
+also provide many opportunities to pause and ask questions.</p>
+<!---
+There are many helpers available to assist you and to answer any questions you may have as we work through the material together.
+--->
+<!---
+## Feedback
+
+Feedback is integral to how we approach training both during and after the course.
+In particular, we use informal and structured feedback activities during the course to ensure we tailor the pace and content appropriately for the attendees,
+and feedback after the course to help us improve our training for the future.
+
+If you are not comfortable with the pace/content then you can use the reaction function of the collaborate session.
+
+At the lunch break (and end of days for multi-day courses) we will also run a quick feedback activity to gauge how the course is matching onto attendees requirements.
+Instructors and helpers will review this feedback over lunch and provide a summary of what we found at the start of the next session and, potentially, how the upcoming materiel/schedule will be changed to address the feedback.
+
+Finally, you will be provided with the opportunity to provide feedback on the course after it has finished.
+We welcome all this feedback, both good and bad, as this information in key to allow us to continually improve the training we offer.
+--->
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -708,13 +707,9 @@ continually improve the training we offer.</p>
 <div class="callout-inner">
 <div class="callout-content">
 <ul>
-<li>We should all understand and follow the <span class="math display">\[ARCHER2 Code of Conduct\]</span><span class="math display">\[archer2-tcoc\]</span> to ensure this course is
-conducted in the best teaching environment.</li>
-<li>The course will be flexible to best meet the learning needs of the
-attendees.</li>
-<li>Feedback is an essential part of our training to allow us to
-continue to improve and make sure the course is as useful as possible to
-attendees.</li>
+<li>We should all understand and follow the <a href="https://www.archer2.ac.uk/about/policies/code-of-conduct.html" class="external-link">ARCHER2
+Code of Conduct</a> to ensure this course is conducted in the best
+teaching environment.</li>
 <li>ARCHER2’s login address is <code>login.archer2.ac.uk</code>.</li>
 <li>You have to change the default text password the first time you log
 in</li>
@@ -725,7 +720,7 @@ in</li>
 </div>
 </section></section><section id="aio-01-arrays"><p>Content from <a href="01-arrays.html">Arrays</a></p>
 <hr>
-<p>Last updated on 2026-07-10 |
+<p>Last updated on 2026-07-21 |
 
         <a href="https://github.com/EPCCed/2026-07-27-Fortran-inter/edit/main/episodes/01-arrays.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -751,7 +746,7 @@ in</li>
 <h3 class="card-title">Objectives</h3>
 <ul>
 <li>Understand how to define static and dynamic arrays</li>
-<li>Diganose and debug array definitions in simple programs</li>
+<li>Diagnose and debug array definitions in simple programs</li>
 </ul>
 </div>
 </div>
@@ -763,14 +758,22 @@ in</li>
 <hr class="half-width">
 <p>We may declare arrays of intrinsic type with a fairly elastic syntax,
 e.g.:</p>
-<pre><code>  integer, dimension(10, 2) :: a
-  integer, dimension(10, 2) :: b, c, d, e(10, 3)</code></pre>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a>  <span class="dt">integer</span>, <span class="dt">dimension(10, 2)</span> <span class="dt">::</span> a</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a>  <span class="dt">integer</span>, <span class="dt">dimension(10, 2)</span> <span class="dt">::</span> b, c, d, e(<span class="dv">10</span>, <span class="dv">3</span>)</span></code></pre>
+</div>
 <p>Note that the declaration <code>e(10, 3)</code> will override the
 <code>dimension(10, 2)</code> statement, however this mix and match
 approach is generally discouraged.</p>
 <p>One may also omit the <code>dimension</code> attribute:</p>
-<pre><code>  integer, dimension(10, 2) :: a
-  integer                   :: b(10, 2)</code></pre>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a>  <span class="dt">integer</span>, <span class="dt">dimension(10, 2)</span> <span class="dt">::</span> a</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a>  <span class="dt">integer</span>                   <span class="dt">::</span> b(<span class="dv">10</span>, <span class="dv">2</span>)</span></code></pre>
+</div>
 <p>The two declarations of <code>b(10,2)</code> above are equivalent. If
 one restricts oneself to one variable declaration per line, then the
 second form is more concise, and will be preferred in the rest of this
@@ -785,13 +788,17 @@ index counting fastest; we expect this to correspond to contiguous
 locations in memory.</p>
 <p>There are a number of ways one may obtain array sections or
 array-valued objects which may not be contiguous:</p>
-<pre><code>  integer :: a(5)
-  real    :: b(10, 2)
-
-  a(1:5:2)          ! an array section   referencing elements 1, 3, and 5
-  a( [1, 3, 5] )    ! a vector subscript referencing elements 1, 3, and 5
-  b(1:5, 1)         ! a rank one section of size 5
-  b(1:2, 1:2)       ! a rank two section of shape (2, 2)</code></pre>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a>  <span class="dt">integer</span> <span class="dt">::</span> a(<span class="dv">5</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a>  <span class="dt">real</span>    <span class="dt">::</span> b(<span class="dv">10</span>, <span class="dv">2</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a>  a(<span class="dv">1</span>:<span class="dv">5</span>:<span class="dv">2</span>)          <span class="co">! an array section   referencing elements 1, 3, and 5</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a>  a( <span class="kw">[</span><span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span><span class="kw">]</span> )    <span class="co">! a vector subscript referencing elements 1, 3, and 5</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a>  b(<span class="dv">1</span>:<span class="dv">5</span>, <span class="dv">1</span>)         <span class="co">! a rank one section of size 5</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a>  b(<span class="dv">1</span>:<span class="dv">2</span>, <span class="dv">1</span>:<span class="dv">2</span>)       <span class="co">! a rank two section of shape (2, 2)</span></span></code></pre>
+</div>
 <div class="section level3">
 <h3 id="limit-on-number-of-ranks">Limit on number of ranks<a class="anchor" aria-label="anchor" href="#limit-on-number-of-ranks"></a>
 </h3>
@@ -805,21 +812,41 @@ rank of the array argument.</p>
 <hr class="half-width">
 <p>There are a number of ways to provide initial values for array
 elements:</p>
-<pre><code>  integer, parameter :: j(3) = (/ -1, 0, +1 /)    ! F2003
-  integer, parameter :: k(3) = [  -1, 0, +1 ]     ! F2008</code></pre>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a>  <span class="dt">integer</span>, <span class="dt">parameter</span> <span class="dt">::</span> j(<span class="dv">3</span>) <span class="kw">=</span> <span class="kw">(/</span> <span class="kw">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="kw">+</span><span class="dv">1</span> <span class="kw">/)</span>    <span class="co">! F2003</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a>  <span class="dt">integer</span>, <span class="dt">parameter</span> <span class="dt">::</span> k(<span class="dv">3</span>) <span class="kw">=</span> <span class="kw">[</span>  <span class="kw">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="kw">+</span><span class="dv">1</span> <span class="kw">]</span>     <span class="co">! F2008</span></span></code></pre>
+</div>
 <p>One may also use an <em>implied do</em> construction:</p>
-<pre><code>  integer         :: i
-  real, parameter :: s(300) = [ (i, i = 1,300) ]
-  real            :: t(3)   = [ (2.0*(i*i + 1), i = 1,3) ]</code></pre>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a>  <span class="dt">integer</span>         <span class="dt">::</span> i</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a>  <span class="dt">real</span>, <span class="dt">parameter</span> <span class="dt">::</span> s(<span class="dv">300</span>) <span class="kw">=</span> <span class="kw">[</span> (i, i <span class="kw">=</span> <span class="dv">1</span>,<span class="dv">300</span>) <span class="kw">]</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a>  <span class="dt">real</span>            <span class="dt">::</span> t(<span class="dv">3</span>)   <span class="kw">=</span> <span class="kw">[</span> (<span class="fl">2.0</span><span class="kw">*</span>(i<span class="kw">*</span>i <span class="kw">+</span> <span class="dv">1</span>), i <span class="kw">=</span> <span class="dv">1</span>,<span class="dv">3</span>) <span class="kw">]</span></span></code></pre>
+</div>
 <p>Older code may also see use of the <code>data</code> statement to
 initialise tables of values. This has the form:</p>
-<pre><code>data data-statement-set [[,] data-statement-set] ...</code></pre>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="dt">data</span> data<span class="kw">-</span>statement<span class="kw">-</span>set <span class="kw">[[</span>,<span class="kw">]</span> data<span class="kw">-</span>statement<span class="kw">-</span>set<span class="kw">]</span> ...</span></code></pre>
+</div>
 <p>where the <code>data-statement-set</code> consists of pairs of</p>
-<pre><code>data-statement-object-list / data-statement-value-list /</code></pre>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="dt">data</span><span class="kw">-</span>statement<span class="kw">-</span>object<span class="kw">-</span>list <span class="kw">/</span> data<span class="kw">-</span>statement<span class="kw">-</span>value<span class="kw">-</span>list <span class="kw">/</span></span></code></pre>
+</div>
 <p>That is, one associates a list of values with a list of variables,
 e.g.:</p>
-<pre><code>real a, b, c
-data a, b, c / 1.0, 2.0, 3.0 /</code></pre>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="dt">real</span> a, b, c</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a><span class="dt">data</span> a, b, c <span class="kw">/</span> <span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">3.0</span> <span class="kw">/</span></span></code></pre>
+</div>
 <p>The <code>data</code> statement is quite flexible in syntax, but
 generally can be omitted in favour of array constructors or other “more
 modern” facilities. The <code>data</code> statement cannot be used to
@@ -829,11 +856,15 @@ initialise allocatable or pointer variables.</p>
 <hr class="half-width">
 <p>Storage for arrays may be established at run time via the
 <code>allocatable</code> attribute, e.g.:</p>
-<pre><code>   real, allocatable :: a(:)
-   ! ...
-   allocate(a(1:nlen))
-   ! ...
-   deallocate(a)</code></pre>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a>   <span class="dt">real</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a>   <span class="co">! ...</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a>   <span class="kw">allocate</span>(a(<span class="dv">1</span>:nlen))</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a>   <span class="co">! ...</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a>   <span class="kw">deallocate</span>(a)</span></code></pre>
+</div>
 <p>The <em>allocation status</em> of the array may be interrogated via
 the intrinsic function <code>allocated()</code>.</p>
 <div class="section level3">
@@ -841,16 +872,24 @@ the intrinsic function <code>allocated()</code>.</p>
 </h3>
 <p>One may combine allocation with initialisation in a number of ways
 including:</p>
-<pre><code>  real, allocatable :: a(:)
-  real, allocatable :: b(:)
-  real, allocatable :: c(:)
-
-  a = [ 1.0, 2.0, 3.0 ]          ! status now allocated
-  allocate(b, source = a)        ! "sourced allocation"
-  c = b(:)</code></pre>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a>  <span class="dt">real</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a>  <span class="dt">real</span>, <span class="dt">allocatable</span> <span class="dt">::</span> b(:)</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a>  <span class="dt">real</span>, <span class="dt">allocatable</span> <span class="dt">::</span> c(:)</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a>  a <span class="kw">=</span> <span class="kw">[</span> <span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">3.0</span> <span class="kw">]</span>          <span class="co">! status now allocated</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a>  <span class="kw">allocate</span>(b, source <span class="kw">=</span> a)        <span class="co">! "sourced allocation"</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a>  c <span class="kw">=</span> b(:)</span></code></pre>
+</div>
 <p>Automatic reallocation is also possible for intrinsic assignments,
 e.g., following on from the above:</p>
-<pre><code>  a = [ a(:), 4.0, 5.0, 6.0 ]    ! Append to the existing elements</code></pre>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a>  a <span class="kw">=</span> <span class="kw">[</span> a(:), <span class="fl">4.0</span>, <span class="fl">5.0</span>, <span class="fl">6.0</span> <span class="kw">]</span>    <span class="co">! Append to the existing elements</span></span></code></pre>
+</div>
 <p>Allocatable scalars are allowed and may be useful in some
 circumstances.</p>
 </div>
@@ -860,8 +899,12 @@ circumstances.</p>
 <p>Formally, a zero-sized allocation is not well defined by
 <code>malloc()</code> in C. However, as Fortran arrays are objects,
 zero-sized arrays are possible:</p>
-<pre><code>  integer :: a(0)      ! a zero-sized array
-  integer :: b(0:0)    ! an array with one element b(0)</code></pre>
+<div class="codewrapper sourceCode" id="cb12">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a>  <span class="dt">integer</span> <span class="dt">::</span> a(<span class="dv">0</span>)      <span class="co">! a zero-sized array</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a>  <span class="dt">integer</span> <span class="dt">::</span> b(<span class="dv">0</span>:<span class="dv">0</span>)    <span class="co">! an array with one element b(0)</span></span></code></pre>
+</div>
 <p>This can make it easier to write generic code which does not have to
 include conditionals to handle edge-cases where the array size might go
 to zero.</p>
@@ -881,12 +924,17 @@ elements, it is always considered to be defined.</p>
 <h3 class="callout-title">Correcting array programs</h3>
 <div class="callout-content">
 <p>Look at the accompanying programs to be found in the directory
-<code>exercises/01-arrays</code> within this repository:</p>
+<code>episodes/files/exercises/01-arrays</code> within this
+repository:</p>
 <pre><code>problem1.f90       ! needs completing
 problem2.f90       ! will fail to compile; correct the code
 problem3.f90       ! will fail at run time; what is the problem?</code></pre>
 <p>These may be compiled with, e.g.,</p>
-<pre><code>$ ftn problem1.f90</code></pre>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a><span class="ex">$</span> ftn problem1.f90</span></code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -899,9 +947,15 @@ problem3.f90       ! will fail at run time; what is the problem?</code></pre>
 </button>
 <div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
-<pre><code>print *, a([1, 2, 7])    ! =&gt; 1 2 7
-print *, a(::2)          ! =&gt; 1 3 5 7 9
-print *, b(:, [1, 3])    ! =&gt; 1 2 5 6</code></pre>
+<p>The following print statements will perform the actions the comments
+ask for:</p>
+<div class="codewrapper sourceCode" id="cb15">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a><span class="fu">print</span> <span class="kw">*</span>, a(<span class="kw">[</span><span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">7</span><span class="kw">]</span>)    <span class="co">! =&gt; 1 2 7</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1" aria-label="code-block-15-2"></a><span class="fu">print</span> <span class="kw">*</span>, a(<span class="dt">::</span><span class="dv">2</span>)          <span class="co">! =&gt; 1 3 5 7 9</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1" aria-label="code-block-15-3"></a><span class="fu">print</span> <span class="kw">*</span>, b(:, <span class="kw">[</span><span class="dv">1</span>, <span class="dv">3</span><span class="kw">]</span>)    <span class="co">! =&gt; 1 2 5 6</span></span></code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -915,12 +969,16 @@ print *, b(:, [1, 3])    ! =&gt; 1 2 5 6</code></pre>
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
-<p>The compiler should highlight the source of the issue, <code>i</code>
+<p>The compiler should highlight the source of the issue: <code>i</code>
 is undefined. The values in the array will still not be as requested.
 After fixing you should obtain the expected output</p>
-<pre><code>Initial values    10.0000000       20.0000000       40.0000000</code></pre>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>Initial values    10.0000000       20.0000000       40.0000000</code></pre>
+</div>
 <p>using the array constructor</p>
-<pre><code>real :: t(3) = [ (10.0*(2**(i-1)), i = 1,3) ]</code></pre>
+<pre><code>real :: t(3) = [ (10.0*(2**(i-1)), i = 1, 3) ]</code></pre>
 </div>
 </div>
 </div>
@@ -936,13 +994,25 @@ After fixing you should obtain the expected output</p>
 <div class="accordion-body">
 <p>The program will <code>SEGFAULT</code> at runtime as <code>a</code>
 has not been allocated. Confirm this by copying the line to print
-<code>Status</code> before the array accesses are performed:</p>
-<pre><code>Status  F</code></pre>
+<code>Status</code> to the point just before the array accesses are
+performed:</p>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>Status  F</code></pre>
+</div>
 <p>Allocating the array before accessing will allow the program to run
 correctly</p>
-<pre><code>Status  F # Before allocation
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>Status  F # Before allocation
 Status  T # After allocation
 Values    1.00000000       2.00000000       3.00000000</code></pre>
+</div>
+<p>Alternatively, to perform assignment and allocation simultaneously,
+as described above, turn <code>a(:) = ...</code> into
+<code>a = ...</code>.</p>
 </div>
 </div>
 </div>
@@ -963,14 +1033,23 @@ the compiler to analyse whether array accesses are valid, or within
 bounds. This can help debugging. Most compilers will have an option that
 instructs the compiler to inject additional code which checks bounds at
 run time. For the Cray Fortran compiler, this is <code>-hbounds</code>;
-for the GNU compiler, this is <code>-fbounds-check</code>.</p>
+for the GNU <code>gfortran</code> compiler, this is
+<code>-fbounds-check</code>.</p>
 <p>The first example contains a fixed array element reference which is
 incorrect. This should be visible to the compiler at compile time:</p>
-<pre><code>$ ftn -hbounds bounds-compile-time.f90</code></pre>
+<div class="codewrapper sourceCode" id="cb20">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" tabindex="-1" aria-label="code-block-20-1"></a><span class="ex">$</span> ftn <span class="at">-hbounds</span> bounds-compile-time.f90</span></code></pre>
+</div>
 <p>The second example prompts for an array index at run time. This may
 or may not be out of bounds. Check what happens at run time if the value
 of <code>4</code> is entered.</p>
-<pre><code>$ ftn -hbounds bounds-run-time.f90</code></pre>
+<div class="codewrapper sourceCode" id="cb21">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" tabindex="-1" aria-label="code-block-21-1"></a><span class="ex">$</span> ftn <span class="at">-hbounds</span> bounds-run-time.f90</span></code></pre>
+</div>
 <p>Check what happens if the tests are repeated using programs compiled
 without bounds checking. What are the possible dangers?</p>
 </div>
@@ -1002,7 +1081,7 @@ checked</li>
         </div>
 <p>Comfort break.</p></section><section id="aio-02-arrays-as-arguments"><p>Content from <a href="02-arrays-as-arguments.html">Arrays as arguments</a></p>
 <hr>
-<p>Last updated on 2026-07-10 |
+<p>Last updated on 2026-07-21 |
 
         <a href="https://github.com/EPCCed/2026-07-27-Fortran-inter/edit/main/episodes/02-arrays-as-arguments.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1054,10 +1133,14 @@ stated.</p>
 </h3>
 <p>An array may be passed explicitly with information on its shape as
 part of the dummy argument list:</p>
-<pre><code>  subroutine array_operation(nmax, a)
-
-    integer, intent(in) :: nmax
-    real,    intent(in) :: a(nmax)</code></pre>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a>  <span class="kw">subroutine</span> array_operation(nmax, a)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a>    <span class="dt">integer</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> nmax</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a>    <span class="dt">real</span>,    <span class="dt">intent(in)</span> <span class="dt">::</span> a(nmax)</span></code></pre>
+</div>
 <p>This is ok; for large rank objects this can become a little verbose.
 The shapes of actual and dummy arguments must agree.</p>
 </div>
@@ -1066,16 +1149,24 @@ The shapes of actual and dummy arguments must agree.</p>
 </h3>
 <p>As an array in Fortran is a self-describing object, there is the
 option to use <em>assumed shape</em>:</p>
-<pre><code>  subroutine array_operation(a)
-
-    real, intent(in) :: a(:)</code></pre>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a>  <span class="kw">subroutine</span> array_operation(a)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a>    <span class="dt">real</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> a(:)</span></code></pre>
+</div>
 <p>The size of the dummy argument can be recovered via
 <code>size()</code> etc. Note that it is the <em>shape</em> that is
 passed, not the bounds; this can lead to errors without some care.
 Consider:</p>
-<pre><code>   real :: a(0:nmax)
-
-   call array_operation(a)</code></pre>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a>   <span class="dt">real</span> <span class="dt">::</span> a(<span class="dv">0</span>:nmax)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a>   <span class="kw">call</span> array_operation(a)</span></code></pre>
+</div>
 <p>The dummy argument in this case would have a size
 <code>nmax + 1</code> and a default lower bound of <code>1</code>. This
 may not be what is expected.</p>
@@ -1094,7 +1185,11 @@ may not be what is expected.</p>
 <p>As a simple illustration of this problem, the following example
 should print out the values <code>0.0, 1.0, ...</code> (not
 <code>1.0, 2.0, ...</code>):</p>
-<pre><code>$ ftn example1.f90</code></pre>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">$</span> ftn example1.f90</span></code></pre>
+</div>
 <p>What needs to be done to correct the situation (and we want to keep
 the declaration <code>a(0:3)</code>)? Correct the program.</p>
 </div>
@@ -1108,7 +1203,11 @@ the declaration <code>a(0:3)</code>)? Correct the program.</p>
 <div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>Replacing the dummy argument declaration with</p>
-<pre><code>real, intent(inout) :: array(0:)</code></pre>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="dt">real</span>, <span class="dt">intent(inout)</span> <span class="dt">::</span> array(<span class="dv">0</span>:)</span></code></pre>
+</div>
 <p>will set the <code>lbound</code> of the <code>array</code> variable
 to <code>0</code> with the <code>ubound</code> set automatically to
 preserve the shape.</p>
@@ -1154,10 +1253,14 @@ array.</p>
 </h3>
 <p>A procedure may allocate space for temporary objects which come into
 existence when the procedure is invoked, e.g.:</p>
-<pre><code>  subroutine array_operation(a)
-
-    real, intent(in) :: a
-    real             :: tmp(1:size(a))    ! temporary storage</code></pre>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a>  <span class="kw">subroutine</span> array_operation(a)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a>    <span class="dt">real</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> a</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a>    <span class="dt">real</span>             <span class="dt">::</span> tmp(<span class="dv">1</span>:<span class="fu">size</span>(a))    <span class="co">! temporary storage</span></span></code></pre>
+</div>
 <p>Such a temporary array, for which the size may not be known at
 compile time, is referred to as an <em>automatic data object</em> and is
 likely to be allocated on the stack. It will have a lifetime of the
@@ -1171,9 +1274,13 @@ preferred.</p>
 <h3 id="assumed-size-arrays">Assumed size arrays<a class="anchor" aria-label="anchor" href="#assumed-size-arrays"></a>
 </h3>
 <p>Older code may contain the following syntax:</p>
-<pre><code>  subroutine array_operation(a)
-
-    real :: a(*)</code></pre>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a>  <span class="kw">subroutine</span> array_operation(a)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a>    <span class="dt">real</span> <span class="dt">::</span> a(<span class="kw">*</span>)</span></code></pre>
+</div>
 <p>The <code>*</code> denotes an <em>assumed size</em> array (distinct
 from assumed shape). This is something more akin to the plain C
 pass-by-reference: a pointer. However, it is potentially error-prone as
@@ -1187,9 +1294,13 @@ options of Modern Fortran.</p>
 <hr class="half-width">
 <p>Arguments to procedures may have the <code>allocatable</code>
 attribute.</p>
-<pre><code>  subroutine array_example(a)
-
-     real, allocatable, intent(inout) :: a(:)</code></pre>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a>  <span class="kw">subroutine</span> array_example(a)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a><span class="bu">     r</span>eal, <span class="dt">allocatable</span>, <span class="dt">intent(inout)</span> <span class="dt">::</span> a(:)</span></code></pre>
+</div>
 <p>The procedure will receive the allocation status of the object on
 entry. A number of conditions apply:</p>
 <ol style="list-style-type: decimal">
@@ -1198,8 +1309,8 @@ entry. A number of conditions apply:</p>
 <li>Actions changing the allocation status of the actual argument must
 occur via the dummy argument.</li>
 </ol>
-<p>Well-written procdures may need to check the allocation status of any
-allocatable arguments with <code>allocated()</code> before action is
+<p>Well-written procedures may need to check the allocation status of
+any allocatable arguments with <code>allocated()</code> before action is
 taken.</p>
 <div class="section level3">
 <h3 id="intent">Intent<a class="anchor" aria-label="anchor" href="#intent"></a>
@@ -1216,37 +1327,49 @@ deallocated on entry if already allocated.</li>
 </ol>
 <p>The second point may cause some surprises. An intent of
 <code>inout</code> must be used if any information from the actual
-argument is to be visible in the procdure.</p>
+argument is to be visible in the procedure.</p>
 </div>
 <div class="section level3">
 <h3 id="functions-returning-allocatable-arrays">Functions returning allocatable arrays<a class="anchor" aria-label="anchor" href="#functions-returning-allocatable-arrays"></a>
 </h3>
 <p>One can write a function having an allocatable result, e.g.,</p>
-<pre><code>  function my_allocation(nlen) result(a)
-
-     integer, intent(in)  :: nlen
-     integer, allocatable :: a(:)
-
-     allocate(a(nlen))
-
-  end my_allocation</code></pre>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a>  <span class="kw">function</span> my_allocation(nlen) <span class="kw">result</span>(a)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a><span class="bu">     i</span>nteger, <span class="dt">intent(in)</span>  <span class="dt">::</span> nlen</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a><span class="bu">     i</span>nteger, <span class="dt">allocatable</span> <span class="dt">::</span> a(:)</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a><span class="bu">     a</span>llocate(a(nlen))</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1" aria-label="code-block-9-7"></a></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a>  <span class="kw">end</span> my_allocation</span></code></pre>
+</div>
 <p>The result must be allocated at the point of return.</p>
 </div>
 </section><section><h2 class="section-heading" id="array-sections-as-arguments">Array sections as arguments<a class="anchor" aria-label="anchor" href="#array-sections-as-arguments"></a>
 </h2>
 <hr class="half-width">
 <p>We may pass an array section as an actual argument. Consider:</p>
-<pre><code>  subroutine my_array_operation(a)
-
-    real, intent(inout) :: a(:)
-
-    ! ... some operation on all elements...
-
-  end subroutine my_array_operation</code></pre>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a>  <span class="kw">subroutine</span> my_array_operation(a)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a>    <span class="dt">real</span>, <span class="dt">intent(inout)</span> <span class="dt">::</span> a(:)</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a>    <span class="co">! ... some operation on all elements...</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a>  <span class="kw">end subroutine</span> my_array_operation</span></code></pre>
+</div>
 <p>We may invoke this as</p>
-<pre><code>   real :: a(5) = [ 1.0, 2.0, 3.0, 4.0, 5.0 ]
-
-   call my_array_operation(a(1:5:2))</code></pre>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a>   <span class="dt">real</span> <span class="dt">::</span> a(<span class="dv">5</span>) <span class="kw">=</span> <span class="kw">[</span> <span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">3.0</span>, <span class="fl">4.0</span>, <span class="fl">5.0</span> <span class="kw">]</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1" aria-label="code-block-11-3"></a>   <span class="kw">call</span> my_array_operation(a(<span class="dv">1</span>:<span class="dv">5</span>:<span class="dv">2</span>))</span></code></pre>
+</div>
 <p>to operate on the odd-indexed elements. How has this worked? In
 practice, the compiler has probably made a temporary copy of the section
 as a contiguous array (with three elements). The copy is passed to the
@@ -1271,7 +1394,11 @@ similar to call by reference”.</p>
 <div class="callout-content">
 <p>If you wish to convince yourself of this, a version of this code has
 been provided:</p>
-<pre><code>$ ftn example2.f90</code></pre>
+<div class="codewrapper sourceCode" id="cb12">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="ex">$</span> ftn example2.f90</span></code></pre>
+</div>
 <p>A <code>print</code> statement has been added to the subroutine to
 confirm that the dummy argument is an entity of size <code>3</code>.</p>
 </div>
@@ -1303,9 +1430,13 @@ indeed deallocated on entry to the subroutine.</p>
 <div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>Example output might look like</p>
-<pre><code>Initial values    1.00000000       2.00000000       3.00000000       4.00000000       5.00000000
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>Initial values    1.00000000       2.00000000       3.00000000       4.00000000       5.00000000
 The argument b is unallocated
 Final values </code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -1348,7 +1479,7 @@ status may not be the same after the call.</p>
 (continued)</em>
 </h3>
 <div class="callout-content">
-<p>What happens if a function with an allocatable result returns which
+<p>What happens if a function with an allocatable result returns with
 the result in an unallocated state?</p>
 </div>
 </div>
@@ -2847,7 +2978,7 @@ provided in the file <code>object_type.f90</code>.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Solution 1 </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <pre><code>type, extends(sphere_t), public :: charged_sphere_t
   real :: q = -1.0         ! charge
@@ -2879,7 +3010,7 @@ short forms.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Solution 2 </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <pre><code>! ... Earlier declarations ...
 cs = charged_sphere_t(s, 5.0)
@@ -2988,7 +3119,7 @@ actual argument.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>Attempting to compile this code should fail with errors</p>
 <pre><code>$example2.f90:20:34:
@@ -3033,7 +3164,7 @@ statements from the example so it will compile.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <p>The <code>charged_sphere_t</code> is higher in the inheritance chain
 than <code>object_t</code>, it therefore cannot be associated with the
@@ -3115,7 +3246,7 @@ argument.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution5" aria-expanded="false" aria-controls="collapseSolution5">
   <h4 class="accordion-header" id="headingSolution5"> Show me the solution </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
 <div class="accordion-body">
 <p>The body of the subroutine will look like</p>
 <pre><code>print *, "Select type: "
@@ -3167,7 +3298,7 @@ able to specify the position as a three-vector of integers.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution6" aria-expanded="false" aria-controls="collapseSolution6">
   <h4 class="accordion-header" id="headingSolution6"> Show me the solution </h4>
 </button>
-<div id="collapseSolution6" class="accordion-collapse collapse" data-bs-parent="#accordionSolution6" aria-labelledby="headingSolution6">
+<div id="collapseSolution6" class="accordion-collapse collapse" aria-labelledby="headingSolution6" data-bs-parent="#accordionSolution6">
 <div class="accordion-body">
 <p>A possible implementation might be of the form</p>
 <pre><code>subroutine object_info(p)
@@ -3825,7 +3956,7 @@ for the following type:</p>
   Solution (list directed)
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>First we implement a type-bound procedure for the date object that
 will print it in <code>dd/mm/yyyy</code> format</p>
@@ -3875,7 +4006,7 @@ constructing an appropriate format string.</p>
   Solution (edit descriptor)
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>Extending our earlier solution we can handle both the list directed,
 and the format descriptor cases</p>
@@ -4141,7 +4272,7 @@ time before running the program we are working towards.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>The abstract type requires a corresponding abstract interface for the
 <code>deferred</code> procedures.</p>
@@ -4239,7 +4370,7 @@ to write some test data to a file.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>We need a concrete type to implement the interface definted by
 <code>file_writer_t</code></p>
@@ -4347,7 +4478,7 @@ based on a string. This should allow at least one working
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <pre><code>function create_file_formatted_writer_t() result(fp)
   class (file_formatted_writer_t), pointer :: fp
@@ -4389,7 +4520,7 @@ end function file_writer_from_string</code></pre>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <pre><code>program example1
 
@@ -4858,7 +4989,7 @@ compiler messages for each.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <pre><code>$ gfortran example1.f90
 example1.f90:14:2:
@@ -5572,7 +5703,7 @@ value?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>You will need to provide an interface like so:</p>
 <pre class="source"><code>  interface
@@ -5687,7 +5818,7 @@ address). Does what you see make sense?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>If you declare the array in C as described and in your Fortran
 interface to the C function declare it as assumed size</p>
@@ -5822,7 +5953,7 @@ stage.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>The Fortran type and subroutine can be placed in a module. Both need
 to be interoperable with C, meaning they should use
