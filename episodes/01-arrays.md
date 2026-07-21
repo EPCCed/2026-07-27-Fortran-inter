@@ -7,7 +7,7 @@ exercises: 10
 ::::::::::::::::::::::::::::::::::::::: objectives
 
 - Understand how to define static and dynamic arrays
-- Diganose and debug array definitions in simple programs
+- Diagnose and debug array definitions in simple programs
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -177,7 +177,7 @@ elements, it is always considered to be defined.
 
 ## Correcting array programs
 
-Look at the accompanying programs to be found in the directory `exercises/01-arrays`
+Look at the accompanying programs to be found in the directory `episodes/files/exercises/01-arrays`
 within this repository:
 
 ```
@@ -196,6 +196,8 @@ $ ftn problem1.f90
 
 ## Solution 1
 
+The following print statements will perform the actions the comments ask for:
+
 ```
 print *, a([1, 2, 7])    ! => 1 2 7
 print *, a(::2)          ! => 1 3 5 7 9
@@ -208,7 +210,7 @@ print *, b(:, [1, 3])    ! => 1 2 5 6
 
 ## Solution 2
 
-The compiler should highlight the source of the issue, `i` is undefined. The
+The compiler should highlight the source of the issue: `i` is undefined. The
 values in the array will still not be as requested. After fixing you should
 obtain the expected output
 
@@ -219,7 +221,7 @@ Initial values    10.0000000       20.0000000       40.0000000
 using the array constructor
 
 ```
-real :: t(3) = [ (10.0*(2**(i-1)), i = 1,3) ]
+real :: t(3) = [ (10.0*(2**(i-1)), i = 1, 3) ]
 ```
 
 :::::::::::::::::::::::::
@@ -229,7 +231,7 @@ real :: t(3) = [ (10.0*(2**(i-1)), i = 1,3) ]
 ## Solution 3
 
 The program will `SEGFAULT` at runtime as `a` has not been allocated.
-Confirm this by copying the line to print `Status` before the array accesses are performed:
+Confirm this by copying the line to print `Status` to the point just before the array accesses are performed:
 
 ```
 Status  F
@@ -242,6 +244,9 @@ Status  F # Before allocation
 Status  T # After allocation
 Values    1.00000000       2.00000000       3.00000000
 ```
+
+Alternatively, to perform assignment and allocation simultaneously,
+as described above, turn `a(:) = ...` into `a = ...`.
 
 :::::::::::::::::::::::::
 
@@ -257,8 +262,8 @@ As arrays are self-describing in Fortran, it is relatively easy for the
 compiler to analyse whether array accesses are valid, or within bounds.
 This can help debugging. Most compilers will have an option that instructs
 the compiler to inject additional code which checks bounds at run time.
-For the Cray Fortran compiler, this is `-hbounds`; for the GNU compiler,
-this is `-fbounds-check`.
+For the Cray Fortran compiler, this is `-hbounds`; for the GNU `gfortran`
+compiler, this is `-fbounds-check`.
 
 The first example contains a fixed array element reference which is
 incorrect. This should be visible to the compiler at compile time:
