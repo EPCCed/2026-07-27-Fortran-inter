@@ -460,7 +460,7 @@ weather prediction and climate models.</p>
 features which are central to Modern Fortran. Attendees should be
 familiar with the basics of Fortran programming which might be covered
 in an introductory course, e.g., the one at,</p>
-<p><a href="https://epcced.github.io/2025-05-19-MO-Fortran-intro/" class="external-link uri">https://epcced.github.io/2025-05-19-MO-Fortran-intro/</a></p>
+<p><a href="https://epcced.github.io/2026-03-02-Fortran-intro/" class="external-link uri">https://epcced.github.io/2026-03-02-Fortran-intro/</a></p>
 <p>So, attendees should be comfortable writing structured Fortran
 programs based on modules and procedures, and have a sound grounding in
 variables, logic, flow-of-control, and so on. Some knowledge of Fortran
@@ -493,28 +493,6 @@ GNU Compiler Collection (GCC). See e.g., <a href="https://gcc.gnu.org/wiki/GFort
 <hr><h2 id="general">
 General Information
 </h2>
-<p>{% comment %} LOCATION</p>
-<p>This block displays the address and links to maps showing directions
-if the latitude and longitude of the workshop have been set. You can use
-<a href="https://itouchmap.com/latlong.html" class="external-link uri">https://itouchmap.com/latlong.html</a> to find the lat/long
-of an address. {% endcomment %} {% if page.latlng %}</p>
-<p id="where">
-<strong>Where:</strong> {{page.address}}. Get directions with
-<a href="//www.openstreetmap.org/?mlat=%7B%7Bpage.latlng%20%7C%20replace:',','&amp;mlon='%7D%7D&amp;zoom=16">OpenStreetMap</a>
-or <a href="//maps.google.com/maps?q=%7B%7Bpage.latlng%7D%7D">Google Maps</a>.
-</p>
-<p>{% endif %}</p>
-<p>{% comment %} DATE</p>
-<p>This block displays the date and links to Google Calendar. {%
-endcomment %} {% if page.humandate %}</p>
-<p id="when">
-<strong>When:</strong> {{page.humandate}}. {% include
-workshop_calendar.html %}
-</p>
-<p>{% endif %}</p>
-<p>{% comment %} SPECIAL REQUIREMENTS</p>
-<p>Modify the block below if there are any special requirements. {%
-endcomment %}</p>
 <p id="requirements">
 <strong>Requirements:</strong> Participants must have a working laptop
 or desktop computer with a Mac, Linux, or Windows operating system (not
@@ -527,30 +505,7 @@ abide by the
 <a href="https://www.archer2.ac.uk/training/code-of-conduct/" class="external-link">ARCHER2
 Training Code of Conduct</a>.
 </p>
-<p>{% comment %} ACCESSIBILITY</p>
-<p>Modify the block below if there are any barriers to accessibility or
-special instructions. {% endcomment %}</p>
-<p id="accessibility">
-</p>
-<p><strong>Accessibility:</strong> We are committed to making this
-workshop accessible to everybody.</p>
-<p>Materials will be provided in advance of the lesson and large-print
-handouts are available if needed by notifying the organizers in advance.
-If we can help making learning easier for you (e.g. sign-language
-interpreters, lactation facilities) please get in touch (using contact
-details below) and we will attempt to provide them.</p>
-
-<p>{% comment %} CONTACT EMAIL ADDRESS</p>
-<p>Display the contact email address set in the configuration file. {%
-endcomment %}</p>
-<p id="contact">
-<strong>Contact</strong>: Please email {% if page.email %} {% for email
-in page.email %} {% if forloop.last and page.email.size &gt; 1 %} or {%
-else %} {% unless forloop.first %} , {% endunless %} {% endif %}
-<a href="mailto:%7B%7Bemail%7D%7D">{{email}}</a> {% endfor %} {% else %}
-to-be-announced {% endif %} for more information.
-</p>
-<hr><div id="prerequisites" class="callout prereq">
+<div id="prerequisites" class="callout prereq">
 <div class="callout-square">
 <i class="callout-icon" data-feather="check"></i>
 </div>
