@@ -27,7 +27,7 @@ which describes overloading in Fortran.
 
 The formal description of an interface block in the generic context is
 
-```
+```fortran
 interface generic-spec
   [ interface-specification ] ...
 end interface generic-spec
@@ -43,7 +43,7 @@ The `generic-spec` has a number of different possible forms:
 We have seen an example of this type of interface in the  context of
 overloading assignment, e.g.,
 
-```
+```fortran
 interface assignment (=)
   module procedure :: my_assignment
 end interface assignment (=)
@@ -55,7 +55,7 @@ in a module along with the relevant procedure definitions,
 the `interface-specification` will often involve one or more
 `module procedure` statements of the form
 
-```
+```fortran
   [ module ] procedure [ :: ] specific-procedure-list
 ```
 
@@ -68,7 +68,7 @@ interface must be available in either form.
 
 We have seen an example of overloading assignment in the previous section:
 
-```
+```fortran
 interface assignment (=)
   module procedure :: my_assignment
 end interface assignment (=)
@@ -85,7 +85,7 @@ redefining conforming array assignments. It is possible to define
 assignment between an intrinsic type and a derived type. For example,
 using the `my_array_t` again from the previous section:
 
-```
+```fortran
 subroutine my_assignment_from_int(a, ival)
 
   type (my_array_t), intent(inout) :: a
@@ -113,7 +113,7 @@ available for other combinations).
 A generic procedure allows one to associate a generic name with one or more
 specific procedures.
 
-```
+```fortran
 interface generic-name
   module procedure :: specific-prcedure-list
 end interface generic-name
@@ -123,7 +123,7 @@ The `specific-procedure-list` can be a comma-separated list of
 different implementations, or one may add new implementation on
 different lines. For example,
 
-```
+```fortran
 interface my_generic_name
   module procedure :: my_real32_implementation
   module procedure :: my_real64_implementation
@@ -166,16 +166,16 @@ Individual pairs of dummy arguments are distinguishable:
 
 Together, the set of non-optional arguments in each case
 must be distinguishable. Note that the order may not be counted upon if the
-dummy arguments have the same name, as one can always call using keywords
+dummy arguments in the two procedures have the same name, as one can always call using keywords
 at the point of invocation, e.g.,
 
-```
+```fortran
   call my_subroutine(arg2 = y, arg1 = x)
 ```
 
 The presence or absence of a pointer attribute in the dummy argument is not
 enough to disambiguate a call; a pointer actual argument can be associated
-with dummy argument which is a non-pointer data object.
+with a dummy argument which is a non-pointer data object.
 
 ### Example (10 minutes)
 
@@ -188,7 +188,7 @@ default structure constructor `my_array_t()` using the existing function
 `my_array_allocate()`. A new version of the module and program are available
 in the `exercises/05-interfaces-overloading` directory (or you can keep your existing one).
 
-```
+```bash
 $ ftn my_array_type.f90 example1.f90
 ```
 
@@ -198,7 +198,7 @@ $ ftn my_array_type.f90 example1.f90
 
 Define a generic interface `my_array_t` that resolves to `my_array_allocate`
 
-```
+```fortran
 interface my_array_t
    module procedure my_array_allocate
 end interface my_array_t
@@ -221,7 +221,7 @@ implementation. Check this works as expected.
 Extend the generic interface to *also* resolve to `my_array_allocate_set` when passed two
 arguments.
 
-```
+```fortran
 interface my_array_t
    module procedure my_array_allocate
    module procedure my_array_allocate_set
@@ -242,7 +242,7 @@ function my_array_allocate_set(nlen, val) result(a)
 end function my_array_allocate_set
 ```
 
-calling `a = my_array_t(4, 5.0)` should now (re)allocate `a` with four entries, each set to
+Calling `a = my_array_t(4, 5.0)` should now (re)allocate `a` with four entries, each set to
 `5.0`.
 
 :::::::::::::::::::::::::
@@ -258,12 +258,12 @@ calling `a = my_array_t(4, 5.0)` should now (re)allocate `a` with four entries, 
 The following is an edge-case which will not compile, as the dummy arguments
 of the two subroutines in the generic interface are ambiguous.
 
-```
+```bash
 $ ftn -c example2.f90
 ```
 
-There's actually a simple solution to the problem. Can you see what it is
-(think about the keyword argument case)?
+There's actually a simple solution to the problem. Can you see what it is?
+(Think about the keyword argument case.)
 
 :::::::::::::::  solution
 
@@ -273,7 +273,7 @@ Because the arguments are named the same, using keyword arguments the two implem
 be distinguished by argument order. To resolve this we can simply rename one of the arguments in
 one of the implementations, e.g.
 
-```
+```fortran
 subroutine my_print_b(i, r)
 
   integer, intent(in) :: i
@@ -306,7 +306,7 @@ for combinations of derived types, or derived types and intrinsic types.
 
 For example, if we had two types
 
-```
+```fortran
 type (date_time_t)      :: now       ! a date and time
 type (time_interval_t)  :: dt        ! interval in seconds
 ```
@@ -315,7 +315,7 @@ one might wish to overload the meaning of `+` to allow an interval to be
 added to a date. This could be done as follows, assume we have a module
 which makes available both types:
 
-```
+```fortran
 interface operator (+)
   module procedure :: add_interval_to_date_time
 end interface operator (+)
@@ -323,12 +323,12 @@ end interface operator (+)
 
 We would then have to supply the function
 
-```
+```fortran
 function add_interval_to_date_time(date, dt) result(newdate)
 
   type (date_time_t),     intent(in) :: date
   type (time_interval_t), intent(in) :: dt
-  type (date_time_t).                :: newdate
+  type (date_time_t)                 :: newdate
 
   ! ... details of implementation ...
 
@@ -337,7 +337,7 @@ end function add_interval_to_date_time
 
 An expression of the form
 
-```
+```fortran
 now + dt
 ```
 
@@ -351,7 +351,7 @@ corresponds to the second dummy argument. So one could not have
 
 One could, equivalently, invoke the function directly:
 
-```
+```fortran
   type (date_time_t) :: newdate
   ...
   newdate = add_interval_to_date(now, dt)
@@ -364,10 +364,10 @@ One could, equivalently, invoke the function directly:
 This is a (deliberately) somewhat contentious example. It raises a number
 of general concerns about the approach:
 
-1. If operations involves single type, the operands are interchangeable,
+1. If operations involve a single type, the operands are interchangeable,
    and a limited number of functions is required.
-2. If operations involving even one defined type, and one intrinsic type
-   are required, then  the number of possible operations can quickly
+2. If operations involving even one defined type and one intrinsic type
+   are required, then the number of possible operations can quickly
    become quite large (without asking the question whether specific
    operations have meaning).
 
@@ -381,7 +381,7 @@ transparent set of operations for any new type.
 
 We could equally define a new name
 
-```
+```fortran
   interface operator(.add.)
     module procedure add_interval_to_date
   end interface operator (.add.)
@@ -389,7 +389,7 @@ We could equally define a new name
 
 in which case we would write
 
-```
+```fortran
    newtime = now .add. dt
 ```
 
@@ -411,27 +411,27 @@ Write a module which defines a type to hold a 3-vector `(u_1, u_2, u_3)` where
 the components are integers. Define an operator `.x.` which
 computes the cross product of two vectors, being
 
-![\\mathbf{u}\\times \\mathbf{v} = (u\_2 v\_3 - u\_3 v\_2, u\_3 v\_1 - u\_1 v\_3, u\_1 v\_2 - u\_2 v\_1)](<https://latex.codecogs.com/svg.latex?\\mathbf{u}\\times> \\mathbf{v} = (u\_2 v\_3 - u\_3 v\_2, u\_3 v\_1 - u\_1 v\_3, u\_1 v\_2 - u\_2 v\_1).)
+$\mathbf{u} \times \mathbf{v} = (u_2 v_3 - u_3 v_2, u_3 v_1 - u_1 v_3, u_1 v_2 - u_2 v_1).$
 
-This should also allow a vector triple product
+This should also allow a vector triple product such as
 
-![](https://latex.codecogs.com/svg.latex?\\mathbf{u}\\times\(\\mathbf{v}\\times\\mathbf{w}\)){alt='\\mathbf{u}\\times(\\mathbf{v}\\times\\mathbf{w})'}
+$\mathbf{u} \times \left( \mathbf{v} \times \mathbf{w} \right)$
 
-where one must use parentheses to obtain the desired result.
+noting the order of the cross products is important.
 
 One could also define a scalar product `.dot.`, being
 
-![\\mathbf{u}\\cdot\\mathbf{v} = u\_1 v\_1 + u\_2 v\_2 + u\_3 v\_3](<https://latex.codecogs.com/svg.latex?\\mathbf{u}\\cdot\\mathbf{v}> = u\_1 v\_1 + u\_2 v\_2 + u\_3 v\_3)
+$\mathbf{u} \cdot \mathbf{v} = u_1 v_1 + u_2 v_2 + u_3 v_3.$
 
 Does a scalar triple product
 
-![](https://latex.codecogs.com/svg.latex?\\mathbf{u}\\cdot\\mathbf{v}\\times\\mathbf{w}){alt='\\mathbf{u}\\cdot\\mathbf{v}\\times\\mathbf{w}'}
+$\mathbf{u} \cdot \mathbf{v} \times \mathbf{w}$
 
 work correctly without parentheses?
 
 A template is provided
 
-```
+```bash
 $ ftn example3.f90 my_vector_type.f90
 ```
 
@@ -441,7 +441,7 @@ where the example program has a number of suggestions to check the results.
 
 ## Solution
 
-```
+```fortran
   interface operator(.dot.)
      module procedure dot_prod
   end interface operator(.dot.)
