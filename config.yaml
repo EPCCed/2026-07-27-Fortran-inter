@@ -67,24 +67,24 @@ contact: 'support@archer2.ac.uk'
 episodes: 
 - 00-connecting.md
 - 01-arrays.md
-- 011-break.md
+# - 011-break.md
 - 02-arrays-as-arguments.md
 - 03-more-on-pointers.md
-- 031-lunch.md
+# - 031-lunch.md
 - 04-derived-types.md
 - 05-interfaces-overloading.md
-- 051-break.md
+# - 051-break.md
 - 06-type-extension-polypmorphism.md
 - 07-type-bound-procedures.md
 - 08-generic-io-for-derived-types.md
 - 09-abstract-types.md
-- 091-break.md
+# - 091-break.md
 - 10-modules-again.md
 - 11-unlimited-polymorphic-entities.md
-- 111-lunch.md
+# - 111-lunch.md
 - 12-type-parameters.md
 - 13-intrinsic-modules.md
-- 131-break.md
+# - 131-break.md
 - 14-interoperability-with-c.md
 
 # Information for Learners
