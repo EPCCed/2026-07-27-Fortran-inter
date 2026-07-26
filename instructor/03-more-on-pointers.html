@@ -455,7 +455,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>More on pointers</h1>
-        <p>Last updated on 2026-07-10 |
+        <p>Last updated on 2026-07-26 |
 
         <a href="https://github.com/EPCCed/2026-07-27-Fortran-inter/edit/main/episodes/03-more-on-pointers.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -501,24 +501,36 @@ pointers in Fortran.</p>
 <section><h2 class="section-heading" id="pointer-assignment">Pointer assignment<a class="anchor" aria-label="anchor" href="#pointer-assignment"></a></h2>
 <hr class="half-width"><p>We recall that a pointer variable may be undefined, unassociated
 (sometimes “disassociated”), or associated:</p>
-<pre><code>  integer, pointer :: p1              ! undefined
-  integer, pointer :: p2 =&gt; null()    ! unassociated
-  integer, pointer :: p3 =&gt; t         ! associated with target t</code></pre>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a>  <span class="dt">integer</span>, <span class="dt">pointer</span> <span class="dt">::</span> p1              <span class="co">! undefined</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a>  <span class="dt">integer</span>, <span class="dt">pointer</span> <span class="dt">::</span> p2 <span class="kw">=</span><span class="op">&gt;</span> null()    <span class="co">! unassociated</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a>  <span class="dt">integer</span>, <span class="dt">pointer</span> <span class="dt">::</span> p3 <span class="kw">=</span><span class="op">&gt;</span> t         <span class="co">! associated with target t</span></span></code></pre>
+</div>
 <p>The difference between undefined and unassociated is that an
 undefined pointer can not have its association status queried by the
 intrinsic function <code>associated()</code>.</p>
 <p>Pointer assignment is of the form:</p>
-<pre><code>  pointer =&gt; target</code></pre>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a>  <span class="dt">pointer</span> <span class="kw">=</span><span class="op">&gt;</span> <span class="dt">target</span></span></code></pre>
+</div>
 <p>where the target may be a variable with the target attribute, another
 pointer, or a function returning a pointer result. The type, type
 parameters and rank of both sides of the assignment must match.</p>
 <div class="section level3">
 <h3 id="target-is-an-array">Target is an array<a class="anchor" aria-label="anchor" href="#target-is-an-array"></a></h3>
 <p>For example, if the target is an array, we might have:</p>
-<pre><code>  integer, target  :: a(10)
-  integer, pointer :: p(:)
-
-  p =&gt; a(1:10:2)</code></pre>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a>  <span class="dt">integer</span>, <span class="dt">target</span>  <span class="dt">::</span> a(<span class="dv">10</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a>  <span class="dt">integer</span>, <span class="dt">pointer</span> <span class="dt">::</span> p(:)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a>  p <span class="kw">=</span><span class="op">&gt;</span> a(<span class="dv">1</span>:<span class="dv">10</span>:<span class="dv">2</span>)</span></code></pre>
+</div>
 <p>then the shape and bounds are those the right-hand side. We can see
 here that the pointer is not a simple object. It should be viewed as a
 descriptor which holds information about what it is pointing to. Here
@@ -527,16 +539,24 @@ one could use intrinsic functions <code>shape()</code>,
 pointer as one would for an array. The pointer must be associated to do
 so.</p>
 <p>It is possible to specify the lower bound of a pointer array:</p>
-<pre><code>  p(2:) =&gt; a(2:6)</code></pre>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a>  p(<span class="dv">2</span>:) <span class="kw">=</span><span class="op">&gt;</span> a(<span class="dv">2</span>:<span class="dv">6</span>)</span></code></pre>
+</div>
 <p>in which case elements are indexed from the lower bound when using
 the pointer.</p>
 <p>A multi-dimensional pointer may be “reshaped” to a lower-dimensional
 target. For example:</p>
-<pre><code>  integer, parameter :: n = 3
-  integer, target    :: storage(n*n)
-  integer, pointer   :: matrix(:, :)
-
-  matrix(1:n, 1:n) =&gt; storage(:)</code></pre>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a>  <span class="dt">integer</span>, <span class="dt">parameter</span> <span class="dt">::</span> n <span class="kw">=</span> <span class="dv">3</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a>  <span class="dt">integer</span>, <span class="dt">target</span>    <span class="dt">::</span> storage(n<span class="kw">*</span>n)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a>  <span class="dt">integer</span>, <span class="dt">pointer</span>   <span class="dt">::</span> matrix(:, :)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1" aria-label="code-block-5-5"></a>  matrix(<span class="dv">1</span>:n, <span class="dv">1</span>:n) <span class="kw">=</span><span class="op">&gt;</span> storage(:)</span></code></pre>
+</div>
 <p>Note that both the lower and upper bounds of
 <code>matrix(1:n, 1:n)</code> are included on the left-hand side of the
 pointer assignment.</p>
@@ -546,9 +566,13 @@ pointer assignment.</p>
 <p>If the target of an assignment is a pointer, then subsequent changes
 in status of the target are not reflected in the later assignment,
 e.g.,</p>
-<pre><code>  b =&gt; a
-  c =&gt; b
-  nullify(b)</code></pre>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a>  b <span class="kw">=</span><span class="op">&gt;</span> a</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a>  c <span class="kw">=</span><span class="op">&gt;</span> b</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a>  <span class="kw">nullify</span>(b)</span></code></pre>
+</div>
 <p>leaves <code>c</code> associated with <code>a</code>.</p>
 <p>The <code>nullify()</code> statement has the same effect as
 assignment to <code>null()</code>. However, <code>nullify()</code> can
@@ -585,28 +609,32 @@ pointer is eight.</p>
 </button>
 <div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
-<pre><code>program example1
-
-  implicit none
-
-  integer, target  :: a(10)
-  integer, pointer :: p(:)
-  integer :: i
-
-  p =&gt; a(2:10:2)
-  a = [ (i, i = 1, 10) ]
-
-  ! print pointer lower bound lbound()
-  print *, "Lower bound: ", lbound(p) ! =&gt; 1
-
-  ! print pointer upper bound ubound()
-  print *, "Upper bound: ", ubound(p) ! =&gt; 5
-
-  ! check size and elements
-  print *, "Size: ", size(p) ! =&gt; 5
-  print *, "p(4) = ", p(4)   ! =&gt; 8
-
-end program example1</code></pre>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="kw">program</span> example1</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a>  <span class="kw">implicit</span> <span class="kw">none</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a>  <span class="dt">integer</span>, <span class="dt">target</span>  <span class="dt">::</span> a(<span class="dv">10</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1" aria-label="code-block-7-6"></a>  <span class="dt">integer</span>, <span class="dt">pointer</span> <span class="dt">::</span> p(:)</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1" aria-label="code-block-7-7"></a>  <span class="dt">integer</span> <span class="dt">::</span> i</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1" aria-label="code-block-7-8"></a></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1" aria-label="code-block-7-9"></a>  p <span class="kw">=</span><span class="op">&gt;</span> a(<span class="dv">2</span>:<span class="dv">10</span>:<span class="dv">2</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1" aria-label="code-block-7-10"></a>  a <span class="kw">=</span> <span class="kw">[</span> (i, i <span class="kw">=</span> <span class="dv">1</span>, <span class="dv">10</span>) <span class="kw">]</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1" aria-label="code-block-7-11"></a></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1" aria-label="code-block-7-12"></a>  <span class="co">! print pointer lower bound lbound()</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1" aria-label="code-block-7-13"></a>  <span class="fu">print</span> <span class="kw">*</span>, <span class="st">"Lower bound: "</span>, <span class="fu">lbound</span>(p) <span class="co">! =&gt; 1</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1" aria-label="code-block-7-14"></a></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1" aria-label="code-block-7-15"></a>  <span class="co">! print pointer upper bound ubound()</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1" aria-label="code-block-7-16"></a>  <span class="fu">print</span> <span class="kw">*</span>, <span class="st">"Upper bound: "</span>, <span class="fu">ubound</span>(p) <span class="co">! =&gt; 5</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1" aria-label="code-block-7-17"></a></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1" aria-label="code-block-7-18"></a>  <span class="co">! check size and elements</span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1" aria-label="code-block-7-19"></a>  <span class="fu">print</span> <span class="kw">*</span>, <span class="st">"Size: "</span>, <span class="fu">size</span>(p) <span class="co">! =&gt; 5</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1" aria-label="code-block-7-20"></a>  <span class="fu">print</span> <span class="kw">*</span>, <span class="st">"p(4) = "</span>, p(<span class="dv">4</span>)   <span class="co">! =&gt; 8</span></span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1" aria-label="code-block-7-21"></a></span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1" aria-label="code-block-7-22"></a><span class="kw">end program</span> example1</span></code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -640,13 +668,17 @@ taken via the associated dummy argument alone. This includes allocation
 status, and association status for pointers.</p>
 <ol style="list-style-type: decimal"><li>
 <p>Consider a case where we have a subroutine of the form</p>
-<pre><code>subroutine my_array_update(ia, ib)
-  integer, intent(inout) :: ia(:)
-  integer, intent(inout) :: ib(:)
-
-  ia(:) = ia(:) + 1
-  ib(:) = ib(:) / 2
-end subroutine my_array_update</code></pre>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="kw">subroutine</span> my_array_update(ia, ib)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a>  <span class="dt">integer</span>, <span class="dt">intent(inout)</span> <span class="dt">::</span> ia(:)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a>  <span class="dt">integer</span>, <span class="dt">intent(inout)</span> <span class="dt">::</span> ib(:)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a>  ia(:) <span class="kw">=</span> ia(:) <span class="kw">+</span> <span class="dv">1</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a>  ib(:) <span class="kw">=</span> ib(:) <span class="kw">/</span> <span class="dv">2</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a><span class="kw">end subroutine</span> my_array_update</span></code></pre>
+</div>
 <p>If we were to make a
 <code>call my_array_update(a(1:10), a(6:15))</code> we have a situation
 where both dummy arguments are referring to the same section of the
@@ -657,23 +689,27 @@ can reduce the scope for this potential problem.</p>
 <li>
 <p>Consider a case where we have a module procedure,
 schematically:</p>
-<pre><code>module my_module
-  ! ...
-  integer, allocatable, public :: ihost(:)
-  ! ...
-contains
-  subroutine my_subroutine(iarg)
-    integer, allocatable, intent(inout) :: iarg(:)
-
-    ! ... change to the status of iarg(:) or ihost(:) ...
-  end subroutine my_subroutine
-end module my_module</code></pre>
-<p>We now have a situation where ihost(:) may appear as the actual
-argument to <code>my_subroutine()</code>. This is best avoided by
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="kw">module</span> my_module</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a>  <span class="co">! ...</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a>  <span class="dt">integer</span>, <span class="dt">allocatable</span>, <span class="dt">public</span> <span class="dt">::</span> ihost(:)</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a>  <span class="co">! ...</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a><span class="co">contains</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a>  <span class="kw">subroutine</span> my_subroutine(iarg)</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1" aria-label="code-block-9-7"></a>    <span class="dt">integer</span>, <span class="dt">allocatable</span>, <span class="dt">intent(inout)</span> <span class="dt">::</span> iarg(:)</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1" aria-label="code-block-9-9"></a>    <span class="co">! ... change to the status of iarg(:) or ihost(:) ...</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1" aria-label="code-block-9-10"></a>  <span class="kw">end subroutine</span> my_subroutine</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1" aria-label="code-block-9-11"></a><span class="kw">end module</span> my_module</span></code></pre>
+</div>
+<p>We now have a situation where <code>ihost(:)</code> may appear as the
+actual argument to <code>my_subroutine()</code>. This is best avoided by
 avoiding module scope data.</p>
 </li>
 </ol><p>These restrictions are not enforced by the compiler (it may not even
-be possible): violations by the programmer may just be manifest as
+be possible): violations by the programmer may just manifest as
 undefined behaviour.</p>
 </div>
 <div class="section level3">
@@ -692,16 +728,28 @@ return.</li>
 <hr class="half-width"><p>There is a <code>procedure</code> statement which declares a name to
 be a procedure. In its simplest form, it is equivalent to an external
 declaration:</p>
-<pre><code>  procedure () :: f_external
-  external     :: f_external</code></pre>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a>  <span class="kw">procedure</span> () <span class="dt">::</span> f_external</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a>  <span class="kw">external</span>     <span class="dt">::</span> f_external</span></code></pre>
+</div>
 <p>Here, the <code>()</code> indicates there is no interface information
 available. For functions, one may include information on a return
 type</p>
-<pre><code>  procedure (integer) :: f_external
-  integer, external   :: f_external</code></pre>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a>  <span class="kw">procedure</span> (<span class="dt">integer</span>) <span class="dt">::</span> f_external</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a>  <span class="dt">integer</span>, <span class="kw">external</span>   <span class="dt">::</span> f_external</span></code></pre>
+</div>
 <p>These are again equivalent.</p>
 <p>The general form is</p>
-<pre><code>procedure [(interface-spec)] [, attribute-list ::] declaration-list</code></pre>
+<div class="codewrapper sourceCode" id="cb12">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="kw">procedure</span> <span class="kw">[</span>(<span class="kw">interface-</span>spec)<span class="kw">]</span> <span class="kw">[</span>, attribute<span class="kw">-</span>list <span class="dt">::</span><span class="kw">]</span> declaration<span class="kw">-</span>list</span></code></pre>
+</div>
 <p>The parentheses accommodate an interface specification, which may be
 an interface name, or a declaration type specification (such as
 <code>integer</code> above). There are a number of possible attributes,
@@ -710,30 +758,42 @@ procedure.</p>
 </section><section><h2 class="section-heading" id="pointers-to-functions-or-subroutines-procedure-pointers">Pointers to functions or subroutines: procedure pointers<a class="anchor" aria-label="anchor" href="#pointers-to-functions-or-subroutines-procedure-pointers"></a></h2>
 <hr class="half-width"><p>A procedure having an explicit interface may be the target of a
 procedure pointer. The declaration might be as follows:</p>
-<pre><code>  interface
-    function my_external_function(x) result(y)
-      real, intent(in) :: x
-      real             :: y
-    end function my_external_function
-  end interface
-
-  procedure (my_external_function), pointer :: f =&gt; my_external_function
-  ! ...
-  y = f(x)</code></pre>
+<div class="codewrapper sourceCode" id="cb13">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a>  <span class="kw">interface</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1" aria-label="code-block-13-2"></a>    <span class="kw">function</span> my_external_function(x) <span class="kw">result</span>(y)</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a>      <span class="dt">real</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> x</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1" aria-label="code-block-13-4"></a>      <span class="dt">real</span>             <span class="dt">::</span> y</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1" aria-label="code-block-13-5"></a>    <span class="kw">end function</span> my_external_function</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1" aria-label="code-block-13-6"></a>  <span class="kw">end interface</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1" aria-label="code-block-13-7"></a></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1" aria-label="code-block-13-8"></a>  <span class="kw">procedure</span> (my_external_function), <span class="dt">pointer</span> <span class="dt">::</span> f <span class="kw">=</span><span class="op">&gt;</span> my_external_function</span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1" aria-label="code-block-13-9"></a>  <span class="co">! ...</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1" aria-label="code-block-13-10"></a>  y <span class="kw">=</span> f(x)</span></code></pre>
+</div>
 <p>Note the name appearing in the interface needs to match that of the
 external function. This is sometimes referred to as a <em>specific</em>
 interface.</p>
 <p>We may also define an abstract procedure, which may only appear in
 the <code>interface-name</code> specification of a procedure
 declaration.</p>
-<pre><code>  abstract interface
-    function if_function(x) result(y)
-      real, intent(in) :: x
-      real             :: y
-    end function if_function
-  end interface</code></pre>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a>  abstract <span class="kw">interface</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a>    <span class="kw">function</span> if_function(x) <span class="kw">result</span>(y)</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1" aria-label="code-block-14-3"></a>      <span class="dt">real</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> x</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1" aria-label="code-block-14-4"></a>      <span class="dt">real</span>             <span class="dt">::</span> y</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1" aria-label="code-block-14-5"></a>    <span class="kw">end function</span> if_function</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1" aria-label="code-block-14-6"></a>  <span class="kw">end interface</span></span></code></pre>
+</div>
 <p>An associated procedure definition might be</p>
-<pre><code>  procedure (if_function) :: my_external_function</code></pre>
+<div class="codewrapper sourceCode" id="cb15">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a>  <span class="kw">procedure</span> (if_function) <span class="dt">::</span> my_external_function</span></code></pre>
+</div>
 <p>This is an alternative to the specific interface declaration
 above.</p>
 <p>A procedure pointer must be associated in order to reference the
@@ -755,7 +815,11 @@ is the size of the array.</p>
 <p>The accompanying program <code>example2.f90</code> makes a simple
 <code>procedure</code> declaration to allow the external function to be
 referenced (similar to an <code>external</code> declaration).</p>
-<pre><code>$ ftn external.f90 example2.f90</code></pre>
+<div class="codewrapper sourceCode" id="cb16">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a><span class="ex">$</span> ftn external.f90 example2.f90</span></code></pre>
+</div>
 <p>There are a number of possible problems with this example (e.g., what
 happens if you provide an actual argument which is a rank two
 array?).</p>
@@ -774,23 +838,27 @@ with incompatible actual arguments.</p>
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
-<pre><code>program example2
-
-  implicit none
-
-  interface
-     function array_size(a) result(isize)
-       real, dimension(:), intent(in) :: a
-       integer                        :: isize
-     end function array_size
-  end interface
-
-  procedure (array_size), pointer :: f =&gt; array_size
-  real :: a(13)
-
-  print *, "size of a is: ", f(a)
-
-end program example2</code></pre>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb17-1"><a href="#cb17-1" tabindex="-1" aria-label="code-block-17-1"></a><span class="kw">program</span> example2</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1" aria-label="code-block-17-2"></a></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1" aria-label="code-block-17-3"></a>  <span class="kw">implicit</span> <span class="kw">none</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1" aria-label="code-block-17-4"></a></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1" aria-label="code-block-17-5"></a>  <span class="kw">interface</span></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1" aria-label="code-block-17-6"></a><span class="bu">     f</span>unction array_size(a) <span class="kw">result</span>(isize)</span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1" aria-label="code-block-17-7"></a>       <span class="dt">real</span>, <span class="dt">dimension(:)</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> a</span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1" aria-label="code-block-17-8"></a>       <span class="dt">integer</span>                        <span class="dt">::</span> isize</span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1" aria-label="code-block-17-9"></a><span class="bu">     e</span>nd <span class="kw">function</span> array_size</span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1" aria-label="code-block-17-10"></a>  <span class="kw">end interface</span></span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1" aria-label="code-block-17-11"></a></span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1" aria-label="code-block-17-12"></a>  <span class="kw">procedure</span> (array_size), <span class="dt">pointer</span> <span class="dt">::</span> f <span class="kw">=</span><span class="op">&gt;</span> array_size</span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1" aria-label="code-block-17-13"></a>  <span class="dt">real</span> <span class="dt">::</span> a(<span class="dv">13</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1" aria-label="code-block-17-14"></a></span>
+<span id="cb17-15"><a href="#cb17-15" tabindex="-1" aria-label="code-block-17-15"></a>  <span class="fu">print</span> <span class="kw">*</span>, <span class="st">"size of a is: "</span>, f(a)</span>
+<span id="cb17-16"><a href="#cb17-16" tabindex="-1" aria-label="code-block-17-16"></a></span>
+<span id="cb17-17"><a href="#cb17-17" tabindex="-1" aria-label="code-block-17-17"></a><span class="kw">end program</span> example2</span></code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -818,23 +886,27 @@ declared in a procedure statement, and also try a procedure pointer.</p>
 </button>
 <div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
-<pre><code>program example2
-
-  implicit none
-
-  abstract interface
-     function my_array_size(a) result(isize)
-       real, dimension(:), intent(in) :: a
-       integer                        :: isize
-     end function my_array_size
-  end interface
-
-  procedure (my_array_size) :: array_size
-  real :: a(13)
-
-  print *, "size of a is: ", array_size(a)
-
-end program example2</code></pre>
+<div class="codewrapper sourceCode" id="cb18">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb18-1"><a href="#cb18-1" tabindex="-1" aria-label="code-block-18-1"></a><span class="kw">program</span> example2</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1" aria-label="code-block-18-2"></a></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1" aria-label="code-block-18-3"></a>  <span class="kw">implicit</span> <span class="kw">none</span></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1" aria-label="code-block-18-4"></a></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1" aria-label="code-block-18-5"></a>  abstract <span class="kw">interface</span></span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1" aria-label="code-block-18-6"></a><span class="bu">     f</span>unction my_array_size(a) <span class="kw">result</span>(isize)</span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1" aria-label="code-block-18-7"></a>       <span class="dt">real</span>, <span class="dt">dimension(:)</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> a</span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1" aria-label="code-block-18-8"></a>       <span class="dt">integer</span>                        <span class="dt">::</span> isize</span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1" aria-label="code-block-18-9"></a><span class="bu">     e</span>nd <span class="kw">function</span> my_array_size</span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1" aria-label="code-block-18-10"></a>  <span class="kw">end interface</span></span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1" aria-label="code-block-18-11"></a></span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1" aria-label="code-block-18-12"></a>  <span class="kw">procedure</span> (my_array_size) <span class="dt">::</span> array_size</span>
+<span id="cb18-13"><a href="#cb18-13" tabindex="-1" aria-label="code-block-18-13"></a>  <span class="dt">real</span> <span class="dt">::</span> a(<span class="dv">13</span>)</span>
+<span id="cb18-14"><a href="#cb18-14" tabindex="-1" aria-label="code-block-18-14"></a></span>
+<span id="cb18-15"><a href="#cb18-15" tabindex="-1" aria-label="code-block-18-15"></a>  <span class="fu">print</span> <span class="kw">*</span>, <span class="st">"size of a is: "</span>, array_size(a)</span>
+<span id="cb18-16"><a href="#cb18-16" tabindex="-1" aria-label="code-block-18-16"></a></span>
+<span id="cb18-17"><a href="#cb18-17" tabindex="-1" aria-label="code-block-18-17"></a><span class="kw">end program</span> example2</span></code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -916,8 +988,8 @@ procedure.</li>
   "url": "https://EPCCed.github.io/2026-07-27-Fortran-inter/instructor/03-more-on-pointers.html",
   "identifier": "https://EPCCed.github.io/2026-07-27-Fortran-inter/instructor/03-more-on-pointers.html",
   "dateCreated": "2025-05-06",
-  "dateModified": "2026-07-10",
-  "datePublished": "2026-07-21"
+  "dateModified": "2026-07-26",
+  "datePublished": "2026-07-26"
 }
 
   </script><script>
