@@ -28,7 +28,7 @@ definitions in a module.
 
 We recall that the general form of the declaration is:
 
-```
+```fortran
  type [ [, attribute-list] :: ] type-name
     [private]
     component-part
@@ -46,7 +46,7 @@ components may be controlled via `public` or `private` statements.
 Encapsulation may be achieved by declaring a `public` type with `private`
 components, e.g.,
 
-```
+```fortran
 type, public :: my_opaque_t
   private
   integer :: idata
@@ -55,7 +55,7 @@ end type my_opaque_t
 
 It is also possible to have a mixture, e.g.:
 
-```
+```fortran
 type, public :: my_semi_opaque_t
   private
   integer         :: idata   ! default private
@@ -86,13 +86,13 @@ a breakdown of encapsulation.
 ### Intrinsic assignments
 
 Intrinsic assignment is available for types, and involves an
-intrinsic assignment of each component in turn. Schematically:
+intrinsic assignment of each component in turn. For a public transparent type, schematically:
 
-```
-  type (my_semi_opaque_t) :: a
-  type (my_semi_opaque_t) :: b
+```fortran
+  type (my_transparent_t) :: a
+  type (my_transparent_t) :: b
 
-  b = my_semi_opaque(2, 3)
+  b = my_transparent_t(2, 3)
   a = b
 ```
 
@@ -100,6 +100,32 @@ Here, the components of `a` will take on the values of the components of `b`.
 
 If a type component is itself a derived type, then intrinsic assignment takes
 place in the same way for that component.
+
+However, if some components are private, such as in the above
+`my_semi_opaque_t`, we would instead write a assignment function to sit alongside it in the module:
+
+```fortran
+  function my_semi_opaque(idata, ndata) result(res)
+
+    integer, intent(in)     :: idata
+    integer, intent(in)     :: ndata
+    type (my_semi_opaque_t) :: res
+
+    res%idata = idata
+    res%ndata = ndata
+
+  end function my_semi_opaque
+```
+
+which would then be called like so:
+
+```fortran
+  type (my_opaque_t) :: a
+  type (my_opaque_t) :: b
+
+  b = my_opaque(2, 3)
+  a = b
+```
 
 #### Example (5 minutes)
 
@@ -109,10 +135,10 @@ place in the same way for that component.
 
 The accompanying module `my_semi_opaque_type.f90` provides a public definition
 of the type as defined above, and includes a function to initialise the two
-components. The accompanying program `exercise1.f90` will make the intrinsic
+components. The accompanying program `example1.f90` will make the intrinsic
 assignment. You can compile with, e.g.,
 
-```
+```bash
 $ ftn my_semi_opaque_type.f90 example1.f90
 ```
 
@@ -124,7 +150,7 @@ perform this check.
 
 ## Solution
 
-```
+```fortran
 subroutine my_semi_opaque_print(name, val)
 
   character(len=*), intent(in) :: name
@@ -138,8 +164,11 @@ end subroutine my_semi_opaque_print
 
 This code should be added to the module. You should obtain the following output:
 
-```
+```bash
 gfortran my_semi_opaque_type.f90 example1.f90 && ./a.out
+```
+
+```output
  a%idata=           2
  a%ndata=           3
 ```
@@ -152,7 +181,7 @@ gfortran my_semi_opaque_type.f90 example1.f90 && ./a.out
 
 Suppose our derived type had an allocatable component. For example:
 
-```
+```fortran
   type, public :: my_array_t
     integer           :: nlen
     real, allocatable :: values(:)
@@ -162,7 +191,7 @@ Suppose our derived type had an allocatable component. For example:
 Intrinsic assignment takes place for such an object in much the
 same way, e.g.,
 
-```
+```fortran
   type (my_array_t) :: a
   type (my_array_t) :: b
 
@@ -199,7 +228,7 @@ components of derived types when a derived-type argument is `intent(out)`.
 
 For types with pointer components, the situation is different. Consider:
 
-```
+```fortran
   type, public :: my_array_pointer_t
     integer       :: nlen
     real, pointer :: values(:)
@@ -209,7 +238,7 @@ For types with pointer components, the situation is different. Consider:
 Assignment here means that the pointer becomes associated with the
 target on the right-hand side.
 
-```
+```fortran
   type (my_array_pointer_t) :: a
   type (my_array_pointer_t) :: b
 
@@ -235,7 +264,7 @@ In the accompanying module `my_array_type.f90` both the types above
 have been declared, along with a function to initialise some array
 values. Compile the example program:
 
-```
+```bash
 $ ftn my_array_type.f90 example2.f90
 ```
 
@@ -251,7 +280,7 @@ again?
 
 The output of the initial program
 
-```
+```output
  State of a            3 T
  State of c            3 T   1.00000000       2.00000000       3.00000000 
 ```
@@ -264,7 +293,7 @@ The output of the initial program
 
 The output of the program after destroying `a` shows `c%values` now points to uninitialised data, however `c%nlen` is a deep copy and is still "valid" (in some sense).
 
-```
+```output
 State of a            3 T
 State of c            3 T   1.00000000       2.00000000       3.00000000    
 State of c            3 T  -1.40913533E-36   1.56146688E-41   1.12103877E-44
@@ -282,8 +311,11 @@ on the left-hand side?
 
 The compiler rejects the code as invalid due to different types.
 
-```
+```bash
 gfortran my_array_type.f90 example2.f90 && ./a.out
+```
+
+```output
 example2.f90:24:6:
 
    24 |   c = b
@@ -303,7 +335,7 @@ possible to overload the meaning of the assignment operation `=`.
 For example, if an assignment between two objects of `my_array_t` were
 required, one could add a new assignment interface in the module specification:
 
-```
+```fortran
   interface assignment (=)
     module procedure my_assignment
   end interface assignment (=)
@@ -311,7 +343,7 @@ required, one could add a new assignment interface in the module specification:
 
 and then provide the following module subprogram:
 
-```
+```fortran
   subroutine my_assignment(a, b)
 
     type (my_array_t), intent(out) :: a
@@ -343,7 +375,7 @@ and `my_array_t`. Add a subroutine in `my_array_type.f90` to make this possible.
 
 First we define the `(=)` interface in the module
 
-```
+```fortran
 interface assignment (=)
    module procedure my_array_ptr_assignment
 end interface assignment (=)
@@ -351,7 +383,7 @@ end interface assignment (=)
 
 and the assignment subroutine itself
 
-```
+```fortran
 subroutine my_array_ptr_assignment(a, b)
 
   type(my_array_pointer_t), intent(out) :: a
