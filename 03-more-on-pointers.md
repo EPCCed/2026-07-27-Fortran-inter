@@ -29,7 +29,7 @@ In this section we look more closely at pointers in Fortran.
 We recall that a pointer variable may be undefined, unassociated
 (sometimes "disassociated"), or associated:
 
-```
+```fortran
   integer, pointer :: p1              ! undefined
   integer, pointer :: p2 => null()    ! unassociated
   integer, pointer :: p3 => t         ! associated with target t
@@ -41,7 +41,7 @@ function `associated()`.
 
 Pointer assignment is of the form:
 
-```
+```fortran
   pointer => target
 ```
 
@@ -53,7 +53,7 @@ parameters and rank of both sides of the assignment must match.
 
 For example, if the target is an array, we might have:
 
-```
+```fortran
   integer, target  :: a(10)
   integer, pointer :: p(:)
 
@@ -69,7 +69,7 @@ do so.
 
 It is possible to specify the lower bound of a pointer array:
 
-```
+```fortran
   p(2:) => a(2:6)
 ```
 
@@ -79,7 +79,7 @@ pointer.
 A multi-dimensional pointer may be "reshaped" to a lower-dimensional
 target. For example:
 
-```
+```fortran
   integer, parameter :: n = 3
   integer, target    :: storage(n*n)
   integer, pointer   :: matrix(:, :)
@@ -95,7 +95,7 @@ included on the left-hand side of the pointer assignment.
 If the target of an assignment is a pointer, then subsequent changes
 in status of the target are not reflected in the later assignment, e.g.,
 
-```
+```fortran
   b => a
   c => b
   nullify(b)
@@ -127,7 +127,7 @@ A bare outline is provided in `example1.f90`.
 
 ## Solution
 
-```
+```fortran
 program example1
 
   implicit none
@@ -188,7 +188,7 @@ allocation status, and association status for pointers.
 
 1. Consider a case where we have a subroutine of the form
    
-   ```
+   ```fortran
    subroutine my_array_update(ia, ib)
      integer, intent(inout) :: ia(:)
      integer, intent(inout) :: ib(:)
@@ -207,7 +207,7 @@ allocation status, and association status for pointers.
 
 2. Consider a case where we have a module procedure, schematically:
    
-   ```
+   ```fortran
    module my_module
      ! ...
      integer, allocatable, public :: ihost(:)
@@ -221,12 +221,12 @@ allocation status, and association status for pointers.
    end module my_module
    ```
    
-   We now have a situation where ihost(:) may appear as the actual
+   We now have a situation where `ihost(:)` may appear as the actual
    argument to `my_subroutine()`. This is best avoided by avoiding
    module scope data.
 
 These restrictions are not enforced by the compiler (it may not even
-be possible): violations by the programmer may just be manifest as
+be possible): violations by the programmer may just manifest as
 undefined behaviour.
 
 ### Actual and dummy arguments with target attribute
@@ -244,7 +244,7 @@ in the context of procedure arguments. These may be summarised:
 There is a `procedure` statement which declares a name to be a procedure.
 In its simplest form, it is equivalent to an external declaration:
 
-```
+```fortran
   procedure () :: f_external
   external     :: f_external
 ```
@@ -252,7 +252,7 @@ In its simplest form, it is equivalent to an external declaration:
 Here, the `()` indicates there is no interface information available.
 For functions, one may include information on a return type
 
-```
+```fortran
   procedure (integer) :: f_external
   integer, external   :: f_external
 ```
@@ -261,7 +261,7 @@ These are again equivalent.
 
 The general form is
 
-```
+```fortran
 procedure [(interface-spec)] [, attribute-list ::] declaration-list
 ```
 
@@ -276,7 +276,7 @@ procedure.
 A procedure having an explicit interface may be the target of a procedure
 pointer. The declaration might be as follows:
 
-```
+```fortran
   interface
     function my_external_function(x) result(y)
       real, intent(in) :: x
@@ -295,7 +295,7 @@ external function. This is sometimes referred to as a *specific* interface.
 We may also define an abstract procedure, which may only appear in the
 `interface-name` specification of a procedure declaration.
 
-```
+```fortran
   abstract interface
     function if_function(x) result(y)
       real, intent(in) :: x
@@ -306,7 +306,7 @@ We may also define an abstract procedure, which may only appear in the
 
 An associated procedure definition might be
 
-```
+```fortran
   procedure (if_function) :: my_external_function
 ```
 
@@ -328,7 +328,7 @@ The accompanying program `example2.f90` makes a simple `procedure` declaration
 to allow the external function to be referenced (similar to an `external`
 declaration).
 
-```
+```bash
 $ ftn external.f90 example2.f90
 ```
 
@@ -346,7 +346,7 @@ incompatible actual arguments.
 
 ## Solution
 
-```
+```fortran
 program example2
 
   implicit none
@@ -376,7 +376,7 @@ procedure statement, and also try a procedure pointer.
 
 ## Solution
 
-```
+```fortran
 program example2
 
   implicit none
