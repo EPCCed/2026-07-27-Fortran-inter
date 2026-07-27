@@ -120,10 +120,10 @@ However, if some components are private, such as in the above
 which would then be called like so:
 
 ```fortran
-  type (my_opaque_t) :: a
-  type (my_opaque_t) :: b
+  type (my_semi_opaque_t) :: a
+  type (my_semi_opaque_t) :: b
 
-  b = my_opaque(2, 3)
+  b = my_semi_opaque(2, 3)
   a = b
 ```
 
