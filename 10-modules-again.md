@@ -20,11 +20,11 @@ exercises: 15
 
 ## Modules
 
-The introductory course encouraged the use of modules to provide structure,
-and to separate public interface from private implementation.
-Schematically, we have seen:
+If you took the introductory Fortran course, you will have seen that we
+encouraged the use of modules to provide structure and to separate public
+interface from private implementation. Schematically, we have seen:
 
-```
+```fortran
 module schematic
 
   ! Broadly, public "interface"
@@ -69,7 +69,7 @@ and implementation (cf. C header files) is required.
 Submodules may be organised in a tree-like hierarchy, with the ancestor
 module as the root.
 
-```
+```fortran
 module example_module
 
 end module example_module
@@ -80,7 +80,7 @@ no `contains` statement).
 
 The implementation can then be placed in a submodule:
 
-```
+```fortran
 submodule (example_module) example_submodule
 
 contains
@@ -101,7 +101,7 @@ the ancestor module.
 
 Formally, we have:
 
-```
+```fortran
 submodule (parent-identifier) submodule-name
   [ specification part ]
   [ module-subprogram-part]
@@ -114,7 +114,7 @@ where the `parent-identifier` is the name of the parent module.
 
 Suppose in our module we define a new data type:
 
-```
+```fortran
   type, public :: example_t
     ...
   end type example_t
@@ -123,7 +123,7 @@ Suppose in our module we define a new data type:
 We can define an interface block using this type (also in the module)
 to specify the contract:
 
-```
+```fortran
    interface example_t
      module function example_int_t(ival) result(e)
        integer, intent(in) :: ival
@@ -137,7 +137,7 @@ there is no `import` statement required in the interface block.
 
 This would then be implemented in the `submodule` subprogram part:
 
-```
+```fortran
   module function example_int_t(ival) result(e)
     integer, intent(in) :: ival
     type (example_t)    :: e
@@ -165,7 +165,7 @@ and need not match).
 Compile (do not link) the `module` and submodule files `example.f90` and
 `example_a.f90` in the current directory. E.g.,
 
-```
+```bash
 $ ftn -c example_module.f90
 $ ftn -c example_submodule.f90
 ```
@@ -181,7 +181,7 @@ just additional `.mod` files).
 
 It's possible to omit the interface details in the submodule. E.g.,
 
-```
+```fortran
   module procedure example_t
     ...
   end procedure example_t
