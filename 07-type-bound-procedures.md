@@ -33,7 +33,7 @@ of the type, and appears after the `contains` statement in the definition.
 For example, consider again the simple `object_t`. Say we wished to add
 a function to compute the volume of an object:
 
-```
+```fortran
   type, public ::object_t
     ! ... components ...
   contains
@@ -57,9 +57,9 @@ Note there is no `pointer` attribute: this is a *type-bound* procedure.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-We must provide the corresponding function function
+We must then provide the corresponding function:
 
-```
+```fortran
   function object_volume(self) result(volume)
 
     class (object_t), intent(in) :: self
@@ -84,7 +84,7 @@ which the type has been extended, i.e., `class` permits polymorphism.
 
 To invoke the new type-bound procedure, e.g.:
 
-```
+```fortran
   type (object_t) :: a = object_t()
 
   print *, "Volume is ", a%volume()
@@ -104,9 +104,9 @@ argument (`self`).
 Using the template `object_type.f90` add the type-bound procedure `volume()`
 in the `object_t` type (only). Provide an implementation which sets the
 volume to zero. Using the accompanying program `example1.f90` check you
-can call new `volume()` procedure for an `object_t`.
+can call the new `volume()` procedure for an `object_t`.
 
-```
+```bash
 $ ftn object_type.f90 example1.f90
 ```
 
@@ -116,7 +116,7 @@ $ ftn object_type.f90 example1.f90
 
 The `object_t` type declaration should now look like
 
-```
+```fortran
 type, public :: object_t
   real :: rho  = 1.0       ! density
   real :: x(3) = 0.0       ! position of centre of mass
@@ -127,7 +127,7 @@ end type object_t
 
 and the module should now contain
 
-```
+```fortran
 function object_volume(self) result(volume)
 
   class (object_t), intent(in) :: self
@@ -164,7 +164,7 @@ new implementation.
 This can be done by merely re-declaring the procedure binding in the extending
 type with the same name, e.g.,:
 
-```
+```fortran
   type, extends(object_t), public :: sphere_t
     ! ...
   contains
@@ -194,7 +194,7 @@ result.
 
 Define an appropriate function for computing the volume of a sphere
 
-```
+```fortran
 function sphere_volume(self) result(volume)
 
   class (sphere_t), intent(in) :: self
@@ -207,7 +207,7 @@ end function sphere_volume
 
 and bind this to the `sphere_t` type
 
-```
+```fortran
 type, extends(object_t), public :: sphere_t
   real :: a = 1.0          ! radius
 contains
@@ -226,8 +226,11 @@ What happens if you try to override the `volume()` procedure in the
 
 The compiler prevents redefinition of the `non_overridable` bound procedure.
 
+```bash
+$ gfortran -c object_type.f90
 ```
-$ gfortran -c object_type.f90 
+
+```output
 object_type.f90:23:14:
 
    23 |      procedure, pass :: volume => charged_sphere_volume
@@ -243,7 +246,7 @@ Error: 'volume' at (1) overrides a procedure binding declared NON_OVERRIDABLE
 
 The form of the type-bound procedure definition in this context is:
 
-```
+```fortran
   procedure [, binding-attr-list] :: type-bound-name [ => specific-name ]
 ```
 
@@ -261,7 +264,7 @@ where there is a comma-separated list of attributes which may include
 The default is that type-bound-procedure receives the *passed object dummy
 argument* as the first dummy argument. There is an optional argument
 
-```
+```fortran
   pass [ (arg) ]
 ```
 
@@ -276,7 +279,7 @@ invoking object (required if it's not the first dummy argument).
 If one wishes to overload type-bound procedures, an additional step is
 required:
 
-```
+```fortran
   type, public :: my_type
     ! ...
   contains
@@ -296,7 +299,7 @@ derived type i/o.
 It is possible to declare a type which has a procedure pointer as a
 *component*:
 
-```
+```fortran
   type, public :: my_pp_t
     procedure (interface_pp), pointer :: p
   end type my_pp_t
@@ -332,7 +335,7 @@ Check that this works for the `charged_sphere_t` too.
 
 As before, define an appropriate function to compute the sphere mass
 
-```
+```fortran
 function sphere_mass(self) result(mass)
 
   class (sphere_t), intent(in) :: self
@@ -345,7 +348,7 @@ end function sphere_mass
 
 and bind this to the `sphere_t` type
 
-```
+```fortran
 type, extends(object_t), public :: sphere_t
   real :: a = 1.0          ! radius
 contains

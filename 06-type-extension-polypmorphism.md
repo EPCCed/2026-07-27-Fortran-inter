@@ -30,7 +30,7 @@ basis for abstraction.
 Suppose we had a type to represent a general category of entity
 or object, e.g.,
 
-```
+```fortran
 type, public :: object_t
   real :: rho           ! density
   real :: x(3)          ! position of centre of mass
@@ -40,7 +40,7 @@ end type base_t
 We can now define a more specific entity by extending the `object_t`,
 e.g.,
 
-```
+```fortran
 type, extends(object_t), public :: sphere_t
   real :: a             ! radius
 end type sphere_t
@@ -49,7 +49,7 @@ end type sphere_t
 This new type is said to inherit the components of the original type
 which may be accessed via the component selector in one of two ways:
 
-```
+```fortran
   type (sphere_t) :: s
   real            :: density
 
@@ -78,7 +78,7 @@ it has a so-called *single inheritance* model.
 
 There is a default structure constructor associated with the new type
 
-```
+```fortran
   type (sphere_t) :: s
   real            :: rho = 1.0
   real            :: x(3) = [ 2.0, 3.0, 4.0 ]
@@ -94,13 +94,13 @@ been declared.
 
 The order can be adjusted with the use of keywords, e.g.:
 
-```
+```fortran
   s = sphere_t(a = radius, rho = rho, x = x)
 ```
 
 We may also use the base type as a component of the structure constructor
 
-```
+```fortran
   type (object_t) :: obj
   type (sphere_t) :: s
   real            :: a = 2.5
@@ -129,7 +129,7 @@ definitions are provided in the file `object_type.f90`.
 
 ## Solution 1
 
-```
+```fortran
 type, extends(sphere_t), public :: charged_sphere_t
   real :: q = -1.0         ! charge
 end type charged_sphere_t
@@ -137,7 +137,7 @@ end type charged_sphere_t
 
 Confirm you can compile the code with
 
-```
+```bash
 ftn example1.f90 object_type.f90
 ```
 
@@ -151,7 +151,7 @@ the ancestor components of the new type in both long and short forms.
 
 ## Solution 2
 
-```
+```fortran
 ! ... Earlier declarations ...
 cs = charged_sphere_t(s, 5.0)
 print *, "Charged sphere q = ", cs%q
@@ -161,8 +161,11 @@ print *, "Charged sphere density (long) = ", cs%sphere_t%object_t%rho
 
 Compiling and running the code you should obtain output similar to
 
-```
+```bash
 $ ftn example1.f90 object_type.f90 && ./a.out
+```
+
+```output
  Sphere density    1.00000000
  Sphere density    1.00000000
  Sphere radius     1.50000000
@@ -190,13 +193,13 @@ in many languages.
 
 Fortran provides the pointer mechanism using
 
-```
+```fortran
   class (object_t), pointer :: obj => null()
 ```
 
 One may also have an allocatable polymorphic object:
 
-```
+```fortran
   class (object_t), allocatable :: obj
 ```
 
@@ -211,7 +214,7 @@ for the time being.
 
 The declaration
 
-```
+```fortran
   class (object_t), pointer :: obj => null()
 ```
 
@@ -225,7 +228,7 @@ In the above example, the *declared* type of the polymorphic pointer is
 The *dynamic* type may be changed by associating the pointer with a
 target of an extended type, e.g. with:
 
-```
+```fortran
   class (object_t), pointer :: obj => null()
   type (sphere_t),  target  :: s
 
@@ -238,7 +241,7 @@ unassociated pointer is its declared type.
 The polymorphic variable has access to components
 of only of the declared type, but not of its descendents. So
 
-```
+```fortran
   class (object_t), pointer :: obj => null()
   type (sphere_t),  target  :: s
 
@@ -267,7 +270,7 @@ actual argument.
 Compile the second example together with your updated `object_type.f90`
 which includes a `charged_sphere_t`:
 
-```
+```bash
 $ ftn example2.f90 object_type.f90
 ```
 
@@ -279,8 +282,8 @@ $ ftn example2.f90 object_type.f90
 
 Attempting to compile this code should fail with errors
 
-```
-$example2.f90:20:34:
+```output
+example2.f90:20:34:
 
    20 |   print *, "object radius   ", p%a
       |                                  1
@@ -304,7 +307,7 @@ from the example so it will compile.
 
 Why can't we just declare the pointer to be:
 
-```
+```fortran
  class (charged_sphere_t), pointer :: p
 ```
 
@@ -317,7 +320,7 @@ in this example? What is the compiler error if you try?
 The `charged_sphere_t` is higher in the inheritance chain than `object_t`, it therefore cannot
 be associated with the base derived type.
 
-```
+```output
 example2.f90:16:2:
 
    16 |   p => obj
@@ -338,7 +341,7 @@ to taken depending on the dynamic type. This is similar to the
 simple `select case` construct, where the behaviour is controlled
 by the dynamic type of the *selector*, here `p`:
 
-```
+```fortran
 select type (p)
 type is (charged_sphere_t)
   print *, "Charge is ", p%q
@@ -367,14 +370,14 @@ There are a number of intrinsic type inquiry functions which take
 polymorphic arguments, and return a logical result depending on
 dynamic type.
 
-```
+```fortran
   extends_type_of(a, b)
 ```
 
 returns `.true.` if the dynamic type of `a` is an extension of `b`;
 and
 
-```
+```fortran
   same_type_as(a, b)
 ```
 
@@ -396,7 +399,7 @@ depending on the dynamic type of the actual argument.
 
 The body of the subroutine will look like
 
-```
+```fortran
 print *, "Select type: "
 select type (p)
 class is (object_t)
@@ -426,31 +429,6 @@ the `example2.f90` program.
 Write some generic constructors for object types
 which take different data types as arguments. For example, it might be a
 convenience to be able to specify the position as a three-vector of integers.
-
-:::::::::::::::  solution
-
-## Solution
-
-A possible implementation might be of the form
-
-```
-subroutine object_info(p)
-   class(object_t), pointer, intent(in) :: p
-   select type (p)
-  type is (charged_sphere_t)
-     print *, "Charge = ", p%q
-  class is (sphere_t)
-     print *, "Radius = ", p%a
-  class is (object_t)
-     print *, "Density = ", p%rho
-     print *, "Position = ", p%x
-  class default
-     print *, "Unknown object type!"
-  end select
-end subroutine object_info
-```
-
-:::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
