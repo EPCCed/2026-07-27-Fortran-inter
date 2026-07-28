@@ -7,7 +7,7 @@ program example1
   implicit none
 
   type (file_formatted_writer_t) :: f
-  integer :: data(4) = [ 3.0, 5.0, 7.0, 9.0 ]
+  integer :: data(4) = [ 3, 5, 7, 9 ]
   integer :: ierr
 
   ! Open a file, say "file_formatted.dat"

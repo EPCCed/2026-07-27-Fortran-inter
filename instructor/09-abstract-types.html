@@ -401,7 +401,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Abstract types</h1>
-        <p>Last updated on 2026-07-10 |
+        <p>Last updated on 2026-07-28 |
 
         <a href="https://github.com/EPCCed/2026-07-27-Fortran-inter/edit/main/episodes/09-abstract-types.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -443,17 +443,21 @@ that allows one to write flexible and extensible software.</p>
 <section><h2 class="section-heading" id="defining-an-abstract-type">Defining an abstract type<a class="anchor" aria-label="anchor" href="#defining-an-abstract-type"></a></h2>
 <hr class="half-width"><p>An abstract type is defined with the <code>abstract</code> attribute,
 schematically:</p>
-<pre><code>  type, abstract, public :: my_abstract_t
-    ! ... usually has no components ...
-  contains
-    procedure (interface1), pass, deferred :: binding1
-    procedure (interface2), pass, deferred :: binding2
-    ! ... and so on ...
-  end type my_abstract_t
-
-  abstract interface
-    ! ... relevant for interface1 and so on ...
-  end interface</code></pre>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a>  <span class="dt">type</span>, abstract, <span class="dt">public</span> <span class="dt">::</span> my_abstract_t</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a>    <span class="co">! ... usually has no components ...</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a>  <span class="kw">contains</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a>    <span class="kw">procedure</span> (interface1), pass, deferred <span class="dt">::</span> binding1</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a>    <span class="kw">procedure</span> (interface2), pass, deferred <span class="dt">::</span> binding2</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a>    <span class="co">! ... and so on ...</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a>  <span class="dt">end type</span> my_abstract_t</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a>  abstract <span class="kw">interface</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1" aria-label="code-block-1-10"></a>    <span class="co">! ... relevant for interface1 and so on ...</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1" aria-label="code-block-1-11"></a>  <span class="kw">end interface</span></span></code></pre>
+</div>
 <div id="abstract-types-define-only-interfaces" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -462,34 +466,47 @@ schematically:</p>
 <div id="abstract-types-define-only-interfaces" class="callout-inner">
 <h3 class="callout-title">Abstract types define only interfaces</h3>
 <div class="callout-content">
-<p>It is often the case that an abstract type defines only interface, or
-supported behaviours, and not components (a lack of concrete components
-can be considered a characteristic of an abstract entity).</p>
+<p>It is often the case that an abstract type defines only interfaces,
+or supported behaviours, and not components (a lack of concrete
+components can be considered a characteristic of an abstract
+entity).</p>
 </div>
 </div>
 </div>
 <p>The <code>deferred</code> attribute in the <code>procedure</code>
 declarations indicates that the actual implementation is yet to be
-specified (cf. virtual in C++). Only abstract types may have
-<code>deferred</code> attribute for procedures. Interface blocks -
+specified (cf. <code>virtual</code> in C++). Only abstract types may
+have <code>deferred</code> attribute for procedures. Interface blocks -
 typically abstract - must be provided for each type-bound procedure.
 This is done in the same way as for non-abstract types as we have seen
 before.</p>
 <p>An object of an abstract type is not permitted:</p>
-<pre><code>  type (my_abstract_t) :: a            ! erroneous</code></pre>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a>  <span class="dt">type (my_abstract_t)</span> <span class="dt">::</span> a            <span class="co">! erroneous</span></span></code></pre>
+</div>
 <p>A polymorphic pointer must be used:</p>
-<pre><code>  class (my_abstract_t), pointer :: a  ! ok. pointer to abstract type</code></pre>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a>  class (my_abstract_t), <span class="dt">pointer</span> <span class="dt">::</span> a  <span class="co">! ok. pointer to abstract type</span></span></code></pre>
+</div>
 <div class="section level3">
 <h3 id="a-concrete-implementation">A concrete implementation<a class="anchor" aria-label="anchor" href="#a-concrete-implementation"></a></h3>
 <p>A concrete implementation would extend the abstract type</p>
-<pre><code>  type, extends(my_abstract_t), public :: my_concrete_t
-    private
-    ! ... implementation often private ...
-  contains
-    procedure :: binding1 =&gt; my_implementation1
-    procedute :: binding2 =&gt; my_implementation2
-    ! ... and so on ...
-  end type my_concrete_t</code></pre>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a>  <span class="dt">type</span>, extends(my_abstract_t), <span class="dt">public</span> <span class="dt">::</span> my_concrete_t</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a>    <span class="dt">private</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a>    <span class="co">! ... implementation often private ...</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a>  <span class="kw">contains</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a>    <span class="kw">procedure</span> <span class="dt">::</span> binding1 <span class="kw">=</span><span class="op">&gt;</span> my_implementation1</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1" aria-label="code-block-4-6"></a>    procedute <span class="dt">::</span> binding2 <span class="kw">=</span><span class="op">&gt;</span> my_implementation2</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1" aria-label="code-block-4-7"></a>    <span class="co">! ... and so on ...</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1" aria-label="code-block-4-8"></a>  <span class="dt">end type</span> my_concrete_t</span></code></pre>
+</div>
 <p>and would have to provide appropriate implementations for the
 deferred procedures consistent with the relevant interface.</p>
 <div id="concrete-types-cannot-have-deferred-procedures" class="callout">
@@ -504,7 +521,7 @@ deferred procedures consistent with the relevant interface.</p>
 <p>A concrete type extending an abstract type <em>must</em> implement
 any remaining deferred procedures.</p>
 <p>A type extending an abstract type may itself be abstract, and the
-definitions of its type-bounds procedures can remain
+definitions of its type-bound procedures can remain
 <code>deferred</code>, but could also be implemented in the abstract
 type.</p>
 </div>
@@ -515,20 +532,28 @@ type.</p>
 <h3 id="constructor">Constructor<a class="anchor" aria-label="anchor" href="#constructor"></a></h3>
 <p>As usual, a concrete type would typically provide some way to
 instantiate itself. Schematically,</p>
-<pre><code>  function my_concrete_type_create(...) result(p)
-
-    ! ... arguments ...
-    type (my_concrete_t), pointer :: p
-
-    allocate(p)
-     ...
-  end function my_concrete_type_create</code></pre>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a>  <span class="kw">function</span> my_concrete_type_create(...) <span class="kw">result</span>(p)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a>    <span class="co">! ... arguments ...</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a>    <span class="dt">type (my_concrete_t)</span>, <span class="dt">pointer</span> <span class="dt">::</span> p</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1" aria-label="code-block-5-5"></a></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1" aria-label="code-block-5-6"></a>    <span class="kw">allocate</span>(p)</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1" aria-label="code-block-5-7"></a><span class="bu">     .</span>..</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1" aria-label="code-block-5-8"></a>  <span class="kw">end function</span> my_concrete_type_create</span></code></pre>
+</div>
 <p>And then, schematically,</p>
-<pre><code>   class (my_abstract_t), pointer :: a =&gt; null()
-
-   a =&gt; my_concrete_type_create(...)
-
-   call a%binding1(...)</code></pre>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a>   class (my_abstract_t), <span class="dt">pointer</span> <span class="dt">::</span> a <span class="kw">=</span><span class="op">&gt;</span> null()</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a>   a <span class="kw">=</span><span class="op">&gt;</span> my_concrete_type_create(...)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1" aria-label="code-block-6-5"></a>   <span class="kw">call</span> a<span class="op">%</span>binding1(...)</span></code></pre>
+</div>
 <p>As <code>a</code> is type-compatible with extending types, and we are
 able to write code in which we do not care about the details of the
 implementation, but only access the public (abstract) interface. This
@@ -538,21 +563,29 @@ excepts the constructor itself.</p>
 <hr class="half-width"><p>Suppose we wished to refactor our <code>object_t</code> from the
 previous section to be an abstract type. We wish to provide a type-bound
 procedure to compute the volume of different objects.</p>
-<pre><code>   type, abstract, public :: object_t
-     ! ... no components here
-   contains
-     procedure (if_volume), pass, deferred :: volume
-   end type object_t</code></pre>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a>   <span class="dt">type</span>, abstract, <span class="dt">public</span> <span class="dt">::</span> object_t</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a><span class="bu">     !</span> ... no components here</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a>   <span class="kw">contains</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a><span class="bu">     p</span>rocedure (if_volume), pass, deferred <span class="dt">::</span> volume</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a>   <span class="dt">end type</span> object_t</span></code></pre>
+</div>
 <p>We need to specify an interface for the volume procedure, which will
 use the passed object dummy argument, and return a scalar real
 number:</p>
-<pre><code>  abstract interface
-    function if_volume(self) result(volume)
-      import object_t
-      class (object_t), intent(in) :: self
-      real                         :: volume
-    end function if_volume
-  end interface</code></pre>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a>  abstract <span class="kw">interface</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a>    <span class="kw">function</span> if_volume(self) <span class="kw">result</span>(volume)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a>      import object_t</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a>      class (object_t), <span class="dt">intent(in)</span> <span class="dt">::</span> self</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a>      <span class="dt">real</span>                         <span class="dt">::</span> volume</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a>    <span class="kw">end function</span> if_volume</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a>  <span class="kw">end interface</span></span></code></pre>
+</div>
 <p>Here, the function is declared with a name matching the interface
 name in the type definition. The procedure will ultimately be called
 using the bound name <code>volume()</code>.</p>
@@ -587,26 +620,27 @@ deferred procedures. The abstract type might be called
 <code>file_writer_t</code>. The three procedures can be functions or
 subroutines. If functions, the interface we want is:</p>
 <ol style="list-style-type: decimal"><li>
-<code>function f_open(self, filename) result(ierr)</code> where
+<code>function if_open(self, filename) result(ierr)</code> where
 filename is a string and the return value is an integer error code;</li>
 <li>
-<code>function f_write(self, data) result(ierr)</code> where the
+<code>function if_write(self, data) result(ierr)</code> where the
 data should be, for simplicity, a rank 1 array of integers;</li>
 <li>
-<code>function f_close(self) result(ierr)</code> which closes the
+<code>function if_close(self) result(ierr)</code> which closes the
 file.</li>
 </ol><p>(Subroutines would be similar, but with an <code>intent(out)</code>
 integer error code.)</p>
 <p>In all cases the passed object dummy argument should be
 <code>intent(inout)</code> to allow that the internal state associated
 with the file write can be updated. The <code>data</code> argument for
-the <code>f_write()</code> function can be <code>intent(in)</code>.</p>
+the <code>if_write()</code> function can be <code>intent(in)</code>.</p>
 <p>At this point you can check only that the module compiles
 successfully:</p>
-<pre><code>$ ftn -c file_writer_module.f90</code></pre>
-<p>Hint: it may be useful to open the file with
-<code>status = "replace"</code> to prevent the need to delete files each
-time before running the program we are working towards.</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="ex">$</span> ftn <span class="at">-c</span> file_writer_module.f90</span></code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -615,38 +649,42 @@ time before running the program we are working towards.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>The abstract type requires a corresponding abstract interface for the
 <code>deferred</code> procedures.</p>
-<pre><code>type, abstract, public :: file_writer_t
-contains
-  procedure (if_open),  pass, deferred :: open
-  procedure (if_write), pass, deferred :: write
-  procedure (if_close), pass, deferred :: close
-end type file_writer_t
-
-abstract interface
-   function if_open(self, filename) result(ierr)
-     import file_writer_t
-     class (file_writer_t), intent(inout) :: self
-     character (len = *),   intent(in)    :: filename
-     integer                              :: ierr
-  end function if_open
-
-  function if_write(self, data) result(ierr)
-    import file_writer_t
-    class (file_writer_t), intent(inout)  :: self
-    integer,               intent(in)     :: data(:)
-    integer                               :: ierr
-  end function if_write
-
-  function if_close(self) result(ierr)
-    import file_writer_t
-    class (file_writer_t), intent(inout)  :: self
-    integer                               :: ierr
-  end function if_close
-end interface</code></pre>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="dt">type</span>, abstract, <span class="dt">public</span> <span class="dt">::</span> file_writer_t</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a><span class="co">contains</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a>  <span class="kw">procedure</span> (if_open),  pass, deferred <span class="dt">::</span> <span class="fu">open</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a>  <span class="kw">procedure</span> (if_write), pass, deferred <span class="dt">::</span> <span class="fu">write</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a>  <span class="kw">procedure</span> (if_close), pass, deferred <span class="dt">::</span> <span class="fu">close</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a><span class="dt">end type</span> file_writer_t</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a>abstract <span class="kw">interface</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1" aria-label="code-block-10-9"></a>  <span class="kw">function</span> if_open(self, filename) <span class="kw">result</span>(ierr)</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a><span class="bu">     i</span>mport file_writer_t</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a><span class="bu">     c</span>lass (file_writer_t), <span class="dt">intent(inout)</span> <span class="dt">::</span> self</span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1" aria-label="code-block-10-12"></a><span class="bu">     c</span>haracter (<span class="fu">len</span> <span class="kw">=</span> <span class="kw">*</span>),   <span class="dt">intent(in)</span>    <span class="dt">::</span> filename</span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1" aria-label="code-block-10-13"></a><span class="bu">     i</span>nteger                              <span class="dt">::</span> ierr</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1" aria-label="code-block-10-14"></a>  <span class="kw">end function</span> if_open</span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1" aria-label="code-block-10-15"></a></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1" aria-label="code-block-10-16"></a>  <span class="kw">function</span> if_write(self, data) <span class="kw">result</span>(ierr)</span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1" aria-label="code-block-10-17"></a>    import file_writer_t</span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1" aria-label="code-block-10-18"></a>    class (file_writer_t), <span class="dt">intent(inout)</span>  <span class="dt">::</span> self</span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1" aria-label="code-block-10-19"></a>    <span class="dt">integer</span>,               <span class="dt">intent(in)</span>     <span class="dt">::</span> data(:)</span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1" aria-label="code-block-10-20"></a>    <span class="dt">integer</span>                               <span class="dt">::</span> ierr</span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1" aria-label="code-block-10-21"></a>  <span class="kw">end function</span> if_write</span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1" aria-label="code-block-10-22"></a></span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1" aria-label="code-block-10-23"></a>  <span class="kw">function</span> if_close(self) <span class="kw">result</span>(ierr)</span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1" aria-label="code-block-10-24"></a>    import file_writer_t</span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1" aria-label="code-block-10-25"></a>    class (file_writer_t), <span class="dt">intent(inout)</span>  <span class="dt">::</span> self</span>
+<span id="cb10-26"><a href="#cb10-26" tabindex="-1" aria-label="code-block-10-26"></a>    <span class="dt">integer</span>                               <span class="dt">::</span> ierr</span>
+<span id="cb10-27"><a href="#cb10-27" tabindex="-1" aria-label="code-block-10-27"></a>  <span class="kw">end function</span> if_close</span>
+<span id="cb10-28"><a href="#cb10-28" tabindex="-1" aria-label="code-block-10-28"></a><span class="kw">end interface</span></span></code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -655,22 +693,30 @@ end interface</code></pre>
 </section><section><h2 class="section-heading" id="a-concrete-implementation-1">A concrete implementation<a class="anchor" aria-label="anchor" href="#a-concrete-implementation-1"></a></h2>
 <hr class="half-width"><p>A concrete implementation of the abstract <code>object_t</code> might
 look like:</p>
-<pre><code>   type, extends(object_t), public :: sphere_t
-     real, private :: a   ! radius
-   contains
-     procedure, pass :: volume =&gt; sphere_volume
-   end type sphere_t</code></pre>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a>   <span class="dt">type</span>, extends(object_t), <span class="dt">public</span> <span class="dt">::</span> sphere_t</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a><span class="bu">     r</span>eal, <span class="dt">private</span> <span class="dt">::</span> a   <span class="co">! radius</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1" aria-label="code-block-11-3"></a>   <span class="kw">contains</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1" aria-label="code-block-11-4"></a><span class="bu">     p</span>rocedure, pass <span class="dt">::</span> volume <span class="kw">=</span><span class="op">&gt;</span> sphere_volume</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1" aria-label="code-block-11-5"></a>   <span class="dt">end type</span> sphere_t</span></code></pre>
+</div>
 <p>Notice the type is no longer <code>abstract</code>, and the procedure
 definition is no longer deferred. In addition, onlt deferred definitions
 require an interface specification.</p>
 <p>The function <code>sphere_volume()</code> would be:</p>
-<pre><code>   function sphere_volume(self) result(volume)
-     class (sphere_t), intent(in) :: self
-     real                         :: volume
-
-     volume = ...
-
-   end function sphere_volume</code></pre>
+<div class="codewrapper sourceCode" id="cb12">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a>   <span class="kw">function</span> sphere_volume(self) <span class="kw">result</span>(volume)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a><span class="bu">     c</span>lass (sphere_t), <span class="dt">intent(in)</span> <span class="dt">::</span> self</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a><span class="bu">     r</span>eal                         <span class="dt">::</span> volume</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1" aria-label="code-block-12-5"></a><span class="bu">     v</span>olume <span class="kw">=</span> ...</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1" aria-label="code-block-12-6"></a></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1" aria-label="code-block-12-7"></a>   <span class="kw">end function</span> sphere_volume</span></code></pre>
+</div>
 <div id="implementation-follows-specification" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -702,6 +748,9 @@ state we must keep in the component part to remember the file between
 operations.</p>
 <p>Write a short program to check you can use an object of the new type
 to write some test data to a file.</p>
+<p>Hint: it may be useful to open the file with
+<code>status = "replace"</code> to prevent the need to delete files each
+time before running the program we are working towards.</p>
 </div>
 </div>
 </div>
@@ -710,59 +759,67 @@ to write some test data to a file.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>We need a concrete type to implement the interface definted by
 <code>file_writer_t</code></p>
-<pre><code>type, extends(file_writer_t), public :: file_formatted_writer_t
-  private
-  integer :: myunit
-contains
-  procedure, pass :: open  =&gt; open_formatted
-  procedure, pass :: write =&gt; write_formatted
-  procedure, pass :: close =&gt; close_formatted
-end type file_formatted_writer_t
-
-! ...
-
-function open_formatted(self, filename) result(ierr)
-  class (file_formatted_writer_t), intent(inout) :: self
-  character (len = *),             intent(in)    :: filename
-  integer                                        :: ierr
-  open (newunit = self%myunit, file = filename, form = 'formatted', &amp;
-       status = "replace", action = 'write', iostat = ierr)
-end function open_formatted
-
-function write_formatted(self, data) result(ierr)
-  class (file_formatted_writer_t), intent(inout) :: self
-  integer,                         intent(in)    :: data(:)
-  integer                                        :: ierr
-  write (unit = self%myunit, fmt = *, iostat = ierr) data(:)
-end function write_formatted
-
-function close_formatted(self) result(ierr)
-  class (file_formatted_writer_t), intent(inout) :: self
-  integer                                        :: ierr
-  close (unit = self%myunit, status = 'keep', iostat = ierr)
-end function close_formatted</code></pre>
+<div class="codewrapper sourceCode" id="cb13">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a><span class="dt">type</span>, extends(file_writer_t), <span class="dt">public</span> <span class="dt">::</span> file_formatted_writer_t</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1" aria-label="code-block-13-2"></a>  <span class="dt">private</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a>  <span class="dt">integer</span> <span class="dt">::</span> myunit</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1" aria-label="code-block-13-4"></a><span class="co">contains</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1" aria-label="code-block-13-5"></a>  <span class="kw">procedure</span>, pass <span class="dt">::</span> <span class="fu">open</span>  <span class="kw">=</span><span class="op">&gt;</span> open_formatted</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1" aria-label="code-block-13-6"></a>  <span class="kw">procedure</span>, pass <span class="dt">::</span> <span class="fu">write</span> <span class="kw">=</span><span class="op">&gt;</span> write_formatted</span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1" aria-label="code-block-13-7"></a>  <span class="kw">procedure</span>, pass <span class="dt">::</span> <span class="fu">close</span> <span class="kw">=</span><span class="op">&gt;</span> close_formatted</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1" aria-label="code-block-13-8"></a><span class="dt">end type</span> file_formatted_writer_t</span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1" aria-label="code-block-13-9"></a></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1" aria-label="code-block-13-10"></a><span class="co">! ...</span></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1" aria-label="code-block-13-11"></a></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1" aria-label="code-block-13-12"></a><span class="kw">function</span> open_formatted(self, filename) <span class="kw">result</span>(ierr)</span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1" aria-label="code-block-13-13"></a>  class (file_formatted_writer_t), <span class="dt">intent(inout)</span> <span class="dt">::</span> self</span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1" aria-label="code-block-13-14"></a>  <span class="dt">character (len = *)</span>,             <span class="dt">intent(in)</span>    <span class="dt">::</span> filename</span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1" aria-label="code-block-13-15"></a>  <span class="dt">integer</span>                                        <span class="dt">::</span> ierr</span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1" aria-label="code-block-13-16"></a>  <span class="fu">open (</span>newunit <span class="kw">=</span> self%myunit, <span class="fu">file</span> <span class="kw">=</span> filename, <span class="fu">form</span> <span class="kw">=</span> <span class="st">'formatted'</span>, <span class="kw">&amp;</span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1" aria-label="code-block-13-17"></a>       <span class="fu">status</span> <span class="kw">=</span> <span class="st">"replace"</span>, <span class="fu">action</span> <span class="kw">=</span> <span class="st">'write'</span>, <span class="fu">iostat</span> <span class="kw">=</span> ierr<span class="fu">)</span></span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1" aria-label="code-block-13-18"></a><span class="kw">end function</span> open_formatted</span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1" aria-label="code-block-13-19"></a></span>
+<span id="cb13-20"><a href="#cb13-20" tabindex="-1" aria-label="code-block-13-20"></a><span class="kw">function</span> write_formatted(self, data) <span class="kw">result</span>(ierr)</span>
+<span id="cb13-21"><a href="#cb13-21" tabindex="-1" aria-label="code-block-13-21"></a>  class (file_formatted_writer_t), <span class="dt">intent(inout)</span> <span class="dt">::</span> self</span>
+<span id="cb13-22"><a href="#cb13-22" tabindex="-1" aria-label="code-block-13-22"></a>  <span class="dt">integer</span>,                         <span class="dt">intent(in)</span>    <span class="dt">::</span> data(:)</span>
+<span id="cb13-23"><a href="#cb13-23" tabindex="-1" aria-label="code-block-13-23"></a>  <span class="dt">integer</span>                                        <span class="dt">::</span> ierr</span>
+<span id="cb13-24"><a href="#cb13-24" tabindex="-1" aria-label="code-block-13-24"></a>  <span class="fu">write (unit</span> <span class="kw">=</span> self%myunit, <span class="fu">fmt</span> <span class="kw">=</span> <span class="fu">*</span>, <span class="fu">iostat</span> <span class="kw">=</span> ierr<span class="fu">)</span> data(:)</span>
+<span id="cb13-25"><a href="#cb13-25" tabindex="-1" aria-label="code-block-13-25"></a><span class="kw">end function</span> write_formatted</span>
+<span id="cb13-26"><a href="#cb13-26" tabindex="-1" aria-label="code-block-13-26"></a></span>
+<span id="cb13-27"><a href="#cb13-27" tabindex="-1" aria-label="code-block-13-27"></a><span class="kw">function</span> close_formatted(self) <span class="kw">result</span>(ierr)</span>
+<span id="cb13-28"><a href="#cb13-28" tabindex="-1" aria-label="code-block-13-28"></a>  class (file_formatted_writer_t), <span class="dt">intent(inout)</span> <span class="dt">::</span> self</span>
+<span id="cb13-29"><a href="#cb13-29" tabindex="-1" aria-label="code-block-13-29"></a>  <span class="dt">integer</span>                                        <span class="dt">::</span> ierr</span>
+<span id="cb13-30"><a href="#cb13-30" tabindex="-1" aria-label="code-block-13-30"></a>  <span class="fu">close (unit</span> <span class="kw">=</span> self%myunit, <span class="fu">status</span> <span class="kw">=</span> <span class="st">'keep'</span>, <span class="fu">iostat</span> <span class="kw">=</span> ierr<span class="fu">)</span></span>
+<span id="cb13-31"><a href="#cb13-31" tabindex="-1" aria-label="code-block-13-31"></a><span class="kw">end function</span> close_formatted</span></code></pre>
+</div>
 <p>An example program then might look like</p>
-<pre><code>program example1
-
-  ! Write a file using the concrete class for formatted output.
-  ! Compile with: ftn file_module.f90 example1.f90
-
-  use file_module
-  implicit none
-
-  type (file_formatted_writer_t) :: f
-  integer :: data(4) = [ 3.0, 5.0, 7.0, 9.0 ]
-  integer :: ierr
-
-  ierr = f%open("file_formatted.dat")
-  ierr = f%write(data)
-  ierr = f%close()
-
-end program example1</code></pre>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a><span class="kw">program</span> example1</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1" aria-label="code-block-14-3"></a>  <span class="co">! Write a file using the concrete class for formatted output.</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1" aria-label="code-block-14-4"></a>  <span class="co">! Compile with: ftn file_module.f90 example1.f90</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1" aria-label="code-block-14-5"></a></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1" aria-label="code-block-14-6"></a>  <span class="kw">use</span> file_module</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1" aria-label="code-block-14-7"></a>  <span class="kw">implicit</span> <span class="kw">none</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1" aria-label="code-block-14-8"></a></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1" aria-label="code-block-14-9"></a>  <span class="dt">type (file_formatted_writer_t)</span> <span class="dt">::</span> f</span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1" aria-label="code-block-14-10"></a>  <span class="dt">integer</span> <span class="dt">::</span> data(<span class="dv">4</span>) <span class="kw">=</span> <span class="kw">[</span> <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span> <span class="kw">]</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1" aria-label="code-block-14-11"></a>  <span class="dt">integer</span> <span class="dt">::</span> ierr</span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1" aria-label="code-block-14-12"></a></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1" aria-label="code-block-14-13"></a>  ierr <span class="kw">=</span> f<span class="op">%</span><span class="fu">open(</span><span class="st">"file_formatted.dat"</span><span class="fu">)</span></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1" aria-label="code-block-14-14"></a>  ierr <span class="kw">=</span> f<span class="op">%</span><span class="fu">write(</span>data<span class="fu">)</span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1" aria-label="code-block-14-15"></a>  ierr <span class="kw">=</span> f<span class="op">%</span><span class="fu">close()</span></span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1" aria-label="code-block-14-16"></a></span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1" aria-label="code-block-14-17"></a><span class="kw">end program</span> example1</span></code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -777,23 +834,31 @@ simple way without worrying about the details of the specific
 implementations. Here we can use a polymorphic pointer to the abstract
 type.</p>
 <p>Schematically</p>
-<pre><code>   class (object_t), pointer :: obj =&gt; null()
-
-   obj =&gt; object_from_string("cube")
-   ...
-   print *, "Volume is ", obj%volume()</code></pre>
+<div class="codewrapper sourceCode" id="cb15">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a>   class (object_t), <span class="dt">pointer</span> <span class="dt">::</span> obj <span class="kw">=</span><span class="op">&gt;</span> null()</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1" aria-label="code-block-15-2"></a></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1" aria-label="code-block-15-3"></a>   obj <span class="kw">=</span><span class="op">&gt;</span> object_from_string(<span class="st">"cube"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1" aria-label="code-block-15-4"></a>   ...</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1" aria-label="code-block-15-5"></a>   <span class="fu">print</span> <span class="kw">*</span>, <span class="st">"Volume is "</span>, obj<span class="op">%</span>volume()</span></code></pre>
+</div>
 <p>where the <code>object_from_string()</code> function returns an
 appropriate pointer to the object requested.</p>
 <p>A function to return a pointer to one particular type might be</p>
-<pre><code>  function cube_create() result(p)
-
-    class (cube_t), pointer :: p
-    allocate(p)
-
-  end function cube_create</code></pre>
+<div class="codewrapper sourceCode" id="cb16">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a>  <span class="kw">function</span> cube_create() <span class="kw">result</span>(p)</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1" aria-label="code-block-16-2"></a></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1" aria-label="code-block-16-3"></a>    class (cube_t), <span class="dt">pointer</span> <span class="dt">::</span> p</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1" aria-label="code-block-16-4"></a>    <span class="kw">allocate</span>(p)</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1" aria-label="code-block-16-5"></a></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1" aria-label="code-block-16-6"></a>  <span class="kw">end function</span> cube_create</span></code></pre>
+</div>
 <p>Two such functions could be combined to return the polymorphic result
-of the abstract type <code>file_writer_t</code>. Memory has been
-allocated against p to instantiate the object.</p>
+of the abstract type <code>object_t</code>. Memory has been allocated
+against p to instantiate the object.</p>
 <div class="section level3">
 <h3 id="exercise-15-minutes-2">Exercise (15 minutes)<a class="anchor" aria-label="anchor" href="#exercise-15-minutes-2"></a></h3>
 <div id="an-abstract-program" class="callout challenge">
@@ -804,9 +869,12 @@ allocated against p to instantiate the object.</p>
 <div id="an-abstract-program" class="callout-inner">
 <h3 class="callout-title">An abstract program</h3>
 <div class="callout-content">
-<p>Add a function in <code>file_module.f90</code> to return a pointer
-based on a string. This should allow at least one working
-<code>file_write_t</code> implementation.</p>
+<p>Add a function in <code>file_module.f90</code> to allocate and return
+a <code>file_writer_t</code> based on a string. The idea is that this
+function could potentially be extended to return one of many concrete
+types, determined by the string argument it receives. Thus for now, it
+can return only your working <code>file_formatted_writer_t</code>
+implementation of a <code>file_writer_t</code>.</p>
 </div>
 </div>
 </div>
@@ -815,26 +883,30 @@ based on a string. This should allow at least one working
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
-<pre><code>function create_file_formatted_writer_t() result(fp)
-  class (file_formatted_writer_t), pointer :: fp
-  allocate(fp)
-end function create_file_formatted_writer_t
-
-function file_writer_from_string(str) result(fp)
-  character (len = *), intent(in) :: str
-  class (file_writer_t), pointer  :: fp
-  ! We haven't reached typed allocation yet, hence the extra
-  ! routines to return a pointer of the right type.
-  fp =&gt; null()
-  select case (str)
-  case ("formatted")
-    fp =&gt; create_file_formatted_writer_t()
-  case default
-    print *, "Not recognised ", str
-  end select
-end function file_writer_from_string</code></pre>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb17-1"><a href="#cb17-1" tabindex="-1" aria-label="code-block-17-1"></a><span class="kw">function</span> create_file_formatted_writer_t() <span class="kw">result</span>(fp)</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1" aria-label="code-block-17-2"></a>  class (file_formatted_writer_t), <span class="dt">pointer</span> <span class="dt">::</span> fp</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1" aria-label="code-block-17-3"></a>  <span class="kw">allocate</span>(fp)</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1" aria-label="code-block-17-4"></a><span class="kw">end function</span> create_file_formatted_writer_t</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1" aria-label="code-block-17-5"></a></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1" aria-label="code-block-17-6"></a><span class="kw">function</span> file_writer_from_string(str) <span class="kw">result</span>(fp)</span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1" aria-label="code-block-17-7"></a>  <span class="dt">character (len = *)</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> str</span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1" aria-label="code-block-17-8"></a>  class (file_writer_t), <span class="dt">pointer</span>  <span class="dt">::</span> fp</span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1" aria-label="code-block-17-9"></a>  <span class="co">! We haven't reached typed allocation yet, hence the extra</span></span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1" aria-label="code-block-17-10"></a>  <span class="co">! routines to return a pointer of the right type.</span></span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1" aria-label="code-block-17-11"></a>  fp <span class="kw">=</span><span class="op">&gt;</span> null()</span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1" aria-label="code-block-17-12"></a>  <span class="kw">select case</span> (str)</span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1" aria-label="code-block-17-13"></a>  <span class="kw">case</span> (<span class="st">"formatted"</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1" aria-label="code-block-17-14"></a>    fp <span class="kw">=</span><span class="op">&gt;</span> create_file_formatted_writer_t()</span>
+<span id="cb17-15"><a href="#cb17-15" tabindex="-1" aria-label="code-block-17-15"></a>  <span class="kw">case default</span></span>
+<span id="cb17-16"><a href="#cb17-16" tabindex="-1" aria-label="code-block-17-16"></a>    <span class="fu">print</span> <span class="kw">*</span>, <span class="st">"Not recognised "</span>, str</span>
+<span id="cb17-17"><a href="#cb17-17" tabindex="-1" aria-label="code-block-17-17"></a>  <span class="kw">end select</span></span>
+<span id="cb17-18"><a href="#cb17-18" tabindex="-1" aria-label="code-block-17-18"></a><span class="kw">end function</span> file_writer_from_string</span></code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -848,7 +920,9 @@ end function file_writer_from_string</code></pre>
 <h3 class="callout-title">An abstract program<em> (continued)</em>
 </h3>
 <div class="callout-content">
-<p>Adjust your main program to be completely abstract.</p>
+<p>Adjust your main program to be completely abstract by using a pointer
+of the abstract type and obtaining an instance of the concrete type
+using your new function.</p>
 </div>
 </div>
 </div>
@@ -857,29 +931,33 @@ end function file_writer_from_string</code></pre>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
-<pre><code>program example1
-
-  ! Write two files via abstract mechanism.
-  ! Compile: ftn file_module.f90 example2.f90
-
-  use file_module
-  implicit none
-
-  class (file_writer_t), pointer :: f =&gt; null()
-  integer :: data(4) = [ 2, 4, 6, 8 ]
-  integer :: ierr
-
-  f =&gt; file_writer_from_string("formatted")
-
-  ierr = f%open("data_formatted.dat")
-  ierr = f%write(data)
-  ierr = f%close()
-
-  deallocate(f)
-
-end program example1</code></pre>
+<div class="codewrapper sourceCode" id="cb18">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb18-1"><a href="#cb18-1" tabindex="-1" aria-label="code-block-18-1"></a><span class="kw">program</span> example1</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1" aria-label="code-block-18-2"></a></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1" aria-label="code-block-18-3"></a>  <span class="co">! Write two files via abstract mechanism.</span></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1" aria-label="code-block-18-4"></a>  <span class="co">! Compile: ftn file_module.f90 example2.f90</span></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1" aria-label="code-block-18-5"></a></span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1" aria-label="code-block-18-6"></a>  <span class="kw">use</span> file_module</span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1" aria-label="code-block-18-7"></a>  <span class="kw">implicit</span> <span class="kw">none</span></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1" aria-label="code-block-18-8"></a></span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1" aria-label="code-block-18-9"></a>  class (file_writer_t), <span class="dt">pointer</span> <span class="dt">::</span> f <span class="kw">=</span><span class="op">&gt;</span> null()</span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1" aria-label="code-block-18-10"></a>  <span class="dt">integer</span> <span class="dt">::</span> data(<span class="dv">4</span>) <span class="kw">=</span> <span class="kw">[</span> <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span> <span class="kw">]</span></span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1" aria-label="code-block-18-11"></a>  <span class="dt">integer</span> <span class="dt">::</span> ierr</span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1" aria-label="code-block-18-12"></a></span>
+<span id="cb18-13"><a href="#cb18-13" tabindex="-1" aria-label="code-block-18-13"></a>  f <span class="kw">=</span><span class="op">&gt;</span> file_writer_from_string(<span class="st">"formatted"</span>)</span>
+<span id="cb18-14"><a href="#cb18-14" tabindex="-1" aria-label="code-block-18-14"></a></span>
+<span id="cb18-15"><a href="#cb18-15" tabindex="-1" aria-label="code-block-18-15"></a>  ierr <span class="kw">=</span> f<span class="op">%</span><span class="fu">open(</span><span class="st">"data_formatted.dat"</span><span class="fu">)</span></span>
+<span id="cb18-16"><a href="#cb18-16" tabindex="-1" aria-label="code-block-18-16"></a>  ierr <span class="kw">=</span> f<span class="op">%</span><span class="fu">write(</span>data<span class="fu">)</span></span>
+<span id="cb18-17"><a href="#cb18-17" tabindex="-1" aria-label="code-block-18-17"></a>  ierr <span class="kw">=</span> f<span class="op">%</span><span class="fu">close()</span></span>
+<span id="cb18-18"><a href="#cb18-18" tabindex="-1" aria-label="code-block-18-18"></a></span>
+<span id="cb18-19"><a href="#cb18-19" tabindex="-1" aria-label="code-block-18-19"></a>  <span class="kw">deallocate</span>(f)</span>
+<span id="cb18-20"><a href="#cb18-20" tabindex="-1" aria-label="code-block-18-20"></a></span>
+<span id="cb18-21"><a href="#cb18-21" tabindex="-1" aria-label="code-block-18-21"></a><span class="kw">end program</span> example1</span></code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -894,8 +972,9 @@ end program example1</code></pre>
 </h3>
 <div class="callout-content">
 <p>(Optional) Implement an additional concrete implementation of
-<code>file_write_t</code> for unformatted output, extend the program to
-use both concrete types.</p>
+<code>file_write_t</code> for unformatted output. Then, extend your
+instantiation function to return either of the two concrete types, and
+have your program use it do so.</p>
 </div>
 </div>
 </div>
@@ -972,7 +1051,7 @@ that are then provided by concrete implementations.</li>
   "url": "https://EPCCed.github.io/2026-07-27-Fortran-inter/instructor/09-abstract-types.html",
   "identifier": "https://EPCCed.github.io/2026-07-27-Fortran-inter/instructor/09-abstract-types.html",
   "dateCreated": "2025-05-06",
-  "dateModified": "2026-07-10",
+  "dateModified": "2026-07-28",
   "datePublished": "2026-07-28"
 }
 
