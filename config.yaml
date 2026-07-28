@@ -74,7 +74,7 @@ episodes:
 - 04-derived-types.md
 - 05-interfaces-overloading.md
 # - 051-break.md
-- 06-type-extension-polypmorphism.md
+- 06-type-extension-polymorphism.md
 - 07-type-bound-procedures.md
 - 08-generic-io-for-derived-types.md
 - 09-abstract-types.md
