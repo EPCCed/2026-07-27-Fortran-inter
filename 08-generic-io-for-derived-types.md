@@ -23,7 +23,7 @@ start: yes
 List-directed output for derived types can be used to provide a default
 output in which each component appears in order, schematically:
 
-```
+```fortran
   type (my_type) :: a
   ! ...
   write (*, fmt = *) a
@@ -35,7 +35,7 @@ components.
 Alternatively, if we know the components, we could write out each component
 separately with an appropriate format
 
-```
+```fortran
   write (*, fmt = "(i4)")   a%int1
   write (*, fmt = "(f5.3)") a%real1
 ```
@@ -50,14 +50,14 @@ an edit descriptor is provided by means of a type-bound procedure.
 
 For formatted i/o, a special `dt` edit-descriptor exists, of the form:
 
-```
+```fortran
   dt[iodesc-string][(v-list)]
 ```
 
 where the `iodesc-string` is a string, and the v-list is a series of
 integers. For example, we may have
 
-```
+```fortran
   dt" my-type: "(2,14)
 ```
 
@@ -67,7 +67,7 @@ programmer.
 
 The following generic procedures may be defined for read or write actions:
 
-```
+```fortan
    read (formatted)
    read (unformatted)
    write (formatted)
@@ -89,7 +89,7 @@ in the io list for a `read()` or a `write()` statement.
 If we consider the type `my_type`, the unformatted output implementation
 requires
 
-```
+```fortran
    subroutine my_type_unformatted_output(self, unit, iostat, iomsg)
 
      class (my_type),     intent(in)    :: self    ! object
@@ -116,7 +116,7 @@ be of `intent(inout)`.
 The formatted case includes the addition of `iodesc-string` and `v-list`
 arguments:
 
-```
+```fortran
  subroutine my_type_write_formatted(self, unit, iotype, vlist, iostat, iomsg)
 
     class (my_type),     intent(in)    :: self
@@ -149,7 +149,7 @@ object dummy argument, which must be `intent(inout)`.
 
 The two procedures above should be declared as generic type-bound procedures
 
-```
+```fortran
 type, public :: my_type
   ! ... components ...
 contains
@@ -176,7 +176,7 @@ invoke `read()` and procedures for writing only invoke `write()`.
 Try implementing the generic `write(formatted)` procedure for the following
 type:
 
-```
+```fortran
   type, public :: my_date
     integer :: day = 1        ! day 1-31
     integer :: month = 1      ! month 1-12
@@ -195,7 +195,7 @@ A program `date_program.f90` and module `date_module.f90` template are provided.
 
 First we implement a type-bound procedure for the date object that will print it in `dd/mm/yyyy` format
 
-```
+```fortran
 subroutine write_my_type(self, unit, iotype, vlist, iostat, iomsg)
 
   class (my_type),     intent(in)    :: self
@@ -228,7 +228,7 @@ each part of the date. This requires constructing an appropriate format string.
 
 Extending our earlier solution we can handle both the list directed, and the format descriptor cases
 
-```
+```fortran
 if (iotype == "LISTDIRECTED") then
    write(unit, fmt = dfmt, iostat = iostat) self%day, self%month, self%year
 else
