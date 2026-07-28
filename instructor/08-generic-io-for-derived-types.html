@@ -402,7 +402,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Generic input/output for derived types</h1>
-        <p>Last updated on 2026-07-10 |
+        <p>Last updated on 2026-07-28 |
 
         <a href="https://github.com/EPCCed/2026-07-27-Fortran-inter/edit/main/episodes/08-generic-io-for-derived-types.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -443,15 +443,23 @@ I/O</li>
 <hr class="half-width"><p>List-directed output for derived types can be used to provide a
 default output in which each component appears in order,
 schematically:</p>
-<pre><code>  type (my_type) :: a
-  ! ...
-  write (*, fmt = *) a</code></pre>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a>  <span class="dt">type (my_type)</span> <span class="dt">::</span> a</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a>  <span class="co">! ...</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a>  <span class="fu">write (*</span>, <span class="fu">fmt</span> <span class="kw">=</span> <span class="fu">*)</span> a</span></code></pre>
+</div>
 <p>will write out all the components with some default format for the
 given components.</p>
 <p>Alternatively, if we know the components, we could write out each
 component separately with an appropriate format</p>
-<pre><code>  write (*, fmt = "(i4)")   a%int1
-  write (*, fmt = "(f5.3)") a%real1</code></pre>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a>  <span class="fu">write (*</span>, <span class="fu">fmt</span> <span class="kw">=</span> <span class="st">"(i4)"</span><span class="fu">)</span>   a<span class="op">%</span>int1</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a>  <span class="fu">write (*</span>, <span class="fu">fmt</span> <span class="kw">=</span> <span class="st">"(f5.3)"</span><span class="fu">)</span> a<span class="op">%</span>real1</span></code></pre>
+</div>
 <p>If we wish to control the output format, without needing to write
 each component individually, we can customise the I/O using type-bound
 procedures.</p>
@@ -460,16 +468,24 @@ procedures.</p>
 an edit descriptor is provided by means of a type-bound procedure.</p>
 <p>For formatted i/o, a special <code>dt</code> edit-descriptor exists,
 of the form:</p>
-<pre><code><span>  <span class="va">dt</span><span class="op">[</span><span class="va">iodesc</span><span class="op">-</span><span class="va">string</span><span class="op">]</span><span class="op">[</span><span class="op">(</span><span class="va">v</span><span class="op">-</span><span class="va">list</span><span class="op">)</span><span class="op">]</span></span></code></pre>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a>  dt<span class="kw">[</span>iodesc<span class="kw">-</span>string<span class="kw">][</span>(v<span class="kw">-</span>list)<span class="kw">]</span></span></code></pre>
+</div>
 <p>where the <code>iodesc-string</code> is a string, and the v-list is a
 series of integers. For example, we may have</p>
-<pre><code>  dt" my-type: "(2,14)</code></pre>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a>  dt<span class="st">" my-type: "</span>(<span class="dv">2</span>,<span class="dv">14</span>)</span></code></pre>
+</div>
 <p>The <code>iodesc-string</code> string and <code>v-list</code> array
 of integers will re-appear as arguments to a type-bound procedure which
 must be provided by the programmer.</p>
 <p>The following generic procedures may be defined for read or write
 actions:</p>
-<pre><code><span>   <span class="fu">read</span> <span class="op">(</span><span class="va">formatted</span><span class="op">)</span></span>
+<pre class="fortan"><code><span>   <span class="fu">read</span> <span class="op">(</span><span class="va">formatted</span><span class="op">)</span></span>
 <span>   <span class="fu">read</span> <span class="op">(</span><span class="va">unformatted</span><span class="op">)</span></span>
 <span>   <span class="fu">write</span> <span class="op">(</span><span class="va">formatted</span><span class="op">)</span></span>
 <span>   <span class="fu">write</span> <span class="op">(</span><span class="va">unformatted</span><span class="op">)</span></span></code></pre>
@@ -486,16 +502,20 @@ appeared in the io list for a <code>read()</code> or a
 <h3 id="unformatted-output">Unformatted output<a class="anchor" aria-label="anchor" href="#unformatted-output"></a></h3>
 <p>If we consider the type <code>my_type</code>, the unformatted output
 implementation requires</p>
-<pre><code>   subroutine my_type_unformatted_output(self, unit, iostat, iomsg)
-
-     class (my_type),     intent(in)    :: self    ! object
-     integer,             intent(in)    :: unit    ! Fortran unit number
-     integer,             intent(out)   :: iostat  ! error condition
-     character (len = *), intent(inout) :: iomsg   ! error message
-
-     ! ... implementation ...
-
-  end subroutine my_type_unformatted_output</code></pre>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a>   <span class="kw">subroutine</span> my_type_unformatted_output(self, unit, iostat, iomsg)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="bu">     c</span>lass (my_type),     <span class="dt">intent(in)</span>    <span class="dt">::</span> self    <span class="co">! object</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a><span class="bu">     i</span>nteger,             <span class="dt">intent(in)</span>    <span class="dt">::</span> unit    <span class="co">! Fortran unit number</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1" aria-label="code-block-6-5"></a><span class="bu">     i</span>nteger,             <span class="dt">intent(out)</span>   <span class="dt">::</span> iostat  <span class="co">! error condition</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1" aria-label="code-block-6-6"></a><span class="bu">     c</span>haracter (<span class="fu">len</span> <span class="kw">=</span> <span class="kw">*</span>), <span class="dt">intent(inout)</span> <span class="dt">::</span> iomsg   <span class="co">! error message</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1" aria-label="code-block-6-7"></a></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1" aria-label="code-block-6-8"></a><span class="bu">     !</span> ... implementation ...</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1" aria-label="code-block-6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1" aria-label="code-block-6-10"></a>  <span class="kw">end subroutine</span> my_type_unformatted_output</span></code></pre>
+</div>
 <p>The <code>iostat</code> and <code>iomsg</code> variables take on
 their usual meaning in the context of <code>write()</code>. The
 <code>iostat</code> variable is zero on success, but should take a
@@ -509,24 +529,28 @@ argument should be of <code>intent(inout)</code>.</p>
 <h3 id="formatted-output">Formatted output<a class="anchor" aria-label="anchor" href="#formatted-output"></a></h3>
 <p>The formatted case includes the addition of
 <code>iodesc-string</code> and <code>v-list</code> arguments:</p>
-<pre><code> subroutine my_type_write_formatted(self, unit, iotype, vlist, iostat, iomsg)
-
-    class (my_type),     intent(in)    :: self
-    integer,             intent(in)    :: unit
-    character (len = *), intent(in)    :: iotype       ! "DT my-type: "
-    integer,             intent(in)    :: vlist(:)     ! (2,14)
-    integer,             intent(out)   :: iostat
-    character (len = *), intent(inout) :: iomsg
-
-    ! ... process arguments to give required output to unit number ...
-    ! iotype is "LISTDIRECTED" for list directed io
-    ! iotype is "DTdesc-string" for dt edit descriptor
-    ! ...
-    ! ... write (unit = unit, fmt = ...)  components ...
-
-    ! iostat and iomsg should be set if there is an error
-
-end subroutine my_type_write_formatted</code></pre>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a> <span class="kw">subroutine</span> my_type_write_formatted(self, unit, iotype, vlist, iostat, iomsg)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a>    class (my_type),     <span class="dt">intent(in)</span>    <span class="dt">::</span> self</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a>    <span class="dt">integer</span>,             <span class="dt">intent(in)</span>    <span class="dt">::</span> unit</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a>    <span class="dt">character (len = *)</span>, <span class="dt">intent(in)</span>    <span class="dt">::</span> iotype       <span class="co">! "DT my-type: "</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1" aria-label="code-block-7-6"></a>    <span class="dt">integer</span>,             <span class="dt">intent(in)</span>    <span class="dt">::</span> vlist(:)     <span class="co">! (2,14)</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1" aria-label="code-block-7-7"></a>    <span class="dt">integer</span>,             <span class="dt">intent(out)</span>   <span class="dt">::</span> iostat</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1" aria-label="code-block-7-8"></a>    <span class="dt">character (len = *)</span>, <span class="dt">intent(inout)</span> <span class="dt">::</span> iomsg</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1" aria-label="code-block-7-9"></a></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1" aria-label="code-block-7-10"></a>    <span class="co">! ... process arguments to give required output to unit number ...</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1" aria-label="code-block-7-11"></a>    <span class="co">! iotype is "LISTDIRECTED" for list directed io</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1" aria-label="code-block-7-12"></a>    <span class="co">! iotype is "DTdesc-string" for dt edit descriptor</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1" aria-label="code-block-7-13"></a>    <span class="co">! ...</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1" aria-label="code-block-7-14"></a>    <span class="co">! ... write (unit = unit, fmt = ...)  components ...</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1" aria-label="code-block-7-15"></a></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1" aria-label="code-block-7-16"></a>    <span class="co">! iostat and iomsg should be set if there is an error</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1" aria-label="code-block-7-17"></a></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1" aria-label="code-block-7-18"></a><span class="kw">end subroutine</span> my_type_write_formatted</span></code></pre>
+</div>
 <p>Both parts of the <code>dt</code> edit descriptor are optional in the
 format specification. If the <code>iodesc-string</code> is missed, the
 corresponding dummy argument <code>iotype</code> is of length zero; if
@@ -538,14 +562,18 @@ object dummy argument, which must be <code>intent(inout)</code>.</p>
 </section><section><h2 class="section-heading" id="type-bound-procedures">Type-bound procedures<a class="anchor" aria-label="anchor" href="#type-bound-procedures"></a></h2>
 <hr class="half-width"><p>The two procedures above should be declared as generic type-bound
 procedures</p>
-<pre><code>type, public :: my_type
-  ! ... components ...
-contains
-  procedure :: my_type_write_formatted
-  procedure :: my_type_write_unformatted
-  generic   :: write(formatted) =&gt; my_type_write_formatted
-  generic   :: write(unformatted) =&gt; my_type_write_unformatted
-end type my_type</code></pre>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="dt">type</span>, <span class="dt">public</span> <span class="dt">::</span> my_type</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a>  <span class="co">! ... components ...</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a><span class="co">contains</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a>  <span class="kw">procedure</span> <span class="dt">::</span> my_type_write_formatted</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a>  <span class="kw">procedure</span> <span class="dt">::</span> my_type_write_unformatted</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a>  generic   <span class="dt">::</span> <span class="fu">write(formatted)</span> <span class="kw">=</span><span class="op">&gt;</span> my_type_write_formatted</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a>  generic   <span class="dt">::</span> <span class="fu">write(unformatted)</span> <span class="kw">=</span><span class="op">&gt;</span> my_type_write_unformatted</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a><span class="dt">end type</span> my_type</span></code></pre>
+</div>
 <p>Some care may be required to write a robust set of procedures
 handling the different formatted and unformatted cases.</p>
 <p>No additional file operations involving the specified unit number are
@@ -563,11 +591,15 @@ invoke <code>read()</code> and procedures for writing only invoke
 <div class="callout-content">
 <p>Try implementing the generic <code>write(formatted)</code> procedure
 for the following type:</p>
-<pre><code>  type, public :: my_date
-    integer :: day = 1        ! day 1-31
-    integer :: month = 1      ! month 1-12
-    integer :: year = 1900    ! year
-  end type my_date</code></pre>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a>  <span class="dt">type</span>, <span class="dt">public</span> <span class="dt">::</span> my_date</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a>    <span class="dt">integer</span> <span class="dt">::</span> day <span class="kw">=</span> <span class="dv">1</span>        <span class="co">! day 1-31</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a>    <span class="dt">integer</span> <span class="dt">::</span> month <span class="kw">=</span> <span class="dv">1</span>      <span class="co">! month 1-12</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a>    <span class="dt">integer</span> <span class="dt">::</span> year <span class="kw">=</span> <span class="dv">1900</span>    <span class="co">! year</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a>  <span class="dt">end type</span> my_date</span></code></pre>
+</div>
 <p>First, try list directed I/O: the format we would like is
 <code>dd/mm/yyyy</code> for <code>01/12/1999</code> for 1st December
 1999.</p>
@@ -583,25 +615,29 @@ for the following type:</p>
   Solution (list directed)
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>First we implement a type-bound procedure for the date object that
 will print it in <code>dd/mm/yyyy</code> format</p>
-<pre><code>subroutine write_my_type(self, unit, iotype, vlist, iostat, iomsg)
-
-  class (my_type),     intent(in)    :: self
-  integer,             intent(in)    :: unit
-  character (len = *), intent(in)    :: iotype
-  integer,             intent(in)    :: vlist(:)
-  integer,             intent(out)   :: iostat
-  character (len = *), intent(inout) :: iomsg
-
-  character (len = *), parameter :: dfmt = "(i2.2,'/',i2.2,'/',i4)"
-  iostat = 0   ! we will assume no errors occur (iomsg is unchanged)
-
-  write(unit, fmt = dfmt, iostat = iostat) self%day, self%month, self%year
-
-end subroutine write_my_type</code></pre>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="kw">subroutine</span> write_my_type(self, unit, iotype, vlist, iostat, iomsg)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a>  class (my_type),     <span class="dt">intent(in)</span>    <span class="dt">::</span> self</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a>  <span class="dt">integer</span>,             <span class="dt">intent(in)</span>    <span class="dt">::</span> unit</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a>  <span class="dt">character (len = *)</span>, <span class="dt">intent(in)</span>    <span class="dt">::</span> iotype</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a>  <span class="dt">integer</span>,             <span class="dt">intent(in)</span>    <span class="dt">::</span> vlist(:)</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a>  <span class="dt">integer</span>,             <span class="dt">intent(out)</span>   <span class="dt">::</span> iostat</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a>  <span class="dt">character (len = *)</span>, <span class="dt">intent(inout)</span> <span class="dt">::</span> iomsg</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1" aria-label="code-block-10-9"></a></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a>  <span class="dt">character (len = *)</span>, <span class="dt">parameter</span> <span class="dt">::</span> dfmt <span class="kw">=</span> <span class="st">"(i2.2,'/',i2.2,'/',i4)"</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a>  iostat <span class="kw">=</span> <span class="dv">0</span>   <span class="co">! we will assume no errors occur (iomsg is unchanged)</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1" aria-label="code-block-10-12"></a></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1" aria-label="code-block-10-13"></a>  <span class="fu">write(unit</span>, <span class="fu">fmt</span> <span class="kw">=</span> dfmt, <span class="fu">iostat</span> <span class="kw">=</span> <span class="fu">iostat)</span> self<span class="op">%</span>day, self<span class="op">%</span>month, self<span class="op">%</span>year</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1" aria-label="code-block-10-14"></a></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1" aria-label="code-block-10-15"></a><span class="kw">end subroutine</span> write_my_type</span></code></pre>
+</div>
 <p>where the format string <code>dfmt</code> controls the formatting.
 You should be able to confirm this works with the
 <code>date_program</code>.</p>
@@ -633,28 +669,32 @@ constructing an appropriate format string.</p>
   Solution (edit descriptor)
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Extending our earlier solution we can handle both the list directed,
 and the format descriptor cases</p>
-<pre><code>if (iotype == "LISTDIRECTED") then
-   write(unit, fmt = dfmt, iostat = iostat) self%day, self%month, self%year
-else
-   ! A dt-style format
-   ! We will only consider the case of vlist(3)
-   if (size(vlist) == 3) then
-     block
-       character (len = 20) :: userfmt
-       write (userfmt, "(a,i1,a,i2,a,i1,a)") &amp;
-            "(i", vlist(1), ",a", vlist(2), ",i", vlist(3), ")"
-       write(unit, userfmt, iostat = iostat) &amp;
-            self%day, months(self%month), self%year
-     end block
-   else
-     ! Handle other conditions; we will just use the default format
-     write (unit, dfmt, iostat = iostat) self%day, self%month, self%year
-   end if
-end if</code></pre>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="kw">if</span> (iotype <span class="op">==</span> <span class="st">"LISTDIRECTED"</span>) <span class="kw">then</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a>   <span class="fu">write(unit</span>, <span class="fu">fmt</span> <span class="kw">=</span> dfmt, <span class="fu">iostat</span> <span class="kw">=</span> <span class="fu">iostat)</span> self<span class="op">%</span>day, self<span class="op">%</span>month, self<span class="op">%</span>year</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1" aria-label="code-block-11-3"></a><span class="kw">else</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1" aria-label="code-block-11-4"></a>   <span class="co">! A dt-style format</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1" aria-label="code-block-11-5"></a>   <span class="co">! We will only consider the case of vlist(3)</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1" aria-label="code-block-11-6"></a>   <span class="kw">if</span> (<span class="fu">size</span>(vlist) <span class="op">==</span> <span class="dv">3</span>) <span class="kw">then</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1" aria-label="code-block-11-7"></a><span class="bu">     b</span>lock</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1" aria-label="code-block-11-8"></a>       <span class="dt">character (len = 20)</span> <span class="dt">::</span> userfmt</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1" aria-label="code-block-11-9"></a>       <span class="fu">write (</span>userfmt, <span class="st">"(a,i1,a,i2,a,i1,a)"</span><span class="fu">)</span> <span class="kw">&amp;</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1" aria-label="code-block-11-10"></a>            <span class="st">"(i"</span>, vlist(<span class="dv">1</span>), <span class="st">",a"</span>, vlist(<span class="dv">2</span>), <span class="st">",i"</span>, vlist(<span class="dv">3</span>), <span class="st">")"</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1" aria-label="code-block-11-11"></a>       <span class="fu">write(unit</span>, userfmt, <span class="fu">iostat</span> <span class="kw">=</span> <span class="fu">iostat)</span> <span class="kw">&amp;</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1" aria-label="code-block-11-12"></a>            self<span class="op">%</span>day, months(self<span class="op">%</span>month), self<span class="op">%</span>year</span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1" aria-label="code-block-11-13"></a><span class="bu">     e</span>nd block</span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1" aria-label="code-block-11-14"></a>   <span class="kw">else</span></span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1" aria-label="code-block-11-15"></a><span class="bu">     !</span> Handle other conditions; we will just <span class="kw">use</span> the default <span class="fu">format</span></span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1" aria-label="code-block-11-16"></a><span class="bu">     w</span>rite (unit, dfmt, iostat <span class="kw">=</span> iostat) self<span class="op">%</span>day, self<span class="op">%</span>month, self<span class="op">%</span>year</span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1" aria-label="code-block-11-17"></a>   <span class="kw">end if</span></span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1" aria-label="code-block-11-18"></a><span class="kw">end if</span></span></code></pre>
+</div>
 <p>using the default list directed format as a fallback. The
 <code>userfmt</code> format string controls the display of the date, try
 changing some of the widths passed.</p>
@@ -734,7 +774,7 @@ procedures</li>
   "url": "https://EPCCed.github.io/2026-07-27-Fortran-inter/instructor/08-generic-io-for-derived-types.html",
   "identifier": "https://EPCCed.github.io/2026-07-27-Fortran-inter/instructor/08-generic-io-for-derived-types.html",
   "dateCreated": "2025-05-06",
-  "dateModified": "2026-07-10",
+  "dateModified": "2026-07-28",
   "datePublished": "2026-07-28"
 }
 
