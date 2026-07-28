@@ -400,7 +400,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Modules again</h1>
-        <p>Last updated on 2026-07-10 |
+        <p>Last updated on 2026-07-28 |
 
         <a href="https://github.com/EPCCed/2026-07-27-Fortran-inter/edit/main/episodes/10-modules-again.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -437,18 +437,23 @@
 </div>
 </div>
 <section><h2 class="section-heading" id="modules">Modules<a class="anchor" aria-label="anchor" href="#modules"></a></h2>
-<hr class="half-width"><p>The introductory course encouraged the use of modules to provide
-structure, and to separate public interface from private implementation.
-Schematically, we have seen:</p>
-<pre><code>module schematic
-
-  ! Broadly, public "interface"
-
-contains
-
-  ! Broadly, private "implementation"
-
-end module schematic</code></pre>
+<hr class="half-width"><p>If you took the introductory Fortran course, you will have seen that
+we encouraged the use of modules to provide structure and to separate
+public interface from private implementation. Schematically, we have
+seen:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="kw">module</span> schematic</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a>  <span class="co">! Broadly, public "interface"</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a><span class="co">contains</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a>  <span class="co">! Broadly, private "implementation"</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a><span class="kw">end module</span> schematic</span></code></pre>
+</div>
 <p>However, …</p>
 <p>We also have a situation in which the (public) interface can remain
 unchanged, while a change to the (private) implementation requires
@@ -481,17 +486,25 @@ interface and implementation (cf. C header files) is required.</p>
 </section><section><h2 class="section-heading" id="submodules">Submodules<a class="anchor" aria-label="anchor" href="#submodules"></a></h2>
 <hr class="half-width"><p>Submodules may be organised in a tree-like hierarchy, with the
 ancestor module as the root.</p>
-<pre><code>module example_module
-
-end module example_module</code></pre>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="kw">module</span> example_module</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a><span class="kw">end module</span> example_module</span></code></pre>
+</div>
 <p>The module should define only the interface (there should probably be
 no <code>contains</code> statement).</p>
 <p>The implementation can then be placed in a submodule:</p>
-<pre><code>submodule (example_module) example_submodule
-
-contains
-
-end submodule example_submodule</code></pre>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a>submodule (example_module) example_submodule</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a><span class="co">contains</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a><span class="kw">end</span> submodule example_submodule</span></code></pre>
+</div>
 <div id="host-association" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -507,36 +520,52 @@ end submodule example_submodule</code></pre>
 </div>
 </div>
 <p>Formally, we have:</p>
-<pre><code>submodule (parent-identifier) submodule-name
-  [ specification part ]
-  [ module-subprogram-part]
-end [submodule [ submodule-name] ]</code></pre>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a>submodule (parent<span class="kw">-</span>identifier) submodule<span class="kw">-</span>name</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a>  <span class="kw">[</span> specification part <span class="kw">]</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a>  <span class="kw">[</span> <span class="kw">module-</span>subprogram<span class="kw">-</span>part<span class="kw">]</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a><span class="kw">end</span> <span class="kw">[</span>submodule <span class="kw">[</span> submodule<span class="kw">-</span>name<span class="kw">]</span> <span class="kw">]</span></span></code></pre>
+</div>
 <p>where the <code>parent-identifier</code> is the name of the parent
 module.</p>
 <div class="section level3">
 <h3 id="submodule-procedures">Submodule procedures<a class="anchor" aria-label="anchor" href="#submodule-procedures"></a></h3>
 <p>Suppose in our module we define a new data type:</p>
-<pre><code>  type, public :: example_t
-    ...
-  end type example_t</code></pre>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a>  <span class="dt">type</span>, <span class="dt">public</span> <span class="dt">::</span> example_t</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a>    ...</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a>  <span class="dt">end type</span> example_t</span></code></pre>
+</div>
 <p>We can define an interface block using this type (also in the module)
 to specify the contract:</p>
-<pre><code>   interface example_t
-     module function example_int_t(ival) result(e)
-       integer, intent(in) :: ival
-       type (example_t)    :: e
-     end function example_int_t
-   end interface example_t</code></pre>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a>   <span class="kw">interface</span> example_t</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="bu">     m</span>odule <span class="kw">function</span> example_int_t(ival) <span class="kw">result</span>(e)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a>       <span class="dt">integer</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> ival</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a>       <span class="dt">type (example_t)</span>    <span class="dt">::</span> e</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1" aria-label="code-block-6-5"></a><span class="bu">     e</span>nd <span class="kw">function</span> example_int_t</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1" aria-label="code-block-6-6"></a>   <span class="kw">end interface</span> example_t</span></code></pre>
+</div>
 <p>Note the <code>module</code> at the start of the
 <code>function</code> declaration, and that there is no
 <code>import</code> statement required in the interface block.</p>
 <p>This would then be implemented in the <code>submodule</code>
 subprogram part:</p>
-<pre><code>  module function example_int_t(ival) result(e)
-    integer, intent(in) :: ival
-    type (example_t)    :: e
-    ...
-  end function example_t</code></pre>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a>  <span class="kw">module</span> <span class="kw">function</span> example_int_t(ival) <span class="kw">result</span>(e)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a>    <span class="dt">integer</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> ival</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a>    <span class="dt">type (example_t)</span>    <span class="dt">::</span> e</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a>    ...</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a>  <span class="kw">end function</span> example_t</span></code></pre>
+</div>
 <div id="matching-text" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -565,8 +594,12 @@ and need not match).</p>
 <p>Compile (do not link) the <code>module</code> and submodule files
 <code>example.f90</code> and <code>example_a.f90</code> in the current
 directory. E.g.,</p>
-<pre><code>$ ftn -c example_module.f90
-$ ftn -c example_submodule.f90</code></pre>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="ex">$</span> ftn <span class="at">-c</span> example_module.f90</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a><span class="ex">$</span> ftn <span class="at">-c</span> example_submodule.f90</span></code></pre>
+</div>
 <p>Check what additional files have been generated (the exact details
 will depend on the compiler: some produce <code>.smod</code> files,
 others just additional <code>.mod</code> files).</p>
@@ -578,9 +611,13 @@ others just additional <code>.mod</code> files).</p>
 <h3 id="abbreviated-form">Abbreviated form<a class="anchor" aria-label="anchor" href="#abbreviated-form"></a></h3>
 <p>It’s possible to omit the interface details in the submodule.
 E.g.,</p>
-<pre><code>  module procedure example_t
-    ...
-  end procedure example_t</code></pre>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a>  <span class="kw">module procedure</span> example_t</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a>    ...</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a>  <span class="kw">end</span> <span class="kw">procedure</span> example_t</span></code></pre>
+</div>
 <p>Note the use of <code>procedure</code> here. Again, the details must
 match the interface declared in the module.</p>
 <div id="a-matter-of-taste" class="callout">
@@ -751,7 +788,7 @@ implementation in Fortran</li>
   "url": "https://EPCCed.github.io/2026-07-27-Fortran-inter/10-modules-again.html",
   "identifier": "https://EPCCed.github.io/2026-07-27-Fortran-inter/10-modules-again.html",
   "dateCreated": "2025-05-06",
-  "dateModified": "2026-07-10",
+  "dateModified": "2026-07-28",
   "datePublished": "2026-07-28"
 }
 
