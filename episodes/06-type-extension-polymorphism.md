@@ -144,7 +144,7 @@ ftn example1.f90 object_type.f90
 :::::::::::::::::::::::::
 
 In the example main program, check you can provide some value for the
-new charge component via a constructor (e.g., `q = -1.0`), and access
+new charge component via a constructor (e.g., `q = 5.0`), and access
 the ancestor components of the new type in both long and short forms.
 
 :::::::::::::::  solution
@@ -335,11 +335,11 @@ CLASS(sphere_t)
 
 ### Type selection
 
-Code may detect the dynamic type of a polymorphic variable via use
-of the `select type` construct, which allows appropriate action to
-to taken depending on the dynamic type. This is similar to the
-simple `select case` construct, where the behaviour is controlled
-by the dynamic type of the *selector*, here `p`:
+Code may detect the dynamic type of a polymorphic variable via use of the
+`select type` construct, which allows appropriate action to to taken depending
+on the dynamic type, notably granting access to the components of extended
+types. This is similar to the simple `select case` construct, where the
+behaviour is controlled by the dynamic type of the *selector*, here `p`:
 
 ```fortran
 select type (p)
