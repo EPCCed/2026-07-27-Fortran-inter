@@ -1,4 +1,4 @@
-program exmaple1
+program example1
 
   use iso_fortran_env
   implicit none
@@ -16,24 +16,21 @@ program exmaple1
   print *, "kind a", a%kr
   print *, "nlen a", a%nlen
 
-  write (*, "(a)", advance = "no") "kind: "
-  read (*, *) kr
   write (*, "(a)", advance = "no") "nlen: "
   read (*, *) nlen
 
-  call defer_me(kr, nlen)
+  call defer_me(nlen)
 
 contains
 
-  subroutine defer_me(kr, nlen)
+  subroutine defer_me(nlen)
 
-    integer, intent(in) :: kr
     integer, intent(in) :: nlen
-    type (my_array_t(kr, nlen)) :: b
+    type (my_array_t(kr = real32, nlen=nlen)) :: b
 
-    print *, "Defer me ", b%kr
     print *, "Length   ", b%nlen
+    print *, "Shape    ", shape(b%data)
 
   end subroutine defer_me
 
-end program exmaple1
+end program example1

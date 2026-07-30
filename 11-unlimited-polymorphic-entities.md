@@ -28,14 +28,14 @@ We have seen a polymorphic pointer of given class used in the context
 of type extension. A more general type of pointer, an *unlimited
 polymorphic* pointer can be declared as
 
-```
+```fortran
   class (*), pointer :: p => null()
 ```
 
 This is particularly useful if a polymorphic reference of intrinsic
 types (which cannot be extended) is required. For example:
 
-```
+```fortran
   real (real32), target  :: r32
   real (real64), target  :: r64
   real (real32), pointer :: p32 => null()
@@ -54,16 +54,16 @@ target of incompatible type, we can with an unlimited polymorphic
 pointer.
 
 However, unlike the type-specific pointer, we cannot use the unlimited
-polymorphic pointer in any context, e.g.,:
+polymorphic pointer in any context, e.g.:
 
-```
+```fortran
   p64 = 2.0d0      ! normal assignment ok
   p   = 2.0d0      ! compile-time error
 ```
 
 Pointer assignments are valid
 
-```
+```fortran
   p   => p32
   p   => p64
 ```
@@ -72,7 +72,7 @@ If an unlimited polymorphic pointer is on the right-hand side of an assignment,
 then the left-hand side must be a pointer to a non-extensible derived type.
 E.g.,
 
-```
+```fortran
   p32  => p
 ```
 
@@ -92,8 +92,11 @@ messages for each.
 
 ## Solution
 
+```bash
+$ gfortran example1.f90
 ```
-$ gfortran example1.f90 
+
+```output
 example1.f90:14:2:
 
    14 |   p32 => r64
@@ -127,7 +130,7 @@ gaurds to provide the compiler with concrete information to deal with
 the dynamic type. This is appropriate for unlimited polymorphic pointers,
 schematically:
 
-```
+```fortran
   class (*), pointer :: p
 
   select type (p)
@@ -144,13 +147,13 @@ Unlimited polymorphic pointers may be used as actual arguments to procedures.
 One relevant intrinsic case is `allocate()`. Typed allocation has a form
 similar to a constructor which specifies the type:
 
-```
+```fortran
   allocate(type-spec :: alloc-list)
 ```
 
-This allows allocations against unlimmited polymorphic pointers, e.g.,
+This allows allocations against unlimited polymorphic pointers, e.g.,
 
-```
+```fortran
   class (*), pointer :: p    => null()
   class (*), pointer :: r(:) => null()
 
@@ -160,7 +163,7 @@ This allows allocations against unlimmited polymorphic pointers, e.g.,
 
 A useful step in many circumstances is to use sourced allocation:
 
-```
+```fortran
   class (*), pointer :: p => null()
 
   allocate(p, source = a)
@@ -179,7 +182,7 @@ derived type that is intended to store key value pairs, where the
 key is a (deferred length) string, and the value is an unlimited
 polymorphic pointer.
 
-```
+```fortran
   type, public :: key_value_t
     character (len = :), allocatable :: key
     class (*), pointer               :: val
@@ -188,9 +191,9 @@ polymorphic pointer.
 
 In principle, this can store values of any type.
 
-Implement three specific constructors to establish key-value pairs for
+Implement two specific constructors to establish key-value pairs for
 integer and real intrinsic types (`int32` and `real32` from `iso_fortran_env`),
-and for strings. Each should allocate appropriate memory for the key and the
+using `key_value_create_str()` as an example. Each should allocate appropriate memory for the key and the
 value. These should overload the default structure constructor `key_value_t()`.
 
 Implement a subroutine `key_value_print()` which uses a `select type`
@@ -204,16 +207,101 @@ last two operations, but it's not really necessary in this context.
 The accompanying program has some examples to act as a test.
 
 
+:::::::::::::::  solution
+
+## Solution
+
+The constructors for `int32` and `real32` could look like
+
+```fortan
+  function key_value_create_i32(key, ivalue) result(kv)
+
+    character (len = *), intent(in) :: key
+    integer (int32),     intent(in) :: ivalue
+    type (key_value_t)              :: kv
+
+    kv%key = trim(key)
+    allocate(kv%val, source = ivalue)
+
+  end function key_value_create_i32
+```
+
+and
+
+```fortran
+  function key_value_create_r32(key, rvalue) result(kv)
+
+    character (len = *), intent(in) :: key
+    real (real32),       intent(in) :: rvalue
+    type (key_value_t)              :: kv
+
+    kv%key = trim(key)
+    allocate(kv%val, source = rvalue)
+
+  end function key_value_create_r32
+```
+
+The generic interface for `key_value_t` will need to contain all three specific constructors:
+
+```fortran
+  interface key_value_t
+    module procedure key_value_create_i32
+    module procedure key_value_create_r32
+    module procedure key_value_create_str
+  end interface key_value_t
+```
+
+To print the data stored in a `key_value_t`:
+
+```fortran
+  subroutine key_value_print(kv)
+
+    type (key_value_t), intent(in) :: kv
+
+    select type (val => kv%val)
+      type is (integer (int32))
+        print *, "int32 kv ", kv%key, val
+      type is (real (real32))
+        print *, "real32 kv ", kv%key, val
+      type is (character (len = *))
+         print *, "string kv ", kv%key, val
+      type is (real (real64))
+         print *, "real64 kv ", kv%key, val
+      class default
+        print *, "value type not recognised kv", kv%key
+     end select
+
+  end subroutine key_value_print
+```
+
+Finally, to release a `key_value_t` you could do the following,
+noting that memory for both the value and the key itself should
+be released with `allocate()`:
+
+```fortran
+  subroutine key_value_release(kv)
+
+    type (key_value_t), intent(inout) :: kv
+
+    if (allocated(kv%key)) deallocate(kv%key)
+    if (associated(kv%val)) deallocate(kv%val)
+
+  end subroutine key_value_release
+```
+
+:::::::::::::::::::::::::
+
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:::::::::::::::::::::::::::::::::::::::  challenge
+<!-- :::::::::::::::::::::::::::::::::::::::  challenge
 
 ## Assumed type (F2018)
 
 It is possible to use a non-pointer unlimited polymorphic dummy argument
 in a procedure, e.g.:
 
-```
+```fortran
   subroutine example(upe)
 
     class (*), intent(in) :: upe
@@ -228,7 +316,7 @@ with one which took on the dynamic type of the actual argument. Try it.
 Do you think it's a good idea?
 
 
-::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::: -->
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
@@ -243,6 +331,37 @@ What remains to be provided is a subroutine which increases the storage as
 required. This should use `move_alloc()`. Have a go at providing this
 subroutine.
 
+
+:::::::::::::::  solution
+
+## Solution
+
+Your subroutine might look like the following:
+
+```fortran
+  subroutine key_value_list_reallocate(kvlist)
+
+    ! Expand list storage (by a factor of 2)
+
+    type (key_value_list_t), intent(inout) :: kvlist
+
+    type (key_value_t), allocatable :: kvtmp(:)
+    integer                         :: nnew
+
+    ! The list must be initialised here ...
+
+    if (.not. allocated(kvlist%kv)) stop "list not initialised!"
+
+    nnew = max(1, 2*size(kvlist%kv))
+    allocate(kvtmp(nnew))
+
+    kvtmp(1:kvlist%npair) = kvlist%kv(1:kvlist%npair)
+    call move_alloc(kvtmp, kvlist%kv)
+
+  end subroutine key_value_list_reallocate
+```
+
+:::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
