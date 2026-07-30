@@ -29,7 +29,7 @@ However, as there is a subset of C which is also valid C++, one can
 also communicate with C++.)
 
 Facilities for ensuring that data objects and procedures are interoperable
-are provided by the intrinsic module `iso_c_binding`
+are provided by the intrinsic module `iso_c_binding`.
 
 ### Numeric data types
 
@@ -37,23 +37,23 @@ For `integer`, `real` and `complex` types, `iso_c_binding` provides names
 for constants which are the relevant kind parameters for Fortran. For
 example, integer interoperable types include:
 
-```
-  !  declaration                                       ... interoperable with ...
+```fortran
+  !  declaration                                       interoperable with
   integer (c_int)                 :: i_int             ! C "int"
   integer (c_short)               :: i_short_int       ! C "short int"
   integer (c_long)                :: i_long            ! C "long int"
   integer (c_size_t)              :: i_size_t          ! C "size_t
 ```
 
-The value can be -1 (no interoperable Fortran type) or -2 (no corresponding
+The kind value can be -1 (no interoperable Fortran type) or -2 (no corresponding
 C type). Recall `size_t` is usually an unsigned type in C. There is still no
 direct analogue of unsigned types in Fortran, although an interoperable
 type is almost certainly available.
 
 For real types, the full list is:
 
-```
-  ! declaration                                        ... interoperable with ...
+```fortran
+  !  declaration                                       interoperable with
   real (c_float)                  :: r_float           ! C "float"
   real (c_double)                 :: r_double          ! C "double"
   real (c_long_double)            :: r_long_double     ! C "long double"
@@ -65,8 +65,8 @@ values indicate unavailabillity for different reasons.
 
 For complex types, the full list is:
 
-```
-  ! declaration                                        ... interoperable with ...
+```fortran
+  !  declaration                                       interoperable with
   complex (c_float_complex)       :: z_float_complex   ! C "float _Complex"
   complex (c_double_complex)      :: z_double_complex  ! C "double _Complex"
   complex (c_long_double_complex) :: z_ldc             ! C "long double _Complex"
@@ -79,7 +79,7 @@ the real and imaginary parts.
 
 There is one interoperable logical type:
 
-```
+```fortran
   ! declaration
   logical (c_bool)                :: logical_c_bool    ! C "_Bool"
 ```
@@ -96,7 +96,7 @@ integer type may be appropriate in a given context.
 A program is provided which prints out a full list of the symbols
 from `iso_c_binding` illustrated above.
 
-```
+```fortran
 $ ftn print_iso_c_binding.f90
 ```
 
@@ -106,8 +106,8 @@ $ ftn print_iso_c_binding.f90
 
 An interoperable character type is expected to be available:
 
-```
-  ! declaration                                  ... interoperable with ...
+```fortran
+  !  declaration                                 interoperable with
   character (kind = c_char, len = 1) :: char     ! C "char"
 ```
 
@@ -117,7 +117,7 @@ size array of characters of `len = 1`.
 
 Named constants for the following C special characters are provided:
 `c_null_char` (`\0`), `c_alert` (`\a`), `c_backspace` (`\b`),
-`c_form_feed` (`\f`),`c_new_line` (`\n`), `c_carriage_return` (`\r`),
+`c_form_feed` (`\f`), `c_new_line` (`\n`), `c_carriage_return` (`\r`),
 `c_horizontal_tab` (`\t`), and `c_vertical_tab` (`\v`).
 
 Fortran code receiving strings from C may wish to discard the `c_null_char`
@@ -125,16 +125,17 @@ at the end of the string.
 
 ### Calling C from Fortran
 
-Suppose we wish to call the standard C library function
+The standard C library function
 
-```
+```c
 int atoi(const char * str);
 ```
 
-from Fortran. To do this, we will write a Fortran interface to reflect the
-need for interoperable arguments. This might be:
+converts an integer in a string to an integer type (e.g. `"123"` to `123`).
+Suppose we wish to call it from Fortran. To do this, we will write a Fortran
+interface to reflect the need for interoperable arguments. This might be:
 
-```
+```fortran
   interface
     function c_atoi(str) bind(c, name = "atoi") result(i)
       use, intrinsic :: iso_c_binding, only : c_char, c_int
@@ -150,7 +151,7 @@ interface declaration. If the `name` is not present, the C name will be taken
 to be the Fortran name (in lower case). Here,
 the function could be called from Fortran via, e.g.,
 
-```
+```fortran
    integer (c_int) :: i
    i = c_atoi("-23")
 ```
@@ -165,7 +166,7 @@ rather than a function.
 
 Many C functions have non-pointer dummy arguments, e.g.,
 
-```
+```c
 double hypot(double x, double y);
 ```
 
@@ -174,7 +175,7 @@ where actual arguments would be passed by value.
 An appropriate Fortran interface can provide information on such scalar arguments
 via the `value` attribute:
 
-```
+```fortran
   interface
     function c_hypot(x, y) bind(c, name = "hypot") result(z)
       use iso_c_binding, only : c_double
@@ -200,7 +201,7 @@ copied in, whereon it may be changed, but not copied out again.
 
 Suppose we have a C function with prototype
 
-```
+```c
 int c_snprintf_float(char * str, size_t nsz, const char * format, float x);
 ```
 
@@ -214,18 +215,22 @@ the `\0` terminating character).
 The C function is supplied in the current directory; it needs to be
 compiled (not linked) with the relevant C compiler, e.g. on ARCHER2,
 
-```
+```bash
 $ cc -c c_snprintf.c
 ```
 
 which will produce an object `c_snprintf.o`.
 
-Write a program which includes an interface which allows the C function
-to be called with appropriate arguments. If the program is called
+Write a program which includes an interface which allows the C function to be
+called with appropriate arguments. You can then try to call the C functions from
+it; an appropriate C format string might be `"%5.3f"` for a `c_float`, or
+`"%22.15e"` for a `c_double`.
+
+If the program is called
 `f_snprintf.f90`, we should be able to compile this with the C object
 via:
 
-```
+```bash
 $ ftn c_snprintf.o f_snprintf.f90
 ```
 
@@ -241,7 +246,7 @@ return value?
 
 You will need to provide an interface like so:
 
-```source
+```fortran
   interface
     function f_snprintf_float(str, sz, cformat, x) &
          bind(c, name = "c_snprintf_float")  result(nchar)
@@ -266,22 +271,29 @@ You will need to provide an interface like so:
 ```
 
 In order to make use of it, you should declare the variables that will be the
-actual arguments using the same interoperable types.
+actual arguments using the same interoperable types, e.g.:
+
+```fortran
+  integer (c_size_t),  parameter       :: sz = 80
+  character (kind = c_char, len = sz)  :: str = ""
+  character (kind = c_char, len = 10)  :: cformat
+  real    (c_float)                    :: x = 3.14e0
+  integer (c_int) :: nwrite = 0
+```
 
 According to the Fortran, the returned string has length of 6, whereas the string legnth
 reported by the returned value from `snprintf` is 5. The extra is the null character used
 by C to terminate strings.
 
-An example program called [f\_snprintf.f90](exercises/14-interoperability-with-c/solutions/f_snprintf.f90) is provided.
-
 :::::::::::::::::::::::::
 
-If you were to implement interfaces for both the `c_snprintf_float()`
-and `c_snprintf_double()` versions, you might wonder whether you could
-overload the specific names with a generic name. It seems like this should
-be possible, but all attempts currently fail with the compiler unable to
-resolve which specific interface it should use from the generic.
-
+If you were to implement interfaces for both the `c_snprintf_float()` and
+`c_snprintf_double()` versions, you might wonder whether you could overload the
+specific names with a generic name. The answer is yes, with a caveat: Fortran
+compilers are themselves unable to distinguish the C types. Instead, you must
+write code such that the overload takes place on a purely Fortran level. This
+means overloading Fortran wrapper functions using Fortran kinds. These can then
+call out to the C functions. 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -294,7 +306,7 @@ interoperable, and the array has an explicit shape or an assumed size
 As an example of an explicit shape consider the C function with
 prototype
 
-```
+```c
 void c_array1(int nlen, double * data);
 ```
 
@@ -302,7 +314,7 @@ As usual, one would expect the array to be indexed from zero in C.
 
 An appropriate Fortran interface might be
 
-```
+```fortran
   interface
     subroutine c_array1(nlen, data) bind(c)
       use iso_c_binding, only : c_int, c_double
@@ -319,7 +331,7 @@ need to be passed as well, as above.
 For arrays of rank 2, we must remember that the array element order is
 reversed in C relative to Fortran. That is, the Fortran declaration
 
-```
+```fortran
    integer (c_int) :: array(m, n)
 ```
 
@@ -335,7 +347,7 @@ or `dimension(m,n)`, respectively.
 
 The accompanying C file `c_array.c` holds a function with prototype
 
-```
+```c
 void c_array(int mlen, int nlen, int [][mlen]);
 ```
 
@@ -343,17 +355,17 @@ intended to be interoperable with a Fortran array declared `(mlen,nlen)`.
 The C function simply prints out the values of the elements.
 
 Write a Fortran program that passes a small array of shape `(2,3)`
-to the C function. Initialise the values consistent with Fortran array element
+to the C function. Initialise the values consistently with Fortran array element
 order (e.g., indicative of increasing address). Does what you see make sense?
 
 :::::::::::::::  solution
 
 ## Solution
 
-If you declare the array in C as described and in your Fortran interface
+If you declare the array in C as described, and in your Fortran interface
 to the C function declare it as assumed size
 
-```source
+```fortran
 integer (kind = c_int), intent(in) :: idata(mlen, *)
 ```
 
@@ -372,11 +384,6 @@ If we insist on visualising the array as a matrix, then in C it
 *appears* to be transposed. This is not actually correct -- the memory
 layout is unchanged, and we reverse the order of indices while in C
 code in order to use it as we did in Fortran.
-
-Sample solution code is available in the `solutions` directory in
-[f\_array.f90](exercises/14-interoperability-with-c/solutions/f_array.f90).
-
-
 
 :::::::::::::::::::::::::
 
@@ -418,7 +425,7 @@ have either the `allocatable` or `pointer` attributes,
 
 The type should be declared as `bind(c)`, e.g.,
 
-```
+```fortran
   type, bind(c), public :: my_type
     integer (c_int) :: icomponent
     real (c_float)  :: fcomponent
@@ -431,7 +438,7 @@ The presence of the `bind(c)` means the type cannot be extended.
 
 Let us suppose we have a C program which defines a `struct`
 
-```
+```c
 typedef struct array_s {
   int nlen;
   float * data;
@@ -442,7 +449,7 @@ to aggregate the information on an array of `float` which is
 to be allocated by the program. Further, we wish to call a
 subroutine declared in C as
 
-```
+```c
 void f_subroutine(const array_t * a);
 ```
 
@@ -451,7 +458,7 @@ which we wish to write in Fortran.
 A corresponding subroutine in Fortran requires the definition of the
 interoperable structure, i.e.,
 
-```
+```fortran
   type, bind(c) :: array_t
     integer (c_int)  :: nlen
     type (c_ptr) :: data
@@ -462,7 +469,7 @@ where we have used a `c_ptr` type to represent the C pointer component.
 
 An interoperable subroutine declared `bind(c)` might be
 
-```
+```fortran
   subroutine f_subroutine(a) bind(c)
 
     type (array_t), intent(in) :: a
@@ -502,15 +509,85 @@ subroutine, then write a brief program to set some values in the `struct`'s
 array. In the Fortran subroutine, you can print the array (after retrieving
 a usable pointer to it via `c_f_pointer()`) and check it's correct.
 
-Example solutions are available in
-`exercises/14-interoperability-with-c/solutions` as
-[c\_struct\_to\_fortran.c](exercises/14-interoperability-with-c/solutions/c_struct_to_fortran.c)
-and
-[f\_array\_t.f90](exercises/14-interoperability-with-c/solutions/f_array_t.f90).
+The C program may look like the following:
+
+```c
+#include <stdlib.h>
+#include <stdio.h>
+
+typedef struct array_s {
+  int nlen;
+  float * data;
+} array_t;
+
+extern void f_subroutine(const array_t * a);
+
+int main() {
+  // Allocate and fill the array
+  array_t a;
+  a.nlen = 10;
+  a.data = (float *)malloc(a.nlen * sizeof(float));
+  printf("C array of size %2d:\n", a.nlen);
+  for (int i = 0; i < a.nlen; ++i) {
+    a.data[i] = 2 * i + 1.0f;
+    printf("Element [%1d] %2.1f\n", i, a.data[i]);
+  }
+
+  // Call the Fortran subroutine, passing a by reference.
+  f_subroutine(&a);
+  
+  // Free the allocated memory in a.
+  free(a.data);
+  a.data = NULL;
+
+  return 0;
+} 
+```
+
+whereas the Fortran module containing `f_subroutine()` could be:
+
+```fortran
+module f_array_t
+
+  use iso_c_binding, only : c_int, c_float, c_ptr, c_f_pointer
+  use iso_fortran_env, only : output_unit
+  implicit none
+
+  ! Interoperable Fortran counterpart to the C array_t.
+  type, bind(c) :: array_t
+    integer (c_int)  :: nlen
+    type (c_ptr) :: data
+  end type array_t
+
+contains
+
+  subroutine f_subroutine(a) bind(c)
+    implicit none
+
+    type (array_t), intent(in) :: a
+    real (c_float), pointer    :: data(:)
+
+    integer :: i
+
+    ! Get a Fortran pointer counterpart to the C pointer.
+    ! As it's a pointer to an array, we need to provide its size.
+    call c_f_pointer(a%data, data, [ a%nlen ])
+
+    ! Print the array's contents. It should match what was
+    ! printed from the C code.
+    write(output_unit, "('Fortran pointer to array of size ', i2, ':')") a%nlen
+    do i = 1, a%nlen
+        write (output_unit, "('Element (',i2,')',x,f4.1)") i, data(i)
+    end do
+
+  end subroutine f_subroutine
+
+end module f_array_t
+```
 
 Using the GCC compilers, you should be able to compile the code as follows:
 
-```output
+```bash
 ftn -c f_array_t.f90
 cc -c c_struct_to_fortran.c
 ftn f_array_t.o c_struct_to_fortran.o
@@ -520,7 +597,7 @@ You can also compile in two steps as long as you tell the C compiler that it
 will need to use `libgfortran.so` in order to link the symbols from
 `f_array_t.o`.
 
-```output
+```bash
 ftn -c f_array_t.f90
 cc -lgfortran f_array_t.o c_struct_to_fortran.c
 ```
