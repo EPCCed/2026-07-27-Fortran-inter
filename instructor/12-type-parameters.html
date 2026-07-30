@@ -399,7 +399,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Type parameters</h1>
-        <p>Last updated on 2026-07-10 |
+        <p>Last updated on 2026-07-30 |
 
         <a href="https://github.com/EPCCed/2026-07-27-Fortran-inter/edit/main/episodes/12-type-parameters.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -438,24 +438,36 @@ intrinsic types?</li>
 <section><h2 class="section-heading" id="type-parameters-for-intrinsic-types">Type parameters for intrinsic types<a class="anchor" aria-label="anchor" href="#type-parameters-for-intrinsic-types"></a></h2>
 <hr class="half-width"><p>We have seen type parameters (kind type parameters) for intrinsic
 types:</p>
-<pre><code>  use iso_fortran_env
-  ...
-  integer (int32) :: i32</code></pre>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a>  <span class="kw">use</span> iso_fortran_env</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a>  ...</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a>  <span class="dt">integer (int32)</span> <span class="dt">::</span> i32</span></code></pre>
+</div>
 <p>This provides a way to control, parametrically, the actual data type
 associated with the variable. Such parameters must be known at compile
 time.</p>
 <p>There are all so-called deferred parameters, such as the length of a
 deferred length string</p>
-<pre><code>  character (len = :), allocatable :: string</code></pre>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a>  <span class="dt">character (len = :)</span>, <span class="dt">allocatable</span> <span class="dt">::</span> string</span></code></pre>
+</div>
 <p>The colon indicates the length is deferred.</p>
 </section><section><h2 class="section-heading" id="parameterised-derived-types">Parameterised derived types<a class="anchor" aria-label="anchor" href="#parameterised-derived-types"></a></h2>
 <hr class="half-width"><p>These features may be combined in a parameterised type definition,
 e.g.:</p>
-<pre><code>type, public :: my_array_t(kr, nlen)
-  integer, kind :: kr                ! kind parameter
-  integer, len  :: nlen              ! len parameter
-  real    (kr)  :: data(nlen)
-end type my_array_t</code></pre>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="dt">type</span>, <span class="dt">public</span> <span class="dt">::</span> my_array_t(kr, nlen)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a>  <span class="dt">integer</span>, <span class="fu">kind</span> <span class="dt">::</span> kr                <span class="co">! kind parameter</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a>  <span class="dt">integer</span>, <span class="fu">len</span>  <span class="dt">::</span> nlen              <span class="co">! len parameter</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a>  <span class="dt">real    (kr)</span>  <span class="dt">::</span> data(nlen)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a><span class="dt">end type</span> my_array_t</span></code></pre>
+</div>
 <p>The type parameters must be integers and take one of two roles: a
 <code>kind</code> parameter, which is used in the place of kind type
 parameters, and a <code>len</code> parameter, which can be used in array
@@ -467,17 +479,33 @@ default value specified in the declaration, and may be accessed at run
 time via the component selector <code>%</code> in the usual way.</p>
 <p>For example declaration of a variable of such a type might look
 like:</p>
-<pre><code>  ! ... establish len_input ...
-
-  type (my_array_t(real32, len_input)) :: a</code></pre>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a>  <span class="co">! ... establish len_input ...</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a>  <span class="dt">type (my_array_t(real32, len_input))</span> <span class="dt">::</span> a</span></code></pre>
+</div>
 <p>Such a parameterised type may have a dummy argument associated with
 an actual argument via a dummy argument declaration, e.g.,</p>
-<pre><code>  type (my_array_t(real32, nlen = *)), intent(in) :: a</code></pre>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a>  <span class="dt">type (my_array_t(real32, nlen = *))</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> a</span></code></pre>
+</div>
 <p>cf.</p>
-<pre><code>  character (len = *), intent(in) :: str</code></pre>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a>  <span class="dt">character (len = *)</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> str</span></code></pre>
+</div>
 <p>A pointer declaration of this type would use the deferred notation
 with the colon:</p>
-<pre><code>  type (my_array_t(real32, nlen = :)), pointer p =&gt; null()</code></pre>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a>  <span class="dt">type (my_array_t(real32, nlen = :))</span>, <span class="dt">pointer</span> p <span class="kw">=</span><span class="op">&gt;</span> null()</span></code></pre>
+</div>
 <p>Here, an (optional) keyword has been used in the parameter list.</p>
 <div id="example" class="callout discussion">
 <div class="callout-square">
@@ -488,43 +516,47 @@ with the colon:</p>
 <h3 class="callout-title">Example</h3>
 <div class="callout-content">
 <p>The example code <code>example1</code> illustrates how a
-parameterised type can be defined and used</p>
-<pre><code>program exmaple1
-
-  use iso_fortran_env
-  implicit none
-
-  type :: my_array_t(kr, nlen)
-    integer, kind :: kr
-    integer, len  :: nlen
-    real (kr)     :: data(nlen)
-  end type my_array_t
-
-  integer :: kr
-  integer :: nlen
-  type (my_array_t(kr = real64, nlen = 1000)) :: a
-
-  print *, "kind a", a%kr
-  print *, "nlen a", a%nlen
-
-  write (*, "(a)", advance = "no") "nlen: "
-  read (*, *) nlen
-
-  call defer_me(nlen)
-
-contains
-
-  subroutine defer_me(nlen)
-
-    integer, intent(in) :: nlen
-    type (my_array_t(kr = real32, nlen=nlen)) :: b
-
-    print *, "Length   ", b%nlen
-    print *, "Shape    ", shape(b%data)
-
-  end subroutine defer_me
-
-end program exmaple1</code></pre>
+parameterised type can be defined and used:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="kw">program</span> example1</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a>  <span class="kw">use</span> iso_fortran_env</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a>  <span class="kw">implicit</span> <span class="kw">none</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a>  <span class="dt">type</span> <span class="dt">::</span> my_array_t(kr, nlen)</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a>    <span class="dt">integer</span>, <span class="fu">kind</span> <span class="dt">::</span> kr</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a>    <span class="dt">integer</span>, <span class="fu">len</span>  <span class="dt">::</span> nlen</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1" aria-label="code-block-8-9"></a>    <span class="dt">real (kr)</span>     <span class="dt">::</span> data(nlen)</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1" aria-label="code-block-8-10"></a>  <span class="dt">end type</span> my_array_t</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1" aria-label="code-block-8-11"></a></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1" aria-label="code-block-8-12"></a>  <span class="dt">integer</span> <span class="dt">::</span> kr</span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1" aria-label="code-block-8-13"></a>  <span class="dt">integer</span> <span class="dt">::</span> nlen</span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1" aria-label="code-block-8-14"></a>  <span class="dt">type (my_array_t(kr = real64, nlen = 1000))</span> <span class="dt">::</span> a</span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1" aria-label="code-block-8-15"></a></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1" aria-label="code-block-8-16"></a>  <span class="fu">print</span> <span class="kw">*</span>, <span class="st">"kind a"</span>, a<span class="op">%</span>kr</span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1" aria-label="code-block-8-17"></a>  <span class="fu">print</span> <span class="kw">*</span>, <span class="st">"nlen a"</span>, a<span class="op">%</span>nlen</span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1" aria-label="code-block-8-18"></a></span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1" aria-label="code-block-8-19"></a>  <span class="fu">write (*</span>, <span class="st">"(a)"</span>, <span class="fu">advance</span> <span class="kw">=</span> <span class="st">"no"</span><span class="fu">)</span> <span class="st">"nlen: "</span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1" aria-label="code-block-8-20"></a>  <span class="fu">read (*</span>, <span class="fu">*)</span> nlen</span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1" aria-label="code-block-8-21"></a></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1" aria-label="code-block-8-22"></a>  <span class="kw">call</span> defer_me(nlen)</span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1" aria-label="code-block-8-23"></a></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1" aria-label="code-block-8-24"></a><span class="co">contains</span></span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1" aria-label="code-block-8-25"></a></span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1" aria-label="code-block-8-26"></a>  <span class="kw">subroutine</span> defer_me(nlen)</span>
+<span id="cb8-27"><a href="#cb8-27" tabindex="-1" aria-label="code-block-8-27"></a></span>
+<span id="cb8-28"><a href="#cb8-28" tabindex="-1" aria-label="code-block-8-28"></a>    <span class="dt">integer</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> nlen</span>
+<span id="cb8-29"><a href="#cb8-29" tabindex="-1" aria-label="code-block-8-29"></a>    <span class="dt">type (my_array_t(kr = real32, nlen=nlen))</span> <span class="dt">::</span> b</span>
+<span id="cb8-30"><a href="#cb8-30" tabindex="-1" aria-label="code-block-8-30"></a></span>
+<span id="cb8-31"><a href="#cb8-31" tabindex="-1" aria-label="code-block-8-31"></a>    <span class="fu">print</span> <span class="kw">*</span>, <span class="st">"Length   "</span>, b<span class="op">%</span>nlen</span>
+<span id="cb8-32"><a href="#cb8-32" tabindex="-1" aria-label="code-block-8-32"></a>    <span class="fu">print</span> <span class="kw">*</span>, <span class="st">"Shape    "</span>, <span class="fu">shape</span>(b<span class="op">%</span>data)</span>
+<span id="cb8-33"><a href="#cb8-33" tabindex="-1" aria-label="code-block-8-33"></a></span>
+<span id="cb8-34"><a href="#cb8-34" tabindex="-1" aria-label="code-block-8-34"></a>  <span class="kw">end subroutine</span> defer_me</span>
+<span id="cb8-35"><a href="#cb8-35" tabindex="-1" aria-label="code-block-8-35"></a></span>
+<span id="cb8-36"><a href="#cb8-36" tabindex="-1" aria-label="code-block-8-36"></a><span class="kw">end program</span> example1</span></code></pre>
+</div>
 <p>The <code>kind</code> of the data held by
 <code>my_array_t%data</code> must be known at compile time, but the
 <code>len</code> of the array can be set dynamically as shown by
@@ -606,8 +638,8 @@ compile time (as for intrinsic types)</li>
   "url": "https://EPCCed.github.io/2026-07-27-Fortran-inter/instructor/12-type-parameters.html",
   "identifier": "https://EPCCed.github.io/2026-07-27-Fortran-inter/instructor/12-type-parameters.html",
   "dateCreated": "2025-05-06",
-  "dateModified": "2026-07-10",
-  "datePublished": "2026-07-29"
+  "dateModified": "2026-07-30",
+  "datePublished": "2026-07-30"
 }
 
   </script><script>
