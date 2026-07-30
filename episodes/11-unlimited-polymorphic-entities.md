@@ -332,6 +332,37 @@ required. This should use `move_alloc()`. Have a go at providing this
 subroutine.
 
 
+:::::::::::::::  solution
+
+## Solution
+
+Your subroutine might look like the following:
+
+```fortran
+  subroutine key_value_list_reallocate(kvlist)
+
+    ! Expand list storage (by a factor of 2)
+
+    type (key_value_list_t), intent(inout) :: kvlist
+
+    type (key_value_t), allocatable :: kvtmp(:)
+    integer                         :: nnew
+
+    ! The list must be initialised here ...
+
+    if (.not. allocated(kvlist%kv)) stop "list not initialised!"
+
+    nnew = max(1, 2*size(kvlist%kv))
+    allocate(kvtmp(nnew))
+
+    kvtmp(1:kvlist%npair) = kvlist%kv(1:kvlist%npair)
+    call move_alloc(kvtmp, kvlist%kv)
+
+  end subroutine key_value_list_reallocate
+```
+
+:::::::::::::::::::::::::
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
