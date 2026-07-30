@@ -138,7 +138,7 @@ contains
       type is (real (real32))
         print *, "real32 kv ", kv%key, val
       type is (character (len = *))
-         print *, "string kv", kv%key, val
+         print *, "string kv ", kv%key, val
       type is (real (real64))
          print *, "real64 kv ", kv%key, val
       class default
