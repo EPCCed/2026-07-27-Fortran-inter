@@ -20,7 +20,7 @@ exercises: 15
 
 We have seen type parameters (kind type parameters) for intrinsic types:
 
-```
+```fortran
   use iso_fortran_env
   ...
   integer (int32) :: i32
@@ -33,7 +33,7 @@ time.
 There are all so-called deferred parameters, such as the length of a
 deferred length string
 
-```
+```fortran
   character (len = :), allocatable :: string
 ```
 
@@ -43,7 +43,7 @@ The colon indicates the length is deferred.
 
 These features may be combined in a parameterised type definition, e.g.:
 
-```
+```fortran
 type, public :: my_array_t(kr, nlen)
   integer, kind :: kr                ! kind parameter
   integer, len  :: nlen              ! len parameter
@@ -63,7 +63,7 @@ time via the component selector `%` in the usual way.
 
 For example declaration of a variable of such a type might look like:
 
-```
+```fortran
   ! ... establish len_input ...
 
   type (my_array_t(real32, len_input)) :: a
@@ -72,20 +72,20 @@ For example declaration of a variable of such a type might look like:
 Such a parameterised type may have a dummy argument associated with an
 actual argument via a dummy argument declaration, e.g.,
 
-```
+```fortran
   type (my_array_t(real32, nlen = *)), intent(in) :: a
 ```
 
 cf.
 
-```
+```fortran
   character (len = *), intent(in) :: str
 ```
 
 A pointer declaration of this type would use the deferred notation
 with the colon:
 
-```
+```fortran
   type (my_array_t(real32, nlen = :)), pointer p => null()
 ```
 
@@ -95,10 +95,10 @@ Here, an (optional) keyword has been used in the parameter list.
 
 ## Example
 
-The example code `example1` illustrates how a parameterised type can be defined and used
+The example code `example1` illustrates how a parameterised type can be defined and used:
 
-```
-program exmaple1
+```fortran
+program example1
 
   use iso_fortran_env
   implicit none
@@ -133,7 +133,7 @@ contains
 
   end subroutine defer_me
 
-end program exmaple1
+end program example1
 ```
 
 The `kind` of the data held by `my_array_t%data` must be known at compile time, but the `len` of
