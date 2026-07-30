@@ -29,7 +29,7 @@ The last is `iso_c_binding` which concerns C/Fortran interoperability.
 A use statement may include, optionally, an `intrinsic` or `non_intrinsic`
 attribute, e.g.,
 
-```
+```fortran
   use, intrinsic :: iso_fortran_env
 ```
 
@@ -38,7 +38,7 @@ any other module with the same name.
 
 Likewise a non-intrinsic module can be used:
 
-```
+```fortran
   use, non_intrinsic :: iso_fortran_env
 ```
 
@@ -59,7 +59,7 @@ These include:
 
 1. `error_unit`, `input_unit` and `output_unit`: the unit numbers
    associated with standard error, standard input, and standard output.
-2. `iostat_end` and `iostat_eor`: error codes for end-fo-file and
+2. `iostat_end` and `iostat_eor`: error codes for end-of-file and
    end-of-record.
 3. `character_storage_size`, `file_storage_size`, and `numeric_storage_size`
    related to i/o
@@ -83,7 +83,7 @@ return a string fixed at compile time.
 
 E.g.,
 
-```
+```fortran
   character (len = *), parameter :: compiler = compiler_version()
 ```
 
@@ -96,7 +96,7 @@ E.g.,
 An example program is provided which prints out the values of the various
 symbols available from `iso_fortran_env`.
 
-```
+```bash
 $ ftn print_iso_fortran_env.f90
 ```
 
@@ -118,9 +118,9 @@ is separated into three modules.
 2. `ieee_arithmetic` contains functionality for identifying different classes
    of floating point values (e.g., `ieee_negative_inf`), rounding modes, and
    so on. The `ieee_arithmetic` module include `ieee_exceptions`.
-3. `ieee_features` does not provide names a such by may affect compilation if
-   present. E.g., if
-   ```
+3. `ieee_features` does not provide names as such but may affect how the program is
+   compiled if present. E.g., if
+   ```fortran
      use, intrinsic :: ieee_features, only : ieee_subnormal
    ```
    is present, then the program unit must provide support for subnormal floating
