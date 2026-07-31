@@ -213,7 +213,7 @@ The accompanying program has some examples to act as a test.
 
 The constructors for `int32` and `real32` could look like
 
-```fortan
+```fortran
   function key_value_create_i32(key, ivalue) result(kv)
 
     character (len = *), intent(in) :: key
